@@ -20,14 +20,38 @@ class CategoryTest extends TestCase
         $user = User::get('email', 'admin@gmail.com')->first();
 
         $data = [
-            'name' => 'karton'
+            'name' => 'makanan'
         ];
+
         $response = $this->actingAs($user)->withSession(['banned' => false])->post('/Category/create', $data);
 
         $response->assertStatus(200);
 
-        $category = Category::where('name', 'karton');
+        $category = collect(Category::where('name', 'makanan')->get());
 
-        $this->assertNotEmpty($category);
+        $this->assertTrue($category->isNotEmpty());
+    }
+
+
+
+
+
+    public function test_edit()
+    {
+        $user = User::get('email', 'admin@gmail.com')->first();
+
+        $data = [
+            'name' => 'karton'
+        ];
+
+        $code = collect(Category::get());
+        $code =  $code->first()->code;
+        $response = $this->actingAs($user)->withSession(['banned' => false])->post("/Category/edit/$code", $data);
+
+        $response->assertStatus(200);
+
+        $category = collect(Category::where('name', 'karton')->get());
+
+        $this->assertTrue($category->isNotEmpty());
     }
 }

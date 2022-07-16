@@ -45,6 +45,10 @@ class Category_controller extends Controller
         Category::create($data);
     }
 
+
+
+
+
     /**
      * Display the specified resource.
      *
@@ -74,9 +78,14 @@ class Category_controller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $code)
     {
-        //
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        $data = ['name' => $request->name];
+        Category::where('code', $code)->update($data);
     }
 
     /**
