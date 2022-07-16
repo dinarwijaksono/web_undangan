@@ -29,4 +29,6 @@ Route::post('/register', [User_controller::class, 'store'])->middleware('guest')
 Route::post('/Category/create', [Category_controller::class, 'store'])->middleware('auth');
 
 Route::post('/Category/edit/{code}', [Category_controller::class, 'update'])->middleware('auth');
+
+Route::delete('/Category/delete/{code}', [Category_controller::class, 'destroy'])->middleware('auth');
 /* end Category_controller */

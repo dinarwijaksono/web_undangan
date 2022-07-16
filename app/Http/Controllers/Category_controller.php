@@ -88,14 +88,19 @@ class Category_controller extends Controller
         Category::where('code', $code)->update($data);
     }
 
+
+
+
+
+
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($code)
     {
-        //
+        Category::where('code', $code)->delete();
     }
 }

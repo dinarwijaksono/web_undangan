@@ -54,4 +54,18 @@ class CategoryTest extends TestCase
 
         $this->assertTrue($category->isNotEmpty());
     }
+
+
+
+
+    public function test_delete()
+    {
+        $user = User::get('email', 'admin@gmail.com')->first();
+
+        $code = collect(Category::get())->first();
+        $code = $code->code;
+        $response = $this->actingAs($user)->withSession(['banned' => false])->delete("/Category/delete/$code");
+
+        $response->assertStatus(200);
+    }
 }
