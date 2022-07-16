@@ -64,6 +64,13 @@ class Product_controller extends Controller
         //
     }
 
+
+
+
+
+
+
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -82,9 +89,16 @@ class Product_controller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $code)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'category' => 'required'
+        ]);
+
+        $data['name'] = $request->name;
+        $data['categories_id'] = $request->category;
+        Produc::where('code', $code)->update($data);
     }
 
     /**

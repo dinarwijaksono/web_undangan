@@ -30,4 +30,25 @@ class ProductTest extends TestCase
         $response->assertStatus(200);
         $this->assertTrue($product->isNotEmpty());
     }
+
+
+
+    public function test_edit()
+    {
+        $user = collect(User::where('email', 'admin@gmail.com')->get())->first();
+
+        $data = [
+            'name' => 'jamur',
+            'category' => 2
+        ];
+
+        $code = collect(Produc::get())->first();
+        $code = $code->code;
+        $response = $this->actingAs($user)->withSession(['banned' => false])->post("/Product/edit/$code", $data);
+
+        $product = collect(Produc::where('code', $code)->get())->first();
+
+        $response->assertStatus(200);
+        $this->assertEquals($product->name, 'jamur');
+    }
 }
