@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Category_controller;
+use App\Http\Controllers\Product_controller;
 use App\Http\Controllers\User_controller;
 use Illuminate\Support\Facades\Route;
 
@@ -32,3 +33,8 @@ Route::post('/Category/edit/{code}', [Category_controller::class, 'update'])->mi
 
 Route::delete('/Category/delete/{code}', [Category_controller::class, 'destroy'])->middleware('auth');
 /* end Category_controller */
+
+
+/* Product_controller */
+Route::post('/Product/create', [Product_controller::class, 'store'])->middleware('auth');
+/* end Product_controller */

@@ -17,7 +17,7 @@ class CreateProducsTable extends Migration
             $table->id();
             $table->foreignId('categories_id');
             $table->string('code', 8)->unique();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->timestamps();
         });
     }
