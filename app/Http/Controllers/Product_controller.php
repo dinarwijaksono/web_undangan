@@ -124,5 +124,7 @@ class Product_controller extends Controller
     public function destroy($code)
     {
         Product::where('code', $code)->delete();
+
+        return redirect('/Product')->with('deleteSuccess', 'Produk berhasil di hapus.');
     }
 }

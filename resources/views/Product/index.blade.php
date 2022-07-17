@@ -43,7 +43,7 @@
                                 <td><?= $product->name ?></td>
                                 <td><?= $product->category->name ?></td>
                                 <td>
-                                    <form action="/Category/delete/<?= $product->code ?>" method="post" style="display: inline;">
+                                    <form action="/Product/delete/<?= $product->code ?>" method="post" style="display: inline;">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger btn-xs">Hapus</button>
