@@ -19,6 +19,9 @@ class Category_controller extends Controller
         return view('/Category/index', $data);
     }
 
+
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -26,7 +29,7 @@ class Category_controller extends Controller
      */
     public function create()
     {
-        //
+        return view('/Category/create');
     }
 
     /**
@@ -45,6 +48,8 @@ class Category_controller extends Controller
         $data['code'] = 'C' . mt_rand(1000000, 9999999);
 
         Category::create($data);
+
+        return redirect('/Category')->with('CreateSuccess', 'Kategori berhasil di tambahkan');
     }
 
 

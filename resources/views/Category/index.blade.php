@@ -14,6 +14,12 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <p>List Kategori</p>
+                <a href="/Category/create" style="text-align: right; display: block; text-decoration: underline;">Buat kategori baru</a>
+
+                @if (session('createSuccess'))
+                <div class="alert alert-success" style="margin: 10px; padding: 10px;" role="alert"><?= session('createSuccess') ?></div>
+                @endif
+
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
