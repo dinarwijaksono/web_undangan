@@ -14,8 +14,16 @@ class Product_controller extends Controller
      */
     public function index()
     {
-        //
+        $data['listProduct'] = collect(Product::all());
+
+        return view('/Product/index', $data);
     }
+
+
+
+
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -42,7 +50,7 @@ class Product_controller extends Controller
 
         $data['code'] = 'P' . mt_rand(1000000, 9999999);
         $data['name'] = $request->name;
-        $data['categories_id'] = $request->category;
+        $data['category_id'] = $request->category;
 
         Product::create($data);
     }
@@ -97,7 +105,7 @@ class Product_controller extends Controller
         ]);
 
         $data['name'] = $request->name;
-        $data['categories_id'] = $request->category;
+        $data['category_id'] = $request->category;
         Product::where('code', $code)->update($data);
     }
 

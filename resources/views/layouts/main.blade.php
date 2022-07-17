@@ -51,8 +51,8 @@
                     <div class="navbar-collapse collapse ">
                         <ul id="menu-top" class="nav navbar-nav navbar-right">
                             <li><a href="/Main">DASHBOARD</a></li>
-                            <li><a href="/Category">Kategori</a></li>
-                            <li><a href="/Main">TABLES</a></li>
+                            <li><a href="/Category">KATEGORI</a></li>
+                            <li><a href="/Product">PRODUCT</a></li>
                             <li><a href="/Main">BLANK PAGE</a></li>
                         </ul>
                     </div>
