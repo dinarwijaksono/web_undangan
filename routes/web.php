@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Auth_controller;
 use App\Http\Controllers\Category_controller;
+use App\Http\Controllers\Home_controller;
+use App\Http\Controllers\Main_controller;
 use App\Http\Controllers\Product_controller;
 use App\Http\Controllers\User_controller;
 use Illuminate\Support\Facades\Route;
@@ -16,9 +19,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/* Home_controller */
+
+Route::get('/', [Home_controller::class, 'index']);
+/*end  Home_controller */
+
+
+/* Auth_controller */
+Route::get('/Login', [Auth_controller::class, 'login'])->name('login')->middleware('guest');
+
+Route::post('/Login', [Auth_controller::class, 'loginProcess'])->middleware('guest');
+/* end Auth_controller */
+
+
+/* Main_controller */
+Route::get('/Main', [Main_controller::class, 'index'])->middleware('auth');
+/* end Main_controller */
 
 
 /* User_controller */
