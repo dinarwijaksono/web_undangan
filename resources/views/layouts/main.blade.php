@@ -77,10 +77,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    &copy; 2014 Yourdomain.com |<a href="http://www.binarytheme.com/" target="_blank"> Designed by :
-                        binarytheme.com</a>
+                    &copy; 2022 Yourdomain.com |<a href="" target="_blank"> Designed and Develop by : @dinarwijaksono11</a>
                 </div>
-
             </div>
         </div>
     </section>
