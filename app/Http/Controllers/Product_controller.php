@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Produc;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class Product_controller extends Controller
@@ -44,7 +44,7 @@ class Product_controller extends Controller
         $data['name'] = $request->name;
         $data['categories_id'] = $request->category;
 
-        Produc::create($data);
+        Product::create($data);
     }
 
 
@@ -98,8 +98,14 @@ class Product_controller extends Controller
 
         $data['name'] = $request->name;
         $data['categories_id'] = $request->category;
-        Produc::where('code', $code)->update($data);
+        Product::where('code', $code)->update($data);
     }
+
+
+
+
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -107,8 +113,8 @@ class Product_controller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($code)
     {
-        //
+        Product::where('code', $code)->delete();
     }
 }

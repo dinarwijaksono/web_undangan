@@ -39,4 +39,6 @@ Route::delete('/Category/delete/{code}', [Category_controller::class, 'destroy']
 Route::post('/Product/create', [Product_controller::class, 'store'])->middleware('auth');
 
 Route::post('/Product/edit/{code}', [Product_controller::class, 'update'])->middleware('auth');
+
+Route::delete('/Product/delete/{code}', [Product_controller::class, 'destroy'])->middleware('auth');
 /* end Product_controller */

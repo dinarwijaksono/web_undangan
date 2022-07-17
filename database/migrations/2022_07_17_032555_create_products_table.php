@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProducsTable extends Migration
+class CreateProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateProducsTable extends Migration
      */
     public function up()
     {
-        Schema::create('producs', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->foreignId('categories_id');
             $table->string('code', 8)->unique();
@@ -29,6 +29,6 @@ class CreateProducsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('producs');
+        Schema::dropIfExists('products');
     }
 }
