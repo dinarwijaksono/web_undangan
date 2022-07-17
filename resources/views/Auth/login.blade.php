@@ -50,7 +50,7 @@
 
                             <div class="form-group">
                                 <label>Password</label>
-                                <input class="form-control" name="password" type="text" placeholder="password" />
+                                <input class="form-control" name="password" type="password" placeholder="password" />
                                 @error('password')
                                 <p class="help-block" style="color: red;"><?= $message ?></p>
                                 @enderror

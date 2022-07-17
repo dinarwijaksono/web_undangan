@@ -29,6 +29,8 @@ Route::get('/', [Home_controller::class, 'index']);
 Route::get('/Login', [Auth_controller::class, 'login'])->name('login')->middleware('guest');
 
 Route::post('/Login', [Auth_controller::class, 'loginProcess'])->middleware('guest');
+
+Route::post('/logout', [Auth_controller::class, 'logout'])->middleware('auth');
 /* end Auth_controller */
 
 
