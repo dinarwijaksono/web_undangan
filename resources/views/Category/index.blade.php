@@ -16,8 +16,12 @@
                 <p>List Kategori</p>
                 <a href="/Category/create" style="text-align: right; display: block; text-decoration: underline;">Buat kategori baru</a>
 
-                @if (session('createSuccess'))
-                <div class="alert alert-success" style="margin: 10px; padding: 10px;" role="alert"><?= session('createSuccess') ?></div>
+                @if (session('CreateSuccess'))
+                <div class="alert alert-success" style="margin: 10px; padding: 10px;" role="alert"><?= session('CreateSuccess') ?></div>
+                @endif
+
+                @if (session('deleteSuccess'))
+                <div class="alert alert-info" style="margin: 10px; padding: 10px;" role="alert"><?= session('deleteSuccess') ?></div>
                 @endif
 
             </div>
@@ -39,8 +43,9 @@
                                 <td><?= $i++ ?>.</td>
                                 <td><?= $category->name ?></td>
                                 <td>
-                                    <form action="" method="post" style="display: inline;">
+                                    <form action="/Category/delete/<?= $category->code ?>" method="post" style="display: inline;">
                                         @csrf
+                                        @method('delete')
                                         <button type="submit" class="btn btn-danger btn-xs">Hapus</button>
                                     </form>
                                     <a href="#" class="btn btn-primary btn-xs">Edit</a>

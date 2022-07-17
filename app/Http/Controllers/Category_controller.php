@@ -109,5 +109,7 @@ class Category_controller extends Controller
     public function destroy($code)
     {
         Category::where('code', $code)->delete();
+
+        return redirect('/Category')->with('deleteSuccess', "Kategori berhasil di hapus.");
     }
 }
