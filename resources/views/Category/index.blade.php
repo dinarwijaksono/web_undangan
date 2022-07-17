@@ -2,12 +2,6 @@
 
 @section('content')
 
-<!-- <div class="row pad-botm">
-    <div class="col-md-12">
-        <h4 class="header-line">LIST KATEGORI</h4>
-    </div>
-</div> -->
-
 <div class="row">
     <div class="col-12">
 
@@ -22,6 +16,10 @@
 
                 @if (session('deleteSuccess'))
                 <div class="alert alert-info" style="margin: 10px; padding: 10px;" role="alert"><?= session('deleteSuccess') ?></div>
+                @endif
+
+                @if (session('editSuccess'))
+                <div class="alert alert-info" style="margin: 10px; padding: 10px;" role="alert"><?= session('editSuccess') ?></div>
                 @endif
 
             </div>
@@ -48,7 +46,7 @@
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger btn-xs">Hapus</button>
                                     </form>
-                                    <a href="#" class="btn btn-primary btn-xs">Edit</a>
+                                    <a href="/Category/edit/<?= $category->code ?>" class="btn btn-primary btn-xs">Edit</a>
                                 </td>
                             </tr>
                             @endforeach

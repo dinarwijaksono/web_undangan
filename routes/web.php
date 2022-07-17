@@ -50,6 +50,7 @@ Route::get('/Category', [Category_controller::class, 'index'])->middleware('auth
 Route::get('/Category/create', [Category_controller::class, 'create'])->middleware('auth');
 Route::post('/Category/create', [Category_controller::class, 'store'])->middleware('auth');
 
+Route::get('/Category/edit/{code}', [Category_controller::class, 'edit'])->middleware('auth');
 Route::post('/Category/edit/{code}', [Category_controller::class, 'update'])->middleware('auth');
 
 Route::delete('/Category/delete/{code}', [Category_controller::class, 'destroy'])->middleware('auth');

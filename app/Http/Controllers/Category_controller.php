@@ -67,15 +67,21 @@ class Category_controller extends Controller
         //
     }
 
+
+
+
+
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($code)
     {
-        //
+        $data['category'] = collect(Category::where('code', $code)->get())->first();
+
+        return view('/Category/edit', $data);
     }
 
     /**
@@ -93,6 +99,8 @@ class Category_controller extends Controller
 
         $data = ['name' => $request->name];
         Category::where('code', $code)->update($data);
+
+        return redirect('/Category')->with('editSuccess', 'Kategori berhasil di edit.');
     }
 
 
