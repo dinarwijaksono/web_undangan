@@ -83,6 +83,11 @@ class Product_controller extends Controller
 
     public function edit($code)
     {
+        $data['product'] = collect(Product::where('code', $code)->get())->first();
+        $data['listCategory'] = Category::all();
+        $data['code'] = $code;
+
+        return view('/Product/edit', $data);
     }
 
 
@@ -97,6 +102,8 @@ class Product_controller extends Controller
         $data['name'] = $request->name;
         $data['category_id'] = $request->category;
         Product::where('code', $code)->update($data);
+
+        return redirect('/Product')->with('editSuccess', "Produk berhasil di edit.");
     }
 
 
