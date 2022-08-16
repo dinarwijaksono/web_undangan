@@ -60,6 +60,7 @@ Route::delete('/Category/delete/{code}', [Category_controller::class, 'destroy']
 /* Product_controller */
 Route::get('/Product', [Product_controller::class, 'index'])->middleware('auth');
 
+Route::get('/Product/create', [Product_controller::class, 'create'])->middleware('auth');
 Route::post('/Product/create', [Product_controller::class, 'store'])->middleware('auth');
 
 Route::post('/Product/edit/{code}', [Product_controller::class, 'update'])->middleware('auth');

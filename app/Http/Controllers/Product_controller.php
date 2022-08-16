@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -32,7 +33,8 @@ class Product_controller extends Controller
      */
     public function create()
     {
-        //
+        $data['listCategory'] =  Category::all();
+        return view('/Product/create', $data);
     }
 
     /**
@@ -53,6 +55,8 @@ class Product_controller extends Controller
         $data['category_id'] = $request->category;
 
         Product::create($data);
+
+        return redirect('/Product')->with('createSuccess', "Produk berhasil di tambahkan.");
     }
 
 
@@ -77,26 +81,12 @@ class Product_controller extends Controller
 
 
 
-
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit($code)
     {
-        //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function update(Request $request, $code)
     {
         $request->validate([
@@ -114,13 +104,6 @@ class Product_controller extends Controller
 
 
 
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($code)
     {
         Product::where('code', $code)->delete();

@@ -8,10 +8,10 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <p>List Produk</p>
-                <a href="/Category/create" style="text-align: right; display: block; text-decoration: underline;">Buat produk baru</a>
+                <a href="/Product/create" style="text-align: right; display: block; text-decoration: underline;">Buat produk baru</a>
 
-                @if (session('CreateSuccess'))
-                <div class="alert alert-success" style="margin: 10px; padding: 10px;" role="alert"><?= session('CreateSuccess') ?></div>
+                @if (session('createSuccess'))
+                <div class="alert alert-success" style="margin: 10px; padding: 10px;" role="alert"><?= session('createSuccess') ?></div>
                 @endif
 
                 @if (session('deleteSuccess'))
