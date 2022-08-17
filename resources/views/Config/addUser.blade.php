@@ -19,20 +19,26 @@
 
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input name="email" autocomplete="off" class="form-control" type="text" id="email" placeholder="Email" />
-                        <!-- <p class="help-block" style="color: red;">Lorem ipsum dolor sit amet consectetur adipisicing.</p> -->
+                        <input name="email" autocomplete="off" class="form-control" type="text" id="email" placeholder="Email" value="<?= old('email') ?>" />
+                        @error('email')
+                        <p class="help-block" style="color: red;"><?= $message ?></p>
+                        @enderror
                     </div>
 
                     <div class="form-group">
                         <label for="password">Password</label>
                         <input name="password" class="form-control" type="password" id="password" placeholder="password" />
-                        <!-- <p class="help-block" style="color: red;">Lorem ipsum dolor sit amet consectetur adipisicing.</p> -->
+                        @error('password')
+                        <p class="help-block" style="color: red;"><?= $message ?></p>
+                        @enderror
                     </div>
 
                     <div class="form-group">
                         <label for="password_confirmation">Password</label>
                         <input name="password_confirmation" class="form-control" type="password" id="password_confirmation" placeholder="konfirmasi password" />
-                        <!-- <p class="help-block" style="color: red;">Lorem ipsum dolor sit amet consectetur adipisicing.</p> -->
+                        @error('password_confirmation')
+                        <p class="help-block" style="color: red;"><?= $message ?></p>
+                        @enderror
                     </div>
 
                     <div style="text-align: right;">

@@ -10,6 +10,13 @@
     <section class="row">
         <div class="col-md-12">
 
+            @if (session('createSuccess'))
+            <div class="alert alert-warning">
+                <strong>INFO :</strong>
+                <?= session('createSuccess') ?>
+            </div>
+            @endif
+
             <div class="panel panel-default">
                 <div class="panel-heading">
                     LIST USER
@@ -29,14 +36,25 @@
 
                                 <?php $i = 1; ?>
                                 @foreach ($listUser as $user)
-                                <tr>
-                                    <td style="text-align: center;"><?= $i++ ?></td>
-                                    <td><?= $user['email'] ?></td>
-                                    <td style="text-align: center;">
-                                        <a href="#" class="btn btn-primary btn-xs">Ubah password</a>
-                                        <a href="#" class="btn btn-danger btn-xs">Hapus</a>
-                                    </td>
-                                </tr>
+                                <?php if ($user['email'] == 'admin@gmail.com') : ?>
+                                    <tr>
+                                        <td style="text-align: center;"><?= $i++ ?></td>
+                                        <td><?= $user['email'] ?></td>
+                                        <td style="text-align: center;">
+                                            <a href="#" class="btn btn-primary btn-xs">Ubah password</a>
+                                            <a class="btn btn-danger btn-xs" style="opacity: 0.5;">Hapus</a>
+                                        </td>
+                                    </tr>
+                                <?php else : ?>
+                                    <tr>
+                                        <td style="text-align: center;"><?= $i++ ?></td>
+                                        <td><?= $user['email'] ?></td>
+                                        <td style="text-align: center;">
+                                            <a href="#" class="btn btn-primary btn-xs">Ubah password</a>
+                                            <a href="#" class="btn btn-danger btn-xs">Hapus</a>
+                                        </td>
+                                    </tr>
+                                <?php endif ?>
                                 @endforeach
 
                             </tbody>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class User_controller extends Controller
 {
@@ -27,22 +28,29 @@ class User_controller extends Controller
         return view('/Config/addUser');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
+        $request->validate([
+            'email' => 'required|unique:users',
+            'password' => 'required',
+            'password_confirmation' => 'required|same:password'
+        ]);
+
+        $data['email'] = $request->email;
+        $data['password'] = Hash::make($request->password);
+
+        User::create($data);
+
+        return redirect('/Config/userManagement')->with('createSuccess', "User berhasil di tambahkan.");
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
+
+
+
+
+
+
     public function show($id)
     {
         //
