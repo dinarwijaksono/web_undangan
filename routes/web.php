@@ -72,5 +72,5 @@ Route::delete('/Product/delete/{code}', [Product_controller::class, 'destroy'])-
 
 
 /* Config */
-Route::get('/Config', [ConfigManagement_controller::class, 'index'])->middleware('auth');
+Route::get('/Config/userManagement', [User_controller::class, 'index'])->middleware('auth');
 /* end Config */

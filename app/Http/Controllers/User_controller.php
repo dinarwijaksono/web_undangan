@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class User_controller extends Controller
@@ -13,7 +14,9 @@ class User_controller extends Controller
      */
     public function index()
     {
-        //
+        $data['listUser'] = User::all();
+
+        return view('/Config/userManagement', $data);
     }
 
     /**

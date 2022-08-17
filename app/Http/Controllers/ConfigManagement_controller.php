@@ -8,6 +8,5 @@ class ConfigManagement_controller extends Controller
 {
     public function index()
     {
-        return view('Config/index');
     }
 }
