@@ -17,6 +17,13 @@
             </div>
             @endif
 
+            @if (session('deleteSuccess'))
+            <div class="alert alert-danger">
+                <strong>INFO :</strong>
+                <?= session('deleteSuccess') ?>
+            </div>
+            @endif
+
             <div class="panel panel-default">
                 <div class="panel-heading">
                     LIST USER
@@ -51,7 +58,11 @@
                                         <td><?= $user['email'] ?></td>
                                         <td style="text-align: center;">
                                             <a href="#" class="btn btn-primary btn-xs">Ubah password</a>
-                                            <a href="#" class="btn btn-danger btn-xs">Hapus</a>
+                                            <form action="/Config/deleteUser/<?= $user['id'] ?>" method="post" style="display: inline">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" class=" btn btn-danger btn-xs">Hapus</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 <?php endif ?>
