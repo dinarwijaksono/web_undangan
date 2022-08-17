@@ -19,14 +19,12 @@ class User_controller extends Controller
         return view('/Config/userManagement', $data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+
+
     public function create()
     {
-        //
+        return view('/Config/addUser');
     }
 
     /**
