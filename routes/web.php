@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth_controller;
 use App\Http\Controllers\Category_controller;
+use App\Http\Controllers\ConfigManagement_controller;
 use App\Http\Controllers\Home_controller;
 use App\Http\Controllers\Main_controller;
 use App\Http\Controllers\Product_controller;
@@ -68,3 +69,8 @@ Route::post('/Product/edit/{code}', [Product_controller::class, 'update'])->midd
 
 Route::delete('/Product/delete/{code}', [Product_controller::class, 'destroy'])->middleware('auth');
 /* end Product_controller */
+
+
+/* Config */
+Route::get('/Config', [ConfigManagement_controller::class, 'index'])->middleware('auth');
+/* end Config */

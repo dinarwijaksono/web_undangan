@@ -52,8 +52,14 @@
                         <ul id="menu-top" class="nav navbar-nav navbar-right">
                             <li><a href="/Main">DASHBOARD</a></li>
                             <li><a href="/Category">KATEGORI</a></li>
-                            <li><a href="/Product">PRODUCT</a></li>
-                            <li><a href="/Main">BLANK PAGE</a></li>
+                            <li><a href="/Product">PRODAK</a></li>
+                            <li>
+                                <a class="dropdown-toggle" id="ddlmenuItem" data-toggle="dropdown">SETTING <i class="fa fa-angle-down"></i></a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="ddlmenuItem">
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="/Config/userManagement">User management</a></li>
+                                    <!-- <li role="presentation"><a role="menuitem" tabindex="-1" href="#">EXAMPLE LINK</a></li> -->
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                 </div>
