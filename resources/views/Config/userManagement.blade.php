@@ -44,7 +44,7 @@
                                 <?php $i = 1; ?>
                                 @foreach ($listUser as $user)
                                 <?php if ($user['email'] == 'admin@gmail.com') : ?>
-                                    <tr>
+                                    <tr <?= $user->email == auth()->user()->email ? "class='warning'" : "" ?>>
                                         <td style="text-align: center;"><?= $i++ ?></td>
                                         <td><?= $user['email'] ?></td>
                                         <td style="text-align: center;">
@@ -53,7 +53,7 @@
                                         </td>
                                     </tr>
                                 <?php else : ?>
-                                    <tr>
+                                    <tr <?= $user->email == auth()->user()->email ? "class='warning'" : "" ?>>
                                         <td style="text-align: center;"><?= $i++ ?></td>
                                         <td><?= $user['email'] ?></td>
                                         <td style="text-align: center;">
@@ -61,7 +61,7 @@
                                             <form action="/Config/deleteUser/<?= $user['id'] ?>" method="post" style="display: inline">
                                                 @csrf
                                                 @method('delete')
-                                                <button type="submit" class=" btn btn-danger btn-xs">Hapus</button>
+                                                <button <?= $user->email == auth()->user()->email ? "class='btn btn-danger btn-xs' style='opacity: 0.5;'" : "type='submit' class='btn btn-danger btn-xs'" ?>>Hapus</button>
                                             </form>
                                         </td>
                                     </tr>
