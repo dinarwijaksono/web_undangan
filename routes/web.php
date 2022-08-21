@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 /* Home_controller */
 
 Route::get('/', [Home_controller::class, 'index']);
+
 /*end  Home_controller */
 
 
