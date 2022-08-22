@@ -45,12 +45,12 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
+                        <li class="nav-item">
                             <a class="nav-link" href="/">Home
                                 <span class="sr-only">(current)</span>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item active">
                             <a class="nav-link" href="/Home/listProduct">Produk kami</a>
                         </li>
                         <!-- <li class="nav-item">
@@ -167,57 +167,6 @@
 
         </div>
     </div>
-
-    <div class="best-features">
-        <div class="container">
-            <section class="row">
-                <div class="col-md-12">
-                    <div class="section-heading">
-                        <h2>Tentang Buat undangan</h2>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="left-content">
-                        <!-- <h4>Looking for the best products?</h4> -->
-                        <p>Buat undangan adalah sebuah platform membuat web digital, murah dengan berbagai macam contoh desain.</p>
-                        <p>Keunggulan buat undangan</p>
-                        <ul class="featured-list">
-                            <li><a href="#">Beragam desain yang bisa di pilih</a></li>
-                            <li><a href="#">Refisi sampai puas</a></li>
-                        </ul>
-                        <a href="about.html" class="filled-button">Baca lebih lengkap</a>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="right-image">
-                        <img src="assets/images/feature-image.jpg" alt="">
-                    </div>
-                </div>
-            </section>
-        </div>
-    </div>
-
-
-    <!-- <div class="call-to-action">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="inner-content">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <h4>Creative &amp; Unique <em>Sixteen</em> Products</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque corporis amet elite author nulla.</p>
-                            </div>
-                            <div class="col-md-4">
-                                <a href="#" class="filled-button">Purchase Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
 
     <footer>
         <div class="container">

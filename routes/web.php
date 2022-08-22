@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [Home_controller::class, 'index']);
 
+Route::get('/Home/listProduct', [Home_controller::class, 'showProduct']);
+
 /*end  Home_controller */
 
 
