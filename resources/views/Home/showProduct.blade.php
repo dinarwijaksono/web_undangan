@@ -91,16 +91,18 @@
                 <section class="col-md-12">
                     <div class="row">
 
+                        @foreach ($listProduct as $product)
                         <div class="col-md-4">
                             <div class="product-item">
                                 <a href="#"><img src="/asset_2/images/product_02.jpg" alt=""></a>
                                 <div class="down-content">
-                                    <h4>Tittle goes here</h4>
+                                    <h4><?= $product->name ?></h4>
                                     <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
                                     <a href=""><span>Lihat demo</span></a>
                                 </div>
                             </div>
                         </div>
+                        @endforeach
 
                     </div>
                 </section>
