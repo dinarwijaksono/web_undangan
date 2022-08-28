@@ -1,0 +1,19 @@
+@font-face {
+  font-family: "BubblegumSans";
+  src: url("../fonts/BubblegumSans-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Merriweather";
+  src: url("../fonts/Merriweather/Merriweather-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Merriweather bold";
+  src: url("../fonts/Merriweather/Merriweather-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url("../fonts/Roboto/Roboto-Regular.ttf");
+}
