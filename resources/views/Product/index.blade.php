@@ -29,9 +29,9 @@
                         <thead>
                             <tr>
                                 <th style="width: 10%;">#</th>
-                                <th style="width: 35%;">Nama</th>
-                                <th style="width: 35%;">Kategori</th>
-                                <th style="width: 20%;">Action</th>
+                                <th style="width: 30%;">Nama</th>
+                                <th style="width: 30%;">Kategori</th>
+                                <th style="width: 30%; text-align: center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,13 +42,14 @@
                                 <td><?= $i++ ?>.</td>
                                 <td><?= $product->name ?></td>
                                 <td><?= $product->category->name ?></td>
-                                <td>
+                                <td style="text-align: center;">
+                                    <a href="/Product/edit/<?= $product->code ?>" class="btn btn-primary btn-xs">Lihat Demo</a>
+                                    <a href="/Product/edit/<?= $product->code ?>" class="btn btn-primary btn-xs">Edit</a>
                                     <form action="/Product/delete/<?= $product->code ?>" method="post" style="display: inline;">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger btn-xs">Hapus</button>
                                     </form>
-                                    <a href="/Product/edit/<?= $product->code ?>" class="btn btn-primary btn-xs">Edit</a>
                                 </td>
                             </tr>
                             @endforeach

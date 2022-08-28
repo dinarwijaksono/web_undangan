@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Link;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -50,11 +51,19 @@ class Product_controller extends Controller
             'category' => 'required'
         ]);
 
-        $data['code'] = 'P' . mt_rand(1000000, 9999999);
+        $code = 'P' . mt_rand(1000000, 9999999);
+        $data['code'] = $code;
         $data['name'] = $request->name;
         $data['category_id'] = $request->category;
 
         Product::create($data);
+
+        $product = collect(Product::where('code', $code)->get())->first();
+
+        $data2['product_id'] = $product->id;
+        $data2['tipe'] = 'demo';
+        $data2['locate'] = mt_rand(1, 9999);
+        Link::create($data2);
 
         return redirect('/Product')->with('createSuccess', "Produk berhasil di tambahkan.");
     }
@@ -113,6 +122,8 @@ class Product_controller extends Controller
 
     public function destroy($code)
     {
+        $product_id = collect(Product::where('code', $code)->get())->first();
+        Link::where('product_id', $product_id->id)->delete();
         Product::where('code', $code)->delete();
 
         return redirect('/Product')->with('deleteSuccess', 'Produk berhasil di hapus.');

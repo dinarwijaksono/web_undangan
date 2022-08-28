@@ -36,7 +36,7 @@
                     <div class="row">
                         <div class="container-fluid">
                             <div class="col-sm-2 col-sm-offset-8">
-                                <a href="/Category" class="btn btn-block btn-danger btn-block">Batal</a>
+                                <a href="/Product" class="btn btn-block btn-danger btn-block">Batal</a>
                             </div>
                             <div class="col-sm-2">
                                 <button type="submit" class="btn btn-block btn-primary btn-block">Buat kategori</button>
