@@ -98,7 +98,7 @@
                                 <div class="down-content">
                                     <h4><?= $product->name ?></h4>
                                     <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                                    <a href=""><span>Lihat demo</span></a>
+                                    <a target="black" href="/Demo/<?= $product->link->locate ?>"><span>Lihat demo</span></a>
                                 </div>
                             </div>
                         </div>
