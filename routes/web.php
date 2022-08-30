@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth_controller;
 use App\Http\Controllers\Category_controller;
 use App\Http\Controllers\ConfigManagement_controller;
+use App\Http\Controllers\Demo_controller;
 use App\Http\Controllers\Home_controller;
 use App\Http\Controllers\Main_controller;
 use App\Http\Controllers\Product_controller;
@@ -82,3 +83,10 @@ Route::post('/Config/addUser', [User_controller::class, 'store'])->middleware('a
 
 Route::delete('/Config/deleteUser/{id}', [User_controller::class, 'destroy'])->middleware('auth');
 /* end Config */
+
+
+
+
+/* Demo_controller */
+Route::get('/Demo/D1042', [Demo_controller::class, 'product_1']);
+/* end Demo_controller */

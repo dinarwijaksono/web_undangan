@@ -59,10 +59,10 @@ class Product_controller extends Controller
         Product::create($data);
 
         $product = collect(Product::where('code', $code)->get())->first();
-
-        $data2['product_id'] = $product->id;
+        $data2['locate'] = 'D' . mt_rand(1, 9999);
         $data2['tipe'] = 'demo';
-        $data2['locate'] = mt_rand(1, 9999);
+        $data2['product_id'] = $product->id;
+
         Link::create($data2);
 
         return redirect('/Product')->with('createSuccess', "Produk berhasil di tambahkan.");

@@ -15,4 +15,10 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+
+    public function link()
+    {
+        return $this->hasOne(Link::class);
+    }
 }

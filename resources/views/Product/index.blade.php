@@ -43,7 +43,7 @@
                                 <td><?= $product->name ?></td>
                                 <td><?= $product->category->name ?></td>
                                 <td style="text-align: center;">
-                                    <a href="/Product/edit/<?= $product->code ?>" class="btn btn-primary btn-xs">Lihat Demo</a>
+                                    <a href="/Demo/<?= $product->link->locate ?>" target="black" class="btn btn-primary btn-xs">Lihat demo</a>
                                     <a href="/Product/edit/<?= $product->code ?>" class="btn btn-primary btn-xs">Edit</a>
                                     <form action="/Product/delete/<?= $product->code ?>" method="post" style="display: inline;">
                                         @csrf
