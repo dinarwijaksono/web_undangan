@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 /* Home_controller */
 
-Route::get('/', [Home_controller::class, 'index']);
+Route::get('/', [Home_controller::class, 'showProduct']);
 
 Route::get('/Home/listProduct', [Home_controller::class, 'showProduct']);
 
