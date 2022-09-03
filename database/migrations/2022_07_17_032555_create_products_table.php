@@ -17,8 +17,12 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->foreignId('category_id');
             $table->string('code', 8)->unique();
-            $table->string('name')->unique();
-            $table->timestamps();
+            $table->string('name', 20)->unique();
+            $table->integer('price', 7);
+            $table->integer('see');
+            $table->string('link_locate_demo', 30);
+            $table->integer('create_at');
+            $table->integer('update_at');
         });
     }
 
