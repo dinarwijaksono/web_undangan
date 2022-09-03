@@ -43,12 +43,6 @@ Route::post('/logout', [Auth_controller::class, 'logout'])->middleware('auth');
 Route::get('/Main', [Main_controller::class, 'index'])->middleware('auth');
 /* end Main_controller */
 
-
-/* User_controller */
-Route::post('/register', [User_controller::class, 'store'])->middleware('guest');
-/* end User_controller */
-
-
 /* Category_controller */
 Route::get('/Category', [Category_controller::class, 'index'])->middleware('auth');
 
