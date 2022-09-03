@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class User_controller extends Controller
@@ -38,8 +39,10 @@ class User_controller extends Controller
 
         $data['email'] = $request->email;
         $data['password'] = Hash::make($request->password);
+        $data['created_at'] = floor(microtime(true) * 1000);
+        $data['updated_at'] = floor(microtime(true) * 1000);
 
-        User::create($data);
+        DB::table('users')->insert($data);
 
         abort(200);
 

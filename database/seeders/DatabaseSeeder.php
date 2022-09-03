@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
@@ -19,8 +20,11 @@ class DatabaseSeeder extends Seeder
 
         $data = [
             'email' => 'admin@gmail.com',
-            'password' => Hash::make('damayanti')
+            'password' => Hash::make('damayanti'),
+            'created_at' => floor(microtime(true) * 1000),
+            'updated_at' => floor(microtime(true) * 1000),
         ];
-        User::create($data);
+
+        DB::table('users')->insert($data);
     }
 }
