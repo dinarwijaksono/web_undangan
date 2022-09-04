@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class Category_controller extends Controller
 {
@@ -41,14 +42,17 @@ class Category_controller extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:categories'
+            'name' => 'required|unique:categories|max:30'
         ]);
 
         $data['name'] = $request->name;
-        $data['code'] = 'C' . mt_rand(1000000, 9999999);
+        $data['code'] = 'C' . mt_rand(1, 9999999);
+        $data['created_at'] = round(microtime(true) * 1000);
+        $data['updated_at'] = round(microtime(true) * 1000);
 
-        Category::create($data);
+        DB::table('categories')->insert($data);
 
+        abort(200);
         return redirect('/Category')->with('CreateSuccess', 'Kategori berhasil di tambahkan');
     }
 
@@ -94,11 +98,17 @@ class Category_controller extends Controller
     public function update(Request $request, $code)
     {
         $request->validate([
-            'name' => 'required'
+            'name' => 'required|max:30'
         ]);
 
-        $data = ['name' => $request->name];
-        Category::where('code', $code)->update($data);
+        $data['name'] = $request->name;
+        $data['updated_at'] = round(microtime(true) * 1000);
+
+        DB::table('categories')
+            ->where('code', $code)
+            ->update($data);
+
+        abort(200);
 
         return redirect('/Category')->with('editSuccess', 'Kategori berhasil di edit.');
     }
@@ -118,6 +128,7 @@ class Category_controller extends Controller
     {
         Category::where('code', $code)->delete();
 
+        abort(200);
         return redirect('/Category')->with('deleteSuccess', "Kategori berhasil di hapus.");
     }
 }
