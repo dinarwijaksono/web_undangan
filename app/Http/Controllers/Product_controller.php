@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Link;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class Product_controller extends Controller
 {
@@ -47,24 +48,24 @@ class Product_controller extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|max:20',
+            'price' => 'required',
             'category' => 'required'
         ]);
 
         $code = 'P' . mt_rand(1000000, 9999999);
+        $data['category_id'] = $request->category;
         $data['code'] = $code;
         $data['name'] = $request->name;
-        $data['category_id'] = $request->category;
+        $data['price'] = $request->price;
+        $data['see'] = 0;
+        $data['link_locate_demo'] = 'Link-' . mt_rand(1, 9999999);
+        $data['created_at'] = round(microtime(true) * 1000);
+        $data['updated_at'] = round(microtime(true) * 1000);
 
-        Product::create($data);
+        DB::table('products')->insert($data);
 
-        $product = collect(Product::where('code', $code)->get())->first();
-        $data2['locate'] = 'D' . mt_rand(1, 9999);
-        $data2['tipe'] = 'demo';
-        $data2['product_id'] = $product->id;
-
-        Link::create($data2);
-
+        abort(200);
         return redirect('/Product')->with('createSuccess', "Produk berhasil di tambahkan.");
     }
 
@@ -104,14 +105,18 @@ class Product_controller extends Controller
     public function update(Request $request, $code)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|max:20',
+            'price' => 'required',
             'category' => 'required'
         ]);
 
         $data['name'] = $request->name;
         $data['category_id'] = $request->category;
-        Product::where('code', $code)->update($data);
+        $data['price'] = $request->price;
+        $data['updated_at'] = round(microtime(true) * 1000);
+        DB::table('products')->where('code', $code)->update($data);
 
+        abort(200);
         return redirect('/Product')->with('editSuccess', "Produk berhasil di edit.");
     }
 
@@ -123,9 +128,9 @@ class Product_controller extends Controller
     public function destroy($code)
     {
         $product_id = collect(Product::where('code', $code)->get())->first();
-        Link::where('product_id', $product_id->id)->delete();
         Product::where('code', $code)->delete();
 
+        abort(200);
         return redirect('/Product')->with('deleteSuccess', 'Produk berhasil di hapus.');
     }
 }
