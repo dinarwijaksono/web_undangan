@@ -127,7 +127,6 @@ class Product_controller extends Controller
 
     public function destroy($code)
     {
-        $product_id = collect(Product::where('code', $code)->get())->first();
         Product::where('code', $code)->delete();
 
         abort(200);

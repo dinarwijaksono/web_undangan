@@ -15,11 +15,12 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->integer('expired');
+            $table->string('code', 8)->unique();
             $table->string('order_from', 50);
+            $table->bigInteger('expired');
             $table->string('link_locate', 100);
-            $table->integer('create_at');
-            $table->integer('updat_at');
+            $table->bigInteger('created_at');
+            $table->bigInteger('updated_at');
         });
     }
 

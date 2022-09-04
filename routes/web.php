@@ -6,6 +6,7 @@ use App\Http\Controllers\ConfigManagement_controller;
 use App\Http\Controllers\Demo_controller;
 use App\Http\Controllers\Home_controller;
 use App\Http\Controllers\Main_controller;
+use App\Http\Controllers\Order_controller;
 use App\Http\Controllers\Product_controller;
 use App\Http\Controllers\User_controller;
 use Illuminate\Support\Facades\Route;
@@ -82,5 +83,14 @@ Route::delete('/Config/deleteUser/{id}', [User_controller::class, 'destroy'])->m
 
 
 /* Demo_controller */
-Route::get('/Demo/D1042', [Demo_controller::class, 'product_1']);
+Route::get('/Demo/D1042', [Demo_controller::class, 'product_1'])->middleware('auth');
 /* end Demo_controller */
+
+
+/* Order_controller */
+Route::post('/Order/create', [Order_controller::class, 'store'])->middleware('auth');
+
+Route::post('/Order/edit/{code}', [Order_controller::class, 'store'])->middleware('auth');
+
+Route::delete('/Order/delete/{code}', [Order_controller::class, 'destroy'])->middleware('auth');
+/* end Order_controller */
