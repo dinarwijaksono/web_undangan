@@ -29,9 +29,11 @@
                         <thead>
                             <tr>
                                 <th style="width: 10%;">#</th>
-                                <th style="width: 30%;">Nama</th>
-                                <th style="width: 30%;">Kategori</th>
-                                <th style="width: 30%; text-align: center">Action</th>
+                                <th style="width: 15%;">Nama</th>
+                                <th style="width: 12%;">Harga</th>
+                                <th>Dilihat</th>
+                                <th style="width: 15%;">Kategori</th>
+                                <th style="width: 25%; text-align: center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,11 +41,13 @@
                             <?php $i = 1; ?>
                             @foreach ($listProduct as $product)
                             <tr>
-                                <td><?= $i++ ?>.</td>
+                                <td><?= $i++ . '.' ?></td>
                                 <td><?= $product->name ?></td>
+                                <td><?= 'Rp ' . number_format($product->price) ?></td>
+                                <td><?= number_format($product->see) ?></td>
                                 <td><?= $product->category->name ?></td>
                                 <td style="text-align: center;">
-                                    <a href="/Demo/<?= $product->link->locate ?>" target="black" class="btn btn-primary btn-xs">Lihat demo</a>
+                                    <a href="/Demo/" target="black" class="btn btn-primary btn-xs">Lihat demo</a>
                                     <a href="/Product/edit/<?= $product->code ?>" class="btn btn-primary btn-xs">Edit</a>
                                     <form action="/Product/delete/<?= $product->code ?>" method="post" style="display: inline;">
                                         @csrf

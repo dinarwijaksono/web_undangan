@@ -10,11 +10,6 @@ use Illuminate\Support\Facades\DB;
 
 class Product_controller extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $data['listProduct'] = collect(Product::all());
@@ -65,7 +60,6 @@ class Product_controller extends Controller
 
         DB::table('products')->insert($data);
 
-        abort(200);
         return redirect('/Product')->with('createSuccess', "Produk berhasil di tambahkan.");
     }
 
@@ -116,7 +110,6 @@ class Product_controller extends Controller
         $data['updated_at'] = round(microtime(true) * 1000);
         DB::table('products')->where('code', $code)->update($data);
 
-        abort(200);
         return redirect('/Product')->with('editSuccess', "Produk berhasil di edit.");
     }
 
@@ -129,7 +122,6 @@ class Product_controller extends Controller
     {
         Product::where('code', $code)->delete();
 
-        abort(200);
         return redirect('/Product')->with('deleteSuccess', 'Produk berhasil di hapus.');
     }
 }

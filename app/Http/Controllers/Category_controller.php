@@ -52,7 +52,6 @@ class Category_controller extends Controller
 
         DB::table('categories')->insert($data);
 
-        abort(200);
         return redirect('/Category')->with('CreateSuccess', 'Kategori berhasil di tambahkan');
     }
 
@@ -98,7 +97,7 @@ class Category_controller extends Controller
     public function update(Request $request, $code)
     {
         $request->validate([
-            'name' => 'required|max:30'
+            'name' => 'required|max:30|unique:categories'
         ]);
 
         $data['name'] = $request->name;
@@ -107,8 +106,6 @@ class Category_controller extends Controller
         DB::table('categories')
             ->where('code', $code)
             ->update($data);
-
-        abort(200);
 
         return redirect('/Category')->with('editSuccess', 'Kategori berhasil di edit.');
     }
@@ -128,7 +125,6 @@ class Category_controller extends Controller
     {
         Category::where('code', $code)->delete();
 
-        abort(200);
         return redirect('/Category')->with('deleteSuccess', "Kategori berhasil di hapus.");
     }
 }

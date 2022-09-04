@@ -21,6 +21,14 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="price">Harga</label>
+                        <input class="form-control" type="text" name="price" id="price" placeholder="Harga produk" />
+                        @error('price')
+                        <p class="help-block" style="color: red;"><?= $message ?></p>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
                         <label>Kategori</label>
                         <select name="category" class="form-control">
                             <option>Pilih kategori</option>

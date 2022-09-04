@@ -32,7 +32,6 @@ class CategoryTest extends TestCase
             ->withSession(['banned' => false])
             ->post('/Category/create', $data);
 
-        $response->assertStatus(200);
         $response->assertValid(['name']);
         $this->assertTrue(collect(Category::where('name', $name)->get())->isNotEmpty());
     }
@@ -66,7 +65,6 @@ class CategoryTest extends TestCase
             ->withSession(['banned' => false])
             ->post("/Category/edit/$code", $data);
 
-        $response->assertStatus(200);
         $response->assertValid(['name']);
         $this->assertDatabaseHas('categories', ['name' => $data['name']]);
     }
@@ -99,7 +97,6 @@ class CategoryTest extends TestCase
             ->withSession(['banned' => false])
             ->delete("/Category/delete/$code");
 
-        $response->assertStatus(200);
         $this->assertDatabaseMissing('categories', ['code' => $code]);
     }
 }
