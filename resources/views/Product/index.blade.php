@@ -42,14 +42,14 @@
                             @foreach ($listProduct as $product)
                             <tr>
                                 <td><?= $i++ . '.' ?></td>
-                                <td><?= $product->name ?></td>
-                                <td><?= 'Rp ' . number_format($product->price) ?></td>
-                                <td><?= number_format($product->see) ?></td>
-                                <td><?= $product->category->name ?></td>
+                                <td><?= $product['name'] ?></td>
+                                <td><?= 'Rp ' . number_format($product['price']) ?></td>
+                                <td><?= number_format($product['see']) ?></td>
+                                <td><?= $product['categoryName'] ?></td>
                                 <td style="text-align: center;">
-                                    <a href="/Demo/<?= $product->link_locate_demo ?>" target="black" class="btn btn-primary btn-xs">Lihat demo</a>
-                                    <a href="/Product/edit/<?= $product->code ?>" class="btn btn-primary btn-xs">Edit</a>
-                                    <form action="/Product/delete/<?= $product->code ?>" method="post" style="display: inline;">
+                                    <a href="/Demo/<?= $product['link_locate_demo'] ?>" target="black" class="btn btn-primary btn-xs">Lihat demo</a>
+                                    <a href="/Product/edit/<?= $product['code'] ?>" class="btn btn-primary btn-xs">Edit</a>
+                                    <form action="/Product/delete/<?= $product['code'] ?>" method="post" style="display: inline;">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger btn-xs">Hapus</button>

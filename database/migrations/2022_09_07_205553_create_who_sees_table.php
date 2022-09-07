@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductsTable extends Migration
+class CreateWhoSeesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class CreateProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('who_sees', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id');
-            $table->string('code', 8)->unique();
-            $table->string('name', 20)->unique();
-            $table->integer('price');
-            $table->string('link_locate_demo', 30);
+            $table->foreignId('product_id');
+            $table->string('user_agent', 100);
             $table->bigInteger('created_at');
-            $table->bigInteger('updated_at');
         });
     }
 
@@ -32,6 +28,6 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('who_sees');
     }
 }

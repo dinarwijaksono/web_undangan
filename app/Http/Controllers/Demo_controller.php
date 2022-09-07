@@ -7,6 +7,9 @@ use GuzzleHttp\Handler\Proxy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use function PHPUnit\Framework\isEmpty;
+use function PHPUnit\Framework\isNull;
+
 class Demo_controller extends Controller
 {
     public function product($code)
@@ -20,10 +23,19 @@ class Demo_controller extends Controller
 
     public function addSee($code)
     {
-        $product = collect(Product::where('link_locate_demo', $code)->get())->first();
 
-        $data['see'] = $product->see + 1;
+        $productId = collect(Product::where('link_locate_demo', $code)->get())->first();
 
-        DB::table('products')->where('link_locate_demo', $code)->update($data);
+        $user_anget = NULL;
+        if (empty($_SERVER['HTTP_USER_AGENT'])) {
+            $user_anget = 'Tidak ada data';
+        } else {
+            $user_anget = $_SERVER['HTTP_USER_AGENT'];
+        }
+
+        $data['product_id'] = $productId->id;
+        $data['user_agent'] = $user_anget;
+        $data['created_at'] = round(microtime(true) * 1000);
+        DB::table('who_sees')->insert($data);
     }
 }

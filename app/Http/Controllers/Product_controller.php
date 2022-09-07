@@ -11,7 +11,21 @@ class Product_controller extends Controller
 {
     public function index()
     {
-        $data['listProduct'] = collect(Product::all());
+        $listProduct = [];
+
+        foreach (Product::all() as $product) {
+
+            $listProduct[] = [
+                'name' => $product->name,
+                'price' => $product->price,
+                'see' => collect($product->whosee)->count(),
+                'categoryName' => $product->category->name,
+                'link_locate_demo' => $product->link_locate_demo,
+                'code' => $product->code
+            ];
+        }
+
+        $data['listProduct'] = $listProduct;
 
         return view('/Product/index', $data);
     }
@@ -52,7 +66,7 @@ class Product_controller extends Controller
         $data['code'] = $code;
         $data['name'] = $request->name;
         $data['price'] = $request->price;
-        $data['see'] = 0;
+        // $data['see'] = 0;
         $data['link_locate_demo'] = 'P_' . mt_rand(1, 9999);
         $data['created_at'] = round(microtime(true) * 1000);
         $data['updated_at'] = round(microtime(true) * 1000);
