@@ -83,7 +83,7 @@ Route::delete('/Config/deleteUser/{id}', [User_controller::class, 'destroy'])->m
 
 
 /* Demo_controller */
-Route::get('/Demo/D1042', [Demo_controller::class, 'product_1'])->middleware('auth');
+Route::get('/Demo/{code}', [Demo_controller::class, 'product'])->middleware('auth');
 /* end Demo_controller */
 
 

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\Link;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -54,7 +53,7 @@ class Product_controller extends Controller
         $data['name'] = $request->name;
         $data['price'] = $request->price;
         $data['see'] = 0;
-        $data['link_locate_demo'] = 'Link-' . mt_rand(1, 9999999);
+        $data['link_locate_demo'] = 'P_' . mt_rand(1, 9999);
         $data['created_at'] = round(microtime(true) * 1000);
         $data['updated_at'] = round(microtime(true) * 1000);
 

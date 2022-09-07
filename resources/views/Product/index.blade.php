@@ -47,7 +47,7 @@
                                 <td><?= number_format($product->see) ?></td>
                                 <td><?= $product->category->name ?></td>
                                 <td style="text-align: center;">
-                                    <a href="/Demo/" target="black" class="btn btn-primary btn-xs">Lihat demo</a>
+                                    <a href="/Demo/<?= $product->link_locate_demo ?>" target="black" class="btn btn-primary btn-xs">Lihat demo</a>
                                     <a href="/Product/edit/<?= $product->code ?>" class="btn btn-primary btn-xs">Edit</a>
                                     <form action="/Product/delete/<?= $product->code ?>" method="post" style="display: inline;">
                                         @csrf
