@@ -53,6 +53,7 @@
                             <li><a href="/Main">DASHBOARD</a></li>
                             <li><a href="/Category">KATEGORI</a></li>
                             <li><a href="/Product">PRODUK</a></li>
+                            <li><a href="/Order">PESANAN</a></li>
                             <li>
                                 <a class="dropdown-toggle" id="ddlmenuItem" data-toggle="dropdown">SETTING <i class="fa fa-angle-down"></i></a>
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="ddlmenuItem">

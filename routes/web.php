@@ -88,6 +88,8 @@ Route::get('/Demo/{code}', [Demo_controller::class, 'product']);
 
 
 /* Order_controller */
+Route::get('/Order', [Order_controller::class, 'index'])->middleware('auth');
+
 Route::post('/Order/create', [Order_controller::class, 'store'])->middleware('auth');
 
 Route::post('/Order/edit/{code}', [Order_controller::class, 'store'])->middleware('auth');
