@@ -15,7 +15,9 @@ class Order_controller extends Controller
      */
     public function index()
     {
-        return view('Order/index');
+        $data['listOrder'] = collect(Order::all())->sortBy('expired');
+
+        return view('Order/index', $data);
     }
 
 

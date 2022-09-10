@@ -16,7 +16,7 @@
                 @endif
 
                 @if (session('deleteSuccess'))
-                <div class="alert alert-info" style="margin: 10px; padding: 10px;" role="alert"><?= session('deleteSuccess') ?></div>
+                <div class="alert alert-danger" style="margin: 10px; padding: 10px;" role="alert"><?= session('deleteSuccess') ?></div>
                 @endif
 
                 @if (session('editSuccess'))
@@ -30,7 +30,7 @@
                         <thead>
                             <tr>
                                 <th style="width: 10%;">#</th>
-                                <th style="width: 40%;">Nama</th>
+                                <th style="width: 40%;">Pesanan</th>
                                 <th style="width: 25%;">Expired</th>
                                 <th style="width: 25%; text-align: center;">Action</th>
                             </tr>
@@ -38,20 +38,22 @@
                         <tbody>
 
                             <?php $i = 1; ?>
+                            @foreach ($listOrder as $order)
                             <tr>
                                 <td><?= $i++ ?>.</td>
-                                <td>pesanan dari</td>
-                                <td>Expired</td>
+                                <td><?= $order->order_from ?></td>
+                                <td><?= date('d - M - Y', $order->expired / 1000) ?></td>
                                 <td>
                                     <a href="" class="btn btn-primary btn-xs">Lihat Demo</a>
-                                    <a href="" class="btn btn-primary btn-xs">Edit</a>
-                                    <form action="/Order/delete/" method="post" style="display: inline;">
+                                    <a href="/Order/edit/<?= $order->code  ?>" class="btn btn-primary btn-xs">Edit</a>
+                                    <form action="/Order/delete/<?= $order->code  ?>" method="post" style="display: inline;">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger btn-xs">Hapus</button>
                                     </form>
                                 </td>
                             </tr>
+                            @endforeach
 
                         </tbody>
                     </table>

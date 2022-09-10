@@ -4,7 +4,9 @@
 /storage/*.key
 /resources/views/Product
 /resources/views/Demo
+/resources/views/Pesanan
 /public/Demo
+/public/Pesanan
 /vendor
 .env
 .env.backup
