@@ -17,8 +17,8 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->string('code', 8)->unique();
             $table->string('order_from', 50);
-            $table->bigInteger('expired');
             $table->string('link_locate', 100);
+            $table->bigInteger('expired');
             $table->bigInteger('created_at');
             $table->bigInteger('updated_at');
         });

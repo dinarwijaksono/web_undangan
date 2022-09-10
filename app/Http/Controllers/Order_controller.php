@@ -27,18 +27,18 @@ class Order_controller extends Controller
 
     public function create()
     {
-        //
+        return view('Order/create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|max:50',
+            'order_from' => 'required|max:50',
             'link_name' => 'required',
             'expired' => 'required'
         ]);
 
-        $data['order_from'] = $request->name;
+        $data['order_from'] = $request->order_from;
         $data['expired'] = strtotime($request->expired) * 1000;
         $data['code'] = 'O' . mt_rand(1, 9999999);
         $data['link_locate'] = trim($request->link_name);
@@ -47,8 +47,7 @@ class Order_controller extends Controller
 
         DB::table('orders')->insert($data);
 
-        abort(200);
-        return redirect('/Order/create')->with('createSuccess', "Order baru berhasil di tambahkan.");
+        return redirect('/Order')->with('createSuccess', "Order baru berhasil di tambahkan.");
     }
 
 
@@ -101,7 +100,6 @@ class Order_controller extends Controller
 
         DB::table('orders')->where('code', $code)->update($data);
 
-        abort(200);
         return redirect("/Order/edit/$code")->with('updateSuccess', "Order berhasil di hapus");
     }
 
@@ -113,7 +111,6 @@ class Order_controller extends Controller
     {
         Order::where('code', $code)->delete();
 
-        abort(200);
         return redirect('/Order')->with('deleteSuccess', "Order berhasil di hapus.");
     }
 }

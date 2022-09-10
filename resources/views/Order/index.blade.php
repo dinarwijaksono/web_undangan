@@ -11,8 +11,8 @@
 
                 <a href="/Order/create" style="text-align: right; display: block; text-decoration: underline;">Tambah pesanan</a>
 
-                @if (session('CreateSuccess'))
-                <div class="alert alert-success" style="margin: 10px; padding: 10px;" role="alert"><?= session('CreateSuccess') ?></div>
+                @if (session('createSuccess'))
+                <div class="alert alert-success" style="margin: 10px; padding: 10px;" role="alert"><?= session('createSuccess') ?></div>
                 @endif
 
                 @if (session('deleteSuccess'))
