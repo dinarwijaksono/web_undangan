@@ -97,4 +97,6 @@ Route::get('/Order/edit/{code}', [Order_controller::class, 'edit'])->middleware(
 Route::post('/Order/edit/{code}', [Order_controller::class, 'store'])->middleware('auth');
 
 Route::delete('/Order/delete/{code}', [Order_controller::class, 'destroy'])->middleware('auth');
+
+Route::get('/Order/{code}', [Order_controller::class, 'show']);
 /* end Order_controller */

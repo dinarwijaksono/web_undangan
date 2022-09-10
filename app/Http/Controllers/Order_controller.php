@@ -42,7 +42,7 @@ class Order_controller extends Controller
 
         $data['order_from'] = $request->order_from;
         $data['expired'] = strtotime($request->expired) * 1000;
-        $data['code'] = 'O' . mt_rand(1, 9999999);
+        $data['code'] = 'O' . mt_rand(1, 9999);
         $data['link_locate'] = trim($request->link_name);
         $data['created_at'] = round(microtime(true) * 1000);
         $data['updated_at'] = round(microtime(true) * 1000);
@@ -57,16 +57,11 @@ class Order_controller extends Controller
 
 
 
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show($link)
     {
-        //
+        $order = collect(Order::where('link_locate', $link)->get())->first();
+
+        return $order->link_locate;
     }
 
 

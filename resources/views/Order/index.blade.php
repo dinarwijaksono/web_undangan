@@ -44,7 +44,7 @@
                                 <td><?= $order->order_from ?></td>
                                 <td><?= date('d - M - Y', $order->expired / 1000) ?></td>
                                 <td>
-                                    <a href="" class="btn btn-primary btn-xs">Lihat Demo</a>
+                                    <a target="blank" href="/Order/<?= $order->link_locate ?>" class="btn btn-primary btn-xs">Lihat Demo</a>
                                     <a href="/Order/edit/<?= $order->code  ?>" class="btn btn-primary btn-xs">Edit</a>
                                     <form action="/Order/delete/<?= $order->code  ?>" method="post" style="display: inline;">
                                         @csrf
