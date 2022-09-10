@@ -69,24 +69,17 @@ class Order_controller extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+
+
+
+
+    public function edit($code)
     {
-        //
+        $data['order'] = collect(Order::where('code', $code)->get())->first();
+
+        return view('/Order/edit', $data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $code)
     {
         $request->validate([
@@ -102,7 +95,7 @@ class Order_controller extends Controller
 
         DB::table('orders')->where('code', $code)->update($data);
 
-        return redirect("/Order/edit/$code")->with('updateSuccess', "Order berhasil di hapus");
+        return redirect("/Order/edit/$code")->with('updateSuccess', "Order berhasil di edit.");
     }
 
 
