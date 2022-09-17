@@ -30,8 +30,9 @@
                         <thead>
                             <tr>
                                 <th style="width: 10%;">#</th>
-                                <th style="width: 40%;">Pesanan</th>
-                                <th style="width: 25%;">Expired</th>
+                                <th style="width: 25%;">Pesanan</th>
+                                <th style="width: 20%;">Expired</th>
+                                <th style="width: 20%;">Dilihat</th>
                                 <th style="width: 25%; text-align: center;">Action</th>
                             </tr>
                         </thead>
@@ -43,6 +44,7 @@
                                 <td><?= $i++ ?>.</td>
                                 <td><?= $order->order_from ?></td>
                                 <td><?= date('d - M - Y', $order->expired / 1000) ?></td>
+                                <td><?= collect($order->who_see_order)->count() ?></td>
                                 <td>
                                     <a target="blank" href="/Order/<?= $order->link_locate ?>" class="btn btn-primary btn-xs">Lihat Demo</a>
                                     <a href="/Order/edit/<?= $order->code  ?>" class="btn btn-primary btn-xs">Edit</a>
