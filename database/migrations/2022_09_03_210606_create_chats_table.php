@@ -17,10 +17,10 @@ class CreateChatsTable extends Migration
             $table->id();
             $table->foreignId('order_id');
             $table->string('from', 30);
-            $table->string('confirmOfAttendance', 20);
+            $table->string('confirm', 20);
             $table->string('saying');
-            $table->integer('create_at');
-            $table->integer('update_at');
+            $table->bigInteger('created_at');
+            $table->bigInteger('updated_at');
         });
     }
 

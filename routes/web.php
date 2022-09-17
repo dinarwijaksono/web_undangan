@@ -6,6 +6,7 @@ use App\Http\Controllers\ConfigManagement_controller;
 use App\Http\Controllers\Demo_controller;
 use App\Http\Controllers\Home_controller;
 use App\Http\Controllers\Main_controller;
+use App\Http\Controllers\Order_controller;
 use App\Http\Controllers\Product_controller;
 use App\Http\Controllers\User_controller;
 use Illuminate\Support\Facades\Route;
@@ -62,6 +63,8 @@ Route::get('/Product', [Product_controller::class, 'index'])->middleware('auth')
 Route::get('/Product/create', [Product_controller::class, 'create'])->middleware('auth');
 Route::post('/Product/create', [Product_controller::class, 'store'])->middleware('auth');
 
+Route::get('/Product/show/{code}', [Product_controller::class, 'show'])->middleware('auth');
+
 Route::get('/Product/edit/{code}', [Product_controller::class, 'edit'])->middleware('auth');
 Route::post('/Product/edit/{code}', [Product_controller::class, 'update'])->middleware('auth');
 
@@ -82,5 +85,20 @@ Route::delete('/Config/deleteUser/{id}', [User_controller::class, 'destroy'])->m
 
 
 /* Demo_controller */
-Route::get('/Demo/D1042', [Demo_controller::class, 'product_1']);
+Route::get('/Demo/{code}', [Demo_controller::class, 'product']);
 /* end Demo_controller */
+
+
+/* Order_controller */
+Route::get('/Order', [Order_controller::class, 'index'])->middleware('auth');
+
+Route::get('/Order/create', [Order_controller::class, 'create'])->middleware('auth');
+Route::post('/Order/create', [Order_controller::class, 'store'])->middleware('auth');
+
+Route::get('/Order/edit/{code}', [Order_controller::class, 'edit'])->middleware('auth');
+Route::post('/Order/edit/{code}', [Order_controller::class, 'store'])->middleware('auth');
+
+Route::delete('/Order/delete/{code}', [Order_controller::class, 'destroy'])->middleware('auth');
+
+Route::get('/Order/{code}', [Order_controller::class, 'show']);
+/* end Order_controller */

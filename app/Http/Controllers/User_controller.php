@@ -44,8 +44,6 @@ class User_controller extends Controller
 
         DB::table('users')->insert($data);
 
-        abort(200);
-
         return redirect('/Config/userManagement')->with('createSuccess', "User berhasil di tambahkan.");
     }
 
@@ -91,8 +89,6 @@ class User_controller extends Controller
     public function destroy($id)
     {
         User::where('id', $id)->delete();
-
-        abort(200);
 
         return redirect('/Config/userManagement')->with('deleteSuccess', "User berhasil di hapus.");
     }

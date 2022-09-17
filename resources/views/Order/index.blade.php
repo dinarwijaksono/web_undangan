@@ -7,15 +7,16 @@
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <p>List Produk</p>
-                <a href="/Product/create" style="text-align: right; display: block; text-decoration: underline;">Buat produk baru</a>
+                <p>List Kategori</p>
+
+                <a href="/Order/create" style="text-align: right; display: block; text-decoration: underline;">Tambah pesanan</a>
 
                 @if (session('createSuccess'))
                 <div class="alert alert-success" style="margin: 10px; padding: 10px;" role="alert"><?= session('createSuccess') ?></div>
                 @endif
 
                 @if (session('deleteSuccess'))
-                <div class="alert alert-info" style="margin: 10px; padding: 10px;" role="alert"><?= session('deleteSuccess') ?></div>
+                <div class="alert alert-danger" style="margin: 10px; padding: 10px;" role="alert"><?= session('deleteSuccess') ?></div>
                 @endif
 
                 @if (session('editSuccess'))
@@ -29,27 +30,25 @@
                         <thead>
                             <tr>
                                 <th style="width: 10%;">#</th>
-                                <th style="width: 15%;">Nama</th>
-                                <th style="width: 12%;">Harga</th>
-                                <th>Dilihat</th>
-                                <th style="width: 15%;">Kategori</th>
-                                <th style="width: 25%; text-align: center">Action</th>
+                                <th style="width: 25%;">Pesanan</th>
+                                <th style="width: 20%;">Expired</th>
+                                <th style="width: 20%;">Dilihat</th>
+                                <th style="width: 25%; text-align: center;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
 
                             <?php $i = 1; ?>
-                            @foreach ($listProduct as $product)
+                            @foreach ($listOrder as $order)
                             <tr>
-                                <td><?= $i++ . '.' ?></td>
-                                <td><a href="/Product/show/<?= $product['code'] ?>"><?= $product['name'] ?></a></td>
-                                <td><?= 'Rp ' . number_format($product['price']) ?></td>
-                                <td><?= number_format($product['see']) ?></td>
-                                <td><?= $product['categoryName'] ?></td>
-                                <td style="text-align: center;">
-                                    <a href="/Demo/<?= $product['link_locate_demo'] ?>" target="black" class="btn btn-primary btn-xs">Lihat demo</a>
-                                    <a href="/Product/edit/<?= $product['code'] ?>" class="btn btn-primary btn-xs">Edit</a>
-                                    <form action="/Product/delete/<?= $product['code'] ?>" method="post" style="display: inline;">
+                                <td><?= $i++ ?>.</td>
+                                <td><?= $order->order_from ?></td>
+                                <td><?= date('d - M - Y', $order->expired / 1000) ?></td>
+                                <td><?= collect($order->who_see_order)->count() ?></td>
+                                <td>
+                                    <a target="blank" href="/Order/<?= $order->link_locate ?>" class="btn btn-primary btn-xs">Lihat Demo</a>
+                                    <a href="/Order/edit/<?= $order->code  ?>" class="btn btn-primary btn-xs">Edit</a>
+                                    <form action="/Order/delete/<?= $order->code  ?>" method="post" style="display: inline;">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger btn-xs">Hapus</button>

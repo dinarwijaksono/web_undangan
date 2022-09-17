@@ -32,9 +32,9 @@
                         <div class="product-item">
                             <a href="#"><img src="/asset_2/images/product_02.jpg" alt=""></a>
                             <div class="down-content">
-                                <h4><?= $product->name ?></h4>
-                                <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                                <a target="black" href="/Demo/<?= $product->link->locate ?>"><span>Lihat demo</span></a>
+                                <h4><?= $product['name'] ?></h4>
+                                <p>Dilihat <?= number_format($product['seeCount']) ?></p>
+                                <a target="black" href="/Demo/<?= $product['link_locate_demo'] ?>"><span>Lihat demo</span></a>
                             </div>
                         </div>
                     </div>

@@ -6,37 +6,32 @@
 
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3>BUAT PRODUK</h3>
+                <h3>TAMBAH PESANAN</h3>
             </div>
 
             <div class="panel-body">
-                <form action="/Product/create" method="post">
+                <form action="/Order/create" method="post">
                     @csrf
                     <div class="form-group">
-                        <label for="name">Nama</label>
-                        <input class="form-control" type="text" name="name" id="name" placeholder="Nama kategori" />
-                        @error('name')
+                        <label for="order_from">Pemesan</label>
+                        <input class="form-control" type="text" name="order_from" id="order_from" placeholder="pemesan" />
+                        @error('order_from')
                         <p class="help-block" style="color: red;"><?= $message ?></p>
                         @enderror
                     </div>
 
                     <div class="form-group">
-                        <label for="price">Harga</label>
-                        <input class="form-control" type="text" name="price" id="price" placeholder="Harga produk" />
-                        @error('price')
+                        <label for="link_name">Name link</label>
+                        <input class="form-control" type="text" name="link_name" id="link_name" placeholder="nama link" />
+                        @error('link_name')
                         <p class="help-block" style="color: red;"><?= $message ?></p>
                         @enderror
                     </div>
 
                     <div class="form-group">
-                        <label>Kategori</label>
-                        <select name="category" class="form-control">
-                            <option>Pilih kategori</option>
-                            @foreach ($listCategory as $category )
-                            <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
-                            @endforeach
-                        </select>
-                        @error('category')
+                        <label for="expired">Expired</label>
+                        <input class="form-control" type="date" name="expired" id="expired" />
+                        @error('expired')
                         <p class="help-block" style="color: red;"><?= $message ?></p>
                         @enderror
                     </div>
@@ -44,10 +39,10 @@
                     <div class="row">
                         <div class="container-fluid">
                             <div class="col-sm-2 col-sm-offset-8">
-                                <a href="/Product" class="btn btn-block btn-danger btn-block">Batal</a>
+                                <a href="/Order" class="btn btn-block btn-danger btn-block">Batal</a>
                             </div>
                             <div class="col-sm-2">
-                                <button type="submit" class="btn btn-block btn-primary btn-block">Buat Produk</button>
+                                <button type="submit" class="btn btn-block btn-primary btn-block">Tambah</button>
                             </div>
                         </div>
                     </div>

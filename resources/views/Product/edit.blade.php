@@ -21,6 +21,14 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="price">Harga</label>
+                        <input class="form-control" type="text" name="price" id="price" placeholder="Harga produk" value="<?= $product['price'] ?>" />
+                        @error('price')
+                        <p class="help-block" style="color: red;"><?= $message ?></p>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
                         <label>Kategori</label>
                         <select name="category" class="form-control">
                             <option>Pilih kategori</option>
@@ -43,7 +51,7 @@
                                 <a href="/Category" class="btn btn-block btn-danger btn-block">Batal</a>
                             </div>
                             <div class="col-sm-2">
-                                <button type="submit" class="btn btn-block btn-primary btn-block">Buat kategori</button>
+                                <button type="submit" class="btn btn-block btn-primary btn-block">Edit kategori</button>
                             </div>
                         </div>
                     </div>
