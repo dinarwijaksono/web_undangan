@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Who_see_order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -60,6 +61,19 @@ class Order_controller extends Controller
     public function show($link)
     {
         $order = collect(Order::where('link_locate', $link)->get())->first();
+
+        // Tambah kan who_see_order
+        $user_anget = NULL;
+        if (empty($_SERVER['HTTP_USER_AGENT'])) {
+            $user_anget = 'Tidak ada data';
+        } else {
+            $user_anget = $_SERVER['HTTP_USER_AGENT'];
+        }
+        $insert['order_id'] = $order->id;
+        $insert['user_agent'] = $user_anget;
+        $insert['created_at'] = round(microtime(true) * 1000);
+        Who_see_order::insert($insert);
+
 
         return $order->link_locate;
     }
