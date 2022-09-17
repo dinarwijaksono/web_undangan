@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\WhoSee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -82,15 +83,26 @@ class Product_controller extends Controller
 
 
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show($code)
     {
-        //
+        $product = DB::table('products')
+            ->where('products.code', $code)
+            ->join('categories', 'categories.id', 'products.category_id')
+            ->select('products.name', 'products.price', 'products.link_locate_demo', 'products.created_at', 'categories.name as category_name')
+            ->get()[0];
+
+        $product_id = collect(Product::where('code', $code)->get())->first()->id;
+        $see = DB::table('who_sees')
+            ->where('product_id', $product_id)
+            ->select('user_agent', 'created_at')
+            ->get();
+
+        $product = collect($product);
+        $product['see_count'] = collect($see)->count();
+
+        $data['product'] = $product;
+
+        return view('/Product/show', $data);
     }
 
 

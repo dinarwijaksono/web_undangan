@@ -42,7 +42,7 @@
                             @foreach ($listProduct as $product)
                             <tr>
                                 <td><?= $i++ . '.' ?></td>
-                                <td><?= $product['name'] ?></td>
+                                <td><a href="/Product/show/<?= $product['code'] ?>"><?= $product['name'] ?></a></td>
                                 <td><?= 'Rp ' . number_format($product['price']) ?></td>
                                 <td><?= number_format($product['see']) ?></td>
                                 <td><?= $product['categoryName'] ?></td>

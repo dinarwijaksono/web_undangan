@@ -63,6 +63,8 @@ Route::get('/Product', [Product_controller::class, 'index'])->middleware('auth')
 Route::get('/Product/create', [Product_controller::class, 'create'])->middleware('auth');
 Route::post('/Product/create', [Product_controller::class, 'store'])->middleware('auth');
 
+Route::get('/Product/show/{code}', [Product_controller::class, 'show'])->middleware('auth');
+
 Route::get('/Product/edit/{code}', [Product_controller::class, 'edit'])->middleware('auth');
 Route::post('/Product/edit/{code}', [Product_controller::class, 'update'])->middleware('auth');
 
