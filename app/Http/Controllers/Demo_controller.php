@@ -2,40 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
-use GuzzleHttp\Handler\Proxy;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-
-use function PHPUnit\Framework\isEmpty;
-use function PHPUnit\Framework\isNull;
+use App\Services\Product_service;
+use App\Services\WhoSeeDemo_service;
 
 class Demo_controller extends Controller
 {
-    public function product($code)
-    {
-        $this->addSee($code);
+    protected $product_service;
+    protected $whoSeeDemo_service;
 
-        return view("/Demo/$code/index");
+    function __construct(Product_service $product_service, WhoSeeDemo_service $whoSeeDemo_service)
+    {
+        $this->product_service = $product_service;
+        $this->whoSeeDemo_service = $whoSeeDemo_service;
     }
 
 
 
-    public function addSee($code)
+    public function product($link)
     {
-
-        $productId = collect(Product::where('link_locate_demo', $code)->get())->first();
-
-        $user_anget = NULL;
+        $user_agent = NULL;
         if (empty($_SERVER['HTTP_USER_AGENT'])) {
-            $user_anget = 'Tidak ada data';
+            $user_agent = 'Tidak ada data';
         } else {
-            $user_anget = $_SERVER['HTTP_USER_AGENT'];
+            $user_agent = $_SERVER['HTTP_USER_AGENT'];
         }
 
-        $data['product_id'] = $productId->id;
-        $data['user_agent'] = $user_anget;
-        $data['created_at'] = round(microtime(true) * 1000);
-        DB::table('who_sees')->insert($data);
+        $product = $this->product_service->getByLink($link);
+
+        $this->whoSeeDemo_service->add($product->id, $user_agent);
+
+        return view("/Demo/$link/index");
     }
 }

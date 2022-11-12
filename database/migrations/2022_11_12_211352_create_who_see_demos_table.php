@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWhoSeesTable extends Migration
+class CreateWhoSeeDemosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateWhoSeesTable extends Migration
      */
     public function up()
     {
-        Schema::create('who_sees', function (Blueprint $table) {
+        Schema::create('who_see_demos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id');
             $table->string('user_agent', 100);
@@ -28,6 +28,6 @@ class CreateWhoSeesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('who_sees');
+        Schema::dropIfExists('who_see_demos');
     }
 }

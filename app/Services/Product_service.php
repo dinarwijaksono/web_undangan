@@ -46,6 +46,17 @@ class Product_service
     }
 
 
+    public function getByLink($link)
+    {
+        $product = DB::table('products')
+            ->select('name', 'id', 'code')
+            ->where('link_locate_demo', $link)
+            ->get();
+
+        return $product->first();
+    }
+
+
     public function getAll()
     {
         $product = DB::table('products')

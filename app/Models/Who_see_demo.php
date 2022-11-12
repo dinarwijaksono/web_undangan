@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class WhoSee extends Model
+class Who_see_demo extends Model
 {
     use HasFactory;
 
