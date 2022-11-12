@@ -33,8 +33,10 @@ Route::get('/Home/listProduct', [Home_controller::class, 'showProduct']);
 
 /* Auth_controller */
 Route::get('/Login', [Auth_controller::class, 'login'])->name('login')->middleware('guest');
-
 Route::post('/Login', [Auth_controller::class, 'loginProcess'])->middleware('guest');
+
+Route::get('/Register', [Auth_controller::class, 'register'])->middleware('guest');
+Route::post('/Register', [Auth_controller::class, 'doRegister'])->middleware('guest');
 
 Route::post('/logout', [Auth_controller::class, 'logout'])->middleware('auth');
 /* end Auth_controller */

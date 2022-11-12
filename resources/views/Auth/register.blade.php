@@ -28,19 +28,31 @@
             <div class="col-sm-6 col-sm-offset-3 col-xs-12">
                 <div class="panel panel-info">
                     <div class="panel-heading text-center">
-                        LOGIN
+                        Register
                     </div>
                     <div class="panel-body">
 
-                        @if (session('loginFailed'))
-                        <div class="alert alert-danger" role="alert"><?= session('loginFailed') ?></div>
+                        @if (session('registerSuccess'))
+                        <div class="alert alert-success" role="alert"><?= session('registerSuccess') ?></div>
                         @endif
 
-                        <form method="post" action="/Login" role="form">
+                        @if (session('registerFailed'))
+                        <div class="alert alert-danger" role="alert"><?= session('registerFailed') ?></div>
+                        @endif
+
+                        <form method="post" action="/Register" role="form">
                             @csrf
                             <div class="form-group">
+                                <label>Register Code</label>
+                                <input class="form-control" name="register_code" type="text" placeholder="Register code" value="{{ old('register_code') }}" />
+                                @error('register_code')
+                                <p class="help-block" style="color: red;"><?= $message ?></p>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
                                 <label>Email</label>
-                                <input class="form-control" name="email" type="text" placeholder="Email" />
+                                <input class="form-control" name="email" type="text" placeholder="Email" value="{{ old('email') }}" />
                                 @error('email')
                                 <p class="help-block" style="color: red;"><?= $message ?></p>
                                 @enderror
@@ -50,6 +62,14 @@
                                 <label>Password</label>
                                 <input class="form-control" name="password" type="password" placeholder="password" />
                                 @error('password')
+                                <p class="help-block" style="color: red;"><?= $message ?></p>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <label>Konfirmasi password</label>
+                                <input class="form-control" name="password_confirmation" type="password" placeholder="konfirmasi password" />
+                                @error('password_confirmation')
                                 <p class="help-block" style="color: red;"><?= $message ?></p>
                                 @enderror
                             </div>
