@@ -61,7 +61,7 @@ class Product_service
     {
         $product = DB::table('products')
             ->join('categories', 'products.category_id', '=', 'categories.id')
-            ->select('products.name as product_name', 'products.price', 'categories.name as category_name', 'products.link_locate_demo', 'products.code', 'categories.id as category_id')
+            ->select('products.name as product_name', 'products.price', 'categories.name as category_name', 'products.link_locate_demo', 'products.code', 'categories.id as category_id', 'products.id as product_id')
             ->get();
 
         return $product;

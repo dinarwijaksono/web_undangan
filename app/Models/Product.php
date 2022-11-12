@@ -16,8 +16,8 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function whosee()
+    public function who_see_demo()
     {
-        return $this->hasMany(WhoSee::class);
+        return $this->hasMany(Who_see_demo::class);
     }
 }

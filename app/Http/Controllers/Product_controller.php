@@ -6,25 +6,41 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Services\Category_service;
 use App\Services\Product_service;
+use App\Services\WhoSeeDemo_service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Psy\Command\HistoryCommand;
 
 class Product_controller extends Controller
 {
     protected $product_service;
     protected $category_service;
+    protected $whoSeeDemo_service;
 
-    function __construct(Product_service $product_service, Category_service $category_service)
+    function __construct(Product_service $product_service, Category_service $category_service, WhoSeeDemo_service $whoSeeDemo_service)
     {
         $this->product_service = $product_service;
         $this->category_service = $category_service;
+        $this->whoSeeDemo_service = $whoSeeDemo_service;
     }
 
 
 
     public function index()
     {
-        $listProduct = $this->product_service->getAll();
+        $listProduct = [];
+        foreach ($this->product_service->getAll() as $product) {
+            $listProduct[] = [
+                'code' => $product->code,
+                'product_name' => $product->product_name,
+                'price' => $product->price,
+                'views' => $this->whoSeeDemo_service->getViews($product->product_id),
+                'category_name' => $product->category_name,
+                'link_locate_demo' => $product->link_locate_demo
+            ];
+        }
+
+        // return $listProduct;
 
         $data['listProduct'] = $listProduct;
 
@@ -118,11 +134,11 @@ class Product_controller extends Controller
             'category' => 'required'
         ]);
 
-        $data['name'] = $request->name;
-        $data['category_id'] = $request->category;
-        $data['price'] = $request->price;
-        $data['updated_at'] = round(microtime(true) * 1000);
-        DB::table('products')->where('code', $code)->update($data);
+        $result = $this->product_service->update($code, $request->name, $request->price, $request->category);
+
+        if ($request == false) {
+            return redirect('/Product')->with('editFailed', "Produk gagal di edit.");
+        }
 
         return redirect('/Product')->with('editSuccess', "Produk berhasil di edit.");
     }
