@@ -1,4 +1,4 @@
-@extends('layouts/main')
+@extends('layouts/cms_main')
 
 @section('content')
 <div class="row">
@@ -14,7 +14,7 @@
                     @csrf
                     <div class="form-group">
                         <label for="name">Nama</label>
-                        <input class="form-control" type="text" name="name" id="name" placeholder="Nama kategori" value="<?= $product['name'] ?>" />
+                        <input class="form-control" type="text" name="name" id="name" placeholder="Nama kategori" value="<?= $product->product_name ?>" />
                         @error('name')
                         <p class="help-block" style="color: red;"><?= $message ?></p>
                         @enderror
@@ -22,7 +22,7 @@
 
                     <div class="form-group">
                         <label for="price">Harga</label>
-                        <input class="form-control" type="text" name="price" id="price" placeholder="Harga produk" value="<?= $product['price'] ?>" />
+                        <input class="form-control" type="text" name="price" id="price" placeholder="Harga produk" value="<?= $product->price ?>" />
                         @error('price')
                         <p class="help-block" style="color: red;"><?= $message ?></p>
                         @enderror
@@ -33,10 +33,10 @@
                         <select name="category" class="form-control">
                             <option>Pilih kategori</option>
                             @foreach ($listCategory as $category )
-                            <?php if ($category['id'] == $product['category_id']) : ?>
-                                <option value="<?= $category['id'] ?>" selected><?= $category['name'] ?></option>
+                            <?php if ($category->id == $product->category_id) : ?>
+                                <option value="<?= $category->id ?>" selected><?= $category->name ?></option>
                             <?php else : ?>
-                                <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
+                                <option value="<?= $category->id ?>"><?= $category->name ?></option>
                             <?php endif ?>
                             @endforeach
                         </select>

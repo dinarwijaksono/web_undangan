@@ -4,27 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\WhoSee;
+use App\Services\Category_service;
+use App\Services\Product_service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class Product_controller extends Controller
 {
+    protected $product_service;
+    protected $category_service;
+
+    function __construct(Product_service $product_service, Category_service $category_service)
+    {
+        $this->product_service = $product_service;
+        $this->category_service = $category_service;
+    }
+
+
+
     public function index()
     {
-        $listProduct = [];
-
-        foreach (Product::all() as $product) {
-
-            $listProduct[] = [
-                'name' => $product->name,
-                'price' => $product->price,
-                'see' => collect($product->whosee)->count(),
-                'categoryName' => $product->category->name,
-                'link_locate_demo' => $product->link_locate_demo,
-                'code' => $product->code
-            ];
-        }
+        $listProduct = $this->product_service->getAll();
 
         $data['listProduct'] = $listProduct;
 
@@ -37,42 +37,25 @@ class Product_controller extends Controller
 
 
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $data['listCategory'] =  Category::all();
         return view('/Product/create', $data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|max:20',
+            'name' => 'required|max:20|unique:products',
             'price' => 'required',
             'category' => 'required'
         ]);
 
-        $code = 'P' . mt_rand(1000000, 9999999);
-        $data['category_id'] = $request->category;
-        $data['code'] = $code;
-        $data['name'] = $request->name;
-        $data['price'] = $request->price;
-        // $data['see'] = 0;
-        $data['link_locate_demo'] = 'P_' . mt_rand(1, 9999);
-        $data['created_at'] = round(microtime(true) * 1000);
-        $data['updated_at'] = round(microtime(true) * 1000);
-
-        DB::table('products')->insert($data);
+        $result =  $this->product_service->add($request->name, $request->price, $request->category);
+        if ($result == false) {
+            return back()->with('createFailed', "Produk gagal di buat.");
+        }
 
         return redirect('/Product')->with('createSuccess', "Produk berhasil di tambahkan.");
     }
@@ -112,8 +95,14 @@ class Product_controller extends Controller
 
     public function edit($code)
     {
-        $data['product'] = collect(Product::where('code', $code)->get())->first();
-        $data['listCategory'] = Category::all();
+        $product = $this->product_service->get($code);
+
+        if (collect($product)->isEmpty()) {
+            return redirect('/Product');
+        }
+
+        $data['product'] = $product;
+        $data['listCategory'] = $this->category_service->getAll();
         $data['code'] = $code;
 
         return view('/Product/edit', $data);
@@ -145,7 +134,10 @@ class Product_controller extends Controller
 
     public function destroy($code)
     {
-        Product::where('code', $code)->delete();
+        $result = $this->product_service->delete($code);
+        if ($result == false) {
+            return back()->with('deleteFailed', 'Produk gagal di hapus');
+        }
 
         return redirect('/Product')->with('deleteSuccess', 'Produk berhasil di hapus.');
     }

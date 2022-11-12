@@ -37,7 +37,7 @@ class Category_service
     public function getAll(): object
     {
         $category = DB::table('categories')
-            ->select('name', 'code')
+            ->select('name', 'code', 'id')
             ->get();
 
         return $category;

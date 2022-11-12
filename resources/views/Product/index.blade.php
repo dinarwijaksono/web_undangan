@@ -1,4 +1,4 @@
-@extends('layouts/main')
+@extends('layouts/cms_main')
 
 @section('content')
 
@@ -28,12 +28,12 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th style="width: 10%;">#</th>
-                                <th style="width: 15%;">Nama</th>
-                                <th style="width: 12%;">Harga</th>
-                                <th>Dilihat</th>
-                                <th style="width: 15%;">Kategori</th>
-                                <th style="width: 25%; text-align: center">Action</th>
+                                <th style="text-align: center; width: 10%;">NO</th>
+                                <th style="text-align: center; width: 15%;">Nama</th>
+                                <th style="text-align: center; width: 12%;">Harga</th>
+                                <th style="text-align: center;">Dilihat</th>
+                                <th style="text-align: center; width: 15%;">Kategori</th>
+                                <th style="text-align: center; width: 25%; text-align: center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -41,15 +41,15 @@
                             <?php $i = 1; ?>
                             @foreach ($listProduct as $product)
                             <tr>
-                                <td><?= $i++ . '.' ?></td>
-                                <td><a href="/Product/show/<?= $product['code'] ?>"><?= $product['name'] ?></a></td>
-                                <td><?= 'Rp ' . number_format($product['price']) ?></td>
-                                <td><?= number_format($product['see']) ?></td>
-                                <td><?= $product['categoryName'] ?></td>
+                                <td style="text-align: center;"><?= $i++ . '.' ?></td>
+                                <td><a href="/Product/show/<?= $product->code ?>"><?= $product->product_name ?></a></td>
+                                <td style="text-align: right;"><?= 'Rp ' . number_format($product->price) ?></td>
+                                <td style="text-align: center;"><?= number_format(10) ?></td>
+                                <td style="text-align: center;"><?= $product->category_name ?></td>
                                 <td style="text-align: center;">
-                                    <a href="/Demo/<?= $product['link_locate_demo'] ?>" target="black" class="btn btn-primary btn-xs">Lihat demo</a>
-                                    <a href="/Product/edit/<?= $product['code'] ?>" class="btn btn-primary btn-xs">Edit</a>
-                                    <form action="/Product/delete/<?= $product['code'] ?>" method="post" style="display: inline;">
+                                    <a href="/Demo/<?= $product->link_locate_demo ?>" target="black" class="btn btn-primary btn-xs">Lihat demo</a>
+                                    <a href="/Product/edit/<?= $product->code ?>" class="btn btn-primary btn-xs">Edit</a>
+                                    <form action="/Product/delete/<?= $product->code ?>" method="post" style="display: inline;">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger btn-xs">Hapus</button>
