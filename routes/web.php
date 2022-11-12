@@ -3,9 +3,9 @@
 use App\Http\Controllers\Auth_controller;
 use App\Http\Controllers\Category_controller;
 use App\Http\Controllers\ConfigManagement_controller;
+use App\Http\Controllers\Dashboard_controller;
 use App\Http\Controllers\Demo_controller;
 use App\Http\Controllers\Home_controller;
-use App\Http\Controllers\Main_controller;
 use App\Http\Controllers\Order_controller;
 use App\Http\Controllers\Product_controller;
 use App\Http\Controllers\User_controller;
@@ -42,9 +42,9 @@ Route::post('/logout', [Auth_controller::class, 'logout'])->middleware('auth');
 /* end Auth_controller */
 
 
-/* Main_controller */
-Route::get('/Main', [Main_controller::class, 'index'])->middleware('auth');
-/* end Main_controller */
+/* Dasbhord_controller */
+Route::get('/Dashboard', [Dashboard_controller::class, 'index'])->middleware('auth');
+/* end Dasbhord_controller */
 
 /* Category_controller */
 Route::get('/Category', [Category_controller::class, 'index'])->middleware('auth');

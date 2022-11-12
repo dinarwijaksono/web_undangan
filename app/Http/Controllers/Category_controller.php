@@ -3,19 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Services\Category_service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class Category_controller extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $category_service;
+
+    function __construct(Category_service $category_service)
+    {
+        $this->category_service = $category_service;
+    }
+
+
+
     public function index()
     {
-        $data['listCategory'] = Category::all();
+        $data['listCategory'] = $this->category_service->getAll();
 
         return view('/Category/index', $data);
     }
@@ -23,34 +28,18 @@ class Category_controller extends Controller
 
 
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('/Category/create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|unique:categories|max:30'
         ]);
 
-        $data['name'] = $request->name;
-        $data['code'] = 'C' . mt_rand(1, 9999999);
-        $data['created_at'] = round(microtime(true) * 1000);
-        $data['updated_at'] = round(microtime(true) * 1000);
-
-        DB::table('categories')->insert($data);
+        $this->category_service->addCategory($request->name);
 
         return redirect('/Category')->with('CreateSuccess', 'Kategori berhasil di tambahkan');
     }
@@ -58,54 +47,30 @@ class Category_controller extends Controller
 
 
 
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-
-
-
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($code)
     {
-        $data['category'] = collect(Category::where('code', $code)->get())->first();
+        $category = $this->category_service->get($code);
+
+        if (collect($category)->isEmpty()) {
+            return redirect('/Category');
+        }
+
+        $data['category'] = $category;
 
         return view('/Category/edit', $data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $code)
     {
         $request->validate([
-            'name' => 'required|max:30|unique:categories'
+            'name' => 'required|max:30'
         ]);
 
-        $data['name'] = $request->name;
-        $data['updated_at'] = round(microtime(true) * 1000);
+        $result = $this->category_service->update($code, $request->name);
 
-        DB::table('categories')
-            ->where('code', $code)
-            ->update($data);
+        if ($result == false) {
+            return redirect('/Category/edit/' . $code)->with('editFailed', 'Anda tidak melakukan perubahan apapun.');
+        }
 
         return redirect('/Category')->with('editSuccess', 'Kategori berhasil di edit.');
     }
@@ -114,16 +79,13 @@ class Category_controller extends Controller
 
 
 
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($code)
     {
-        Category::where('code', $code)->delete();
+        $result = $this->category_service->delete($code);
+
+        if ($result == false) {
+            return redirect('/Category')->with('deleteFailed', "Kategori gagal di hapus.");
+        }
 
         return redirect('/Category')->with('deleteSuccess', "Kategori berhasil di hapus.");
     }

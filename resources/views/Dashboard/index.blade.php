@@ -1,4 +1,4 @@
-@extends('layouts/main')
+@extends('layouts/cms_main')
 
 
 @section('content')

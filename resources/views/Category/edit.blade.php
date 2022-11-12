@@ -1,4 +1,4 @@
-@extends('layouts/main')
+@extends('layouts/cms_main')
 
 @section('content')
 <div class="row">
@@ -8,6 +8,10 @@
             <div class="panel-heading">
                 <h3>EDIT KATEGORI</h3>
             </div>
+
+            @if (session('editFailed'))
+            <div class="alert alert-warning" style="margin: 10px; padding: 10px;" role="alert"><?= session('editFailed') ?></div>
+            @endif
 
             <div class="panel-body">
                 <form action="/Category/edit/<?= $category->code ?>" method="post">

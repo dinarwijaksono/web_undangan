@@ -36,11 +36,14 @@ class Auth_controller extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('/Main');
+            return redirect()->intended('/Dashboard');
         }
 
         return back()->with('loginFailed', 'Email / password salah.');
     }
+
+
+
 
 
 

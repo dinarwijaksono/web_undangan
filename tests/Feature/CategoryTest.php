@@ -18,10 +18,10 @@ class CategoryTest extends TestCase
 
     use WithFaker;
 
-    public function test_create_success()
+    public function test_createSuccess()
     {
 
-        $user = collect(User::where('email', 'admin@gmail.com')->get())->first();
+        $user = collect(User::get())->first();
 
         $name = $this->faker('id_ID')->text(14);
 
@@ -33,17 +33,18 @@ class CategoryTest extends TestCase
             ->post('/Category/create', $data);
 
         $response->assertValid(['name']);
-        $this->assertTrue(collect(Category::where('name', $name)->get())->isNotEmpty());
+        $this->assertDatabaseHas('categories', ['name' => $name]);
     }
 
 
-    public function test_create_failed()
+    public function test_createFailed()
     {
-        $user = collect(User::where('email', 'admin@gmail.com')->get())->first();
+        $user = collect(User::get())->first();
 
         $data = [
             'name' => ''
         ];
+
         $response = $this->actingAs($user)
             ->withSession(['banned' => false])
             ->post('/Category/create', $data);
@@ -85,13 +86,11 @@ class CategoryTest extends TestCase
         $this->assertDatabaseMissing('categories', ['name' => $data['name']]);
     }
 
-
-
-    public function test_delete()
+    public function test_deleteSuccess()
     {
-        $user = collect(User::where('email', 'admin@gmail.com')->get())->first();
+        $user = collect(User::get())->first();
 
-        $code = collect(Category::all())->pop()->code;
+        $code = collect(Category::all())->first()->code;
 
         $response = $this->actingAs($user)
             ->withSession(['banned' => false])

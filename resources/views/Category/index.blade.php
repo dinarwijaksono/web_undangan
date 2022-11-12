@@ -1,4 +1,4 @@
-@extends('layouts/main')
+@extends('layouts/cms_main')
 
 @section('content')
 
@@ -16,6 +16,10 @@
 
                 @if (session('deleteSuccess'))
                 <div class="alert alert-info" style="margin: 10px; padding: 10px;" role="alert"><?= session('deleteSuccess') ?></div>
+                @endif
+
+                @if (session('deleteFailed'))
+                <div class="alert alert-danger" style="margin: 10px; padding: 10px;" role="alert"><?= session('deleteFailed') ?></div>
                 @endif
 
                 @if (session('editSuccess'))
