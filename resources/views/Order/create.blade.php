@@ -1,4 +1,4 @@
-@extends('layouts/main')
+@extends('layouts/cms_main')
 
 @section('content')
 <div class="row">
@@ -8,6 +8,10 @@
             <div class="panel-heading">
                 <h3>TAMBAH PESANAN</h3>
             </div>
+
+            @if (session('createFailed'))
+            <div class="alert alert-danger" style="margin: 10px; padding: 10px;" role="alert"><?= session('createFailed') ?></div>
+            @endif
 
             <div class="panel-body">
                 <form action="/Order/create" method="post">

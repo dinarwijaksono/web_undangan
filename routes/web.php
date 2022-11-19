@@ -91,6 +91,7 @@ Route::get('/Demo/{code}', [Demo_controller::class, 'product']);
 /* end Demo_controller */
 
 
+
 /* Order_controller */
 Route::get('/Order', [Order_controller::class, 'index'])->middleware('auth');
 
@@ -98,7 +99,7 @@ Route::get('/Order/create', [Order_controller::class, 'create'])->middleware('au
 Route::post('/Order/create', [Order_controller::class, 'store'])->middleware('auth');
 
 Route::get('/Order/edit/{code}', [Order_controller::class, 'edit'])->middleware('auth');
-Route::post('/Order/edit/{code}', [Order_controller::class, 'store'])->middleware('auth');
+Route::post('/Order/edit/{code}', [Order_controller::class, 'update'])->middleware('auth');
 
 Route::delete('/Order/delete/{code}', [Order_controller::class, 'destroy'])->middleware('auth');
 

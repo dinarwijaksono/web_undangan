@@ -70,16 +70,26 @@ class Product_service
 
 
 
-    public function update($code, $name, $price, $category_id): bool
+    public function update($code, $name, $price, $category_id): array
     {
         $product = $this->get($code);
         if ($name == $product->product_name && $price == $product->price && $category_id == $product->category_id) {
-            return false;
+            return [
+                'isSuccess' => false,
+                'message' => "Tidak ada perubahan."
+            ];
         }
 
-        $productByName = DB::table('products')->select('name')->where('name', $name)->get();
+        $productByName = DB::table('products')
+            ->select('name')
+            ->where('name', $name)
+            ->where('code', '!=', $code)
+            ->get();
         if ($productByName->isNotEmpty()) {
-            return false;
+            return [
+                'isSuccess' => false,
+                'message' => "Terdapat nama product yang sama."
+            ];
         }
 
         DB::table('products')
@@ -91,7 +101,9 @@ class Product_service
                 'updated_at' => round(microtime(true) * 1000)
             ]);
 
-        return true;
+        return [
+            'isSuccess' => true
+        ];
     }
 
 

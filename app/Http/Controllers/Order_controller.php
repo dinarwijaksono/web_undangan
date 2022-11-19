@@ -4,27 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Who_see_order;
+use App\Services\Order_service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class Order_controller extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $data['listOrder'] = collect(Order::all())->sortBy('expired');
+    protected $order_service;
 
-        return view('Order/index', $data);
+    function __construct(Order_service $order_service)
+    {
+        $this->order_service = $order_service;
     }
 
 
 
 
+    public function index()
+    {
+        $data['listOrder'] = $this->order_service->getAll();
 
+        return view('Order/index', $data);
+    }
 
 
 
@@ -41,14 +42,12 @@ class Order_controller extends Controller
             'expired' => 'required'
         ]);
 
-        $data['order_from'] = $request->order_from;
-        $data['expired'] = strtotime($request->expired) * 1000;
-        $data['code'] = 'O' . mt_rand(1, 9999);
-        $data['link_locate'] = trim($request->link_name);
-        $data['created_at'] = round(microtime(true) * 1000);
-        $data['updated_at'] = round(microtime(true) * 1000);
+        $expired = strtotime($request->expired) * 1000;
+        $result = $this->order_service->add($request->order_from, $request->link_name, $expired);
 
-        DB::table('orders')->insert($data);
+        if ($result['isSuccess'] == false) {
+            return back()->with('createFailed', $result['message']);
+        }
 
         return redirect('/Order')->with('createSuccess', "Order baru berhasil di tambahkan.");
     }
@@ -84,7 +83,7 @@ class Order_controller extends Controller
 
     public function edit($code)
     {
-        $data['order'] = collect(Order::where('code', $code)->get())->first();
+        $data['order'] = $this->order_service->getByCode($code);
 
         return view('/Order/edit', $data);
     }
@@ -92,19 +91,22 @@ class Order_controller extends Controller
     public function update(Request $request, $code)
     {
         $request->validate([
-            'name' => 'required|max:50',
+            'order_from' => 'required|max:50',
             'link_name' => 'required',
             'expired' => 'required'
         ]);
 
-        $data['order_from'] = $request->name;
-        $data['expired'] = strtotime($request->expired) * 1000;
-        $data['link_locate'] = trim($request->link_name);
-        $data['updated_at'] = round(microtime(true) * 1000);
+        // print_r('damayanti');
 
-        DB::table('orders')->where('code', $code)->update($data);
+        $expired = strtotime($request->expired) * 1000;
+        $link_locate = trim($request->link_name);
 
-        return redirect("/Order/edit/$code")->with('updateSuccess', "Order berhasil di edit.");
+        $result = $this->order_service->update($code, $request->order_from, $link_locate, $expired);
+        if ($result['isSuccess'] == false) {
+            return back()->with('updateFailed', $result['message']);
+        }
+
+        return back()->with('updateSuccess', "Order berhasil di edit.");
     }
 
 
@@ -113,7 +115,7 @@ class Order_controller extends Controller
 
     public function destroy($code)
     {
-        Order::where('code', $code)->delete();
+        $this->order_service->delete($code);
 
         return redirect('/Order')->with('deleteSuccess', "Order berhasil di hapus.");
     }

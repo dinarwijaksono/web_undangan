@@ -1,4 +1,4 @@
-@extends('layouts/main')
+@extends('layouts/cms_main')
 
 @section('content')
 <div class="row">
@@ -9,12 +9,20 @@
                 <h3>EDIT PESANAN</h3>
             </div>
 
+            @if (session('updateFailed'))
+            <div class="alert alert-danger" style="margin: 10px; padding: 10px;" role="alert"><?= session('updateFailed') ?></div>
+            @endif
+
+            @if (session('updateSuccess'))
+            <div class="alert alert-success" style="margin: 10px; padding: 10px;" role="alert"><?= session('updateSuccess') ?></div>
+            @endif
+
             <div class="panel-body">
-                <form action="/Order/edit/<?= $order['code'] ?>" method="post">
+                <form action="/Order/edit/<?= $order->code ?>" method="post">
                     @csrf
                     <div class="form-group">
                         <label for="order_from">Pemesan</label>
-                        <input class="form-control" type="text" name="order_from" id="order_from" value="<?= $order['order_from'] ?>" placeholder="pemesan" />
+                        <input class="form-control" type="text" name="order_from" id="order_from" value="<?= $order->order_from ?>" placeholder="pemesan" />
                         @error('order_from')
                         <p class="help-block" style="color: red;"><?= $message ?></p>
                         @enderror
@@ -22,7 +30,7 @@
 
                     <div class="form-group">
                         <label for="link_name">Name link</label>
-                        <input class="form-control" type="text" name="link_name" id="link_name" value="<?= $order['link_locate'] ?>" placeholder="nama link" />
+                        <input class="form-control" type="text" name="link_name" id="link_name" value="<?= $order->link_locate ?>" placeholder="nama link" />
                         @error('link_name')
                         <p class="help-block" style="color: red;"><?= $message ?></p>
                         @enderror
@@ -30,7 +38,7 @@
 
                     <div class="form-group">
                         <label for="expired">Expired</label>
-                        <input class="form-control" type="date" name="expired" value="<?= date('Y-m-d', $order['expired'] / 1000) ?>" id="expired" />
+                        <input class="form-control" type="date" name="expired" value="<?= date('Y-m-d', $order->expired / 1000) ?>" id="expired" />
                         @error('expired')
                         <p class="help-block" style="color: red;"><?= $message ?></p>
                         @enderror

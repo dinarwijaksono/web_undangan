@@ -136,8 +136,8 @@ class Product_controller extends Controller
 
         $result = $this->product_service->update($code, $request->name, $request->price, $request->category);
 
-        if ($request == false) {
-            return redirect('/Product')->with('editFailed', "Produk gagal di edit.");
+        if ($result['isSuccess'] == false) {
+            return back()->with('editFailed', $result['message']);
         }
 
         return redirect('/Product')->with('editSuccess', "Produk berhasil di edit.");

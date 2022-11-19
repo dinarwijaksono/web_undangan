@@ -2,11 +2,12 @@
 
 namespace App\Providers;
 
-use App\Models\Who_see_demo;
 use App\Services\Category_service;
+use App\Services\Order_service;
 use App\Services\Product_service;
 use App\Services\User_service;
 use App\Services\WhoSeeDemo_service;
+
 use Illuminate\Support\ServiceProvider;
 
 class Main_provider extends ServiceProvider
@@ -33,6 +34,10 @@ class Main_provider extends ServiceProvider
 
         $this->app->singleton(WhoSeeDemo_service::class, function () {
             return new WhoSeeDemo_service;
+        });
+
+        $this->app->singleton(Order_service::class, function () {
+            return new Order_service;
         });
     }
 
