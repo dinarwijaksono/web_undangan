@@ -43,13 +43,22 @@ class Order_service
         ];
     }
 
+    public function getIdByCode($code)
+    {
+        $order = DB::table('orders')
+            ->select('id')
+            ->where('code', $code)
+            ->first();
+
+        return $order->id;
+    }
 
     public function getByLink($link)
     {
         $order = DB::table('orders')
-            ->select('link_locate')
+            ->select('link_locate', 'order_from', 'expired', 'code')
             ->where('link_locate', $link)
-            ->get();
+            ->first();
 
         return $order;
     }

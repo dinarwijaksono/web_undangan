@@ -9,6 +9,7 @@ use App\Http\Controllers\Home_controller;
 use App\Http\Controllers\Order_controller;
 use App\Http\Controllers\Product_controller;
 use App\Http\Controllers\User_controller;
+use App\Http\Controllers\WebUndangan_controller;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -105,3 +106,8 @@ Route::delete('/Order/delete/{code}', [Order_controller::class, 'destroy'])->mid
 
 Route::get('/Order/{code}', [Order_controller::class, 'show']);
 /* end Order_controller */
+
+
+/* WebUndangan_controller */
+Route::get("/P/{link}", [WebUndangan_controller::class, 'index']);
+/* end WebUndangan_controller */

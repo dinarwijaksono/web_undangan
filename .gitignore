@@ -2,7 +2,7 @@
 /public/storage
 /storage/*.key
 /resources/views/Demo
-/resources/views/Pesanan
+/resources/views/web_undangan
 /public/Demo
 /public/Pesanan
 /vendor

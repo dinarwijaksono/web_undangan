@@ -42,13 +42,13 @@
                             @foreach ($listOrder as $order)
                             <tr>
                                 <td><?= $i++ ?>.</td>
-                                <td><?= $order->order_from ?></td>
-                                <td><?= date('d - M - Y', $order->expired / 1000) ?></td>
-                                <td><?= '10' ?></td>
+                                <td><?= $order['order_from'] ?></td>
+                                <td><?= date('d - M - Y', $order['expired'] / 1000) ?></td>
+                                <td><?= number_format($order['views']) ?></td>
                                 <td>
-                                    <a target="blank" href="/Order/<?= $order->link_locate ?>" class="btn btn-primary btn-xs">Lihat halaman</a>
-                                    <a href="/Order/edit/<?= $order->code  ?>" class="btn btn-primary btn-xs">Edit</a>
-                                    <form action="/Order/delete/<?= $order->code  ?>" method="post" style="display: inline;">
+                                    <a target="blank" href="/P/<?= $order['link_locate'] ?>" class="btn btn-primary btn-xs">Lihat halaman</a>
+                                    <a href="/Order/edit/<?= $order['code']  ?>" class="btn btn-primary btn-xs">Edit</a>
+                                    <form action="/Order/delete/<?= $order['code']  ?>" method="post" style="display: inline;">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger btn-xs">Hapus</button>

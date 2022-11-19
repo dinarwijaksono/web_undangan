@@ -5,16 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Who_see_order;
 use App\Services\Order_service;
+use App\Services\WhoSeeProduct_service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class Order_controller extends Controller
 {
     protected $order_service;
+    protected $whoSeeProduct_service;
 
-    function __construct(Order_service $order_service)
+    function __construct(Order_service $order_service, WhoSeeProduct_service $whoSeeProduct_service)
     {
         $this->order_service = $order_service;
+        $this->whoSeeProduct_service = $whoSeeProduct_service;
     }
 
 
@@ -22,7 +25,21 @@ class Order_controller extends Controller
 
     public function index()
     {
-        $data['listOrder'] = $this->order_service->getAll();
+        // $data['listOrder'] = $this->order_service->getAll();
+
+        $listOrder = [];
+        foreach ($this->order_service->getAll() as $order) {
+            $id = $this->order_service->getIdByCode($order->code);
+
+            $listOrder[] = [
+                'order_from' => $order->order_from,
+                'expired' => $order->expired,
+                'code' => $order->code,
+                'views' => $this->whoSeeProduct_service->getCountView($id),
+                'link_locate' => $order->link_locate
+            ];
+        }
+        $data['listOrder'] = collect($listOrder);
 
         return view('Order/index', $data);
     }
