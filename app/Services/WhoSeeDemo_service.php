@@ -20,7 +20,7 @@ class WhoSeeDemo_service
     public function getViews($product_id)
     {
         $who_see = DB::table('who_see_demos')
-            ->select('order_id', 'user_agent', 'created_at')
+            ->select('product_id', 'user_agent', 'created_at')
             ->where('product_id', $product_id)
             ->get();
 
