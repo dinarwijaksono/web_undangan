@@ -3,36 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Services\Product_service;
 use Illuminate\Http\Request;
 
 class Home_controller extends Controller
 {
-    public function index()
+    private $product_service;
+
+    public function __construct(Product_service $product_service)
     {
-        return view('Home/index');
+        $this->product_service = $product_service;
     }
+
 
 
     public function showProduct()
     {
-        $data['active'] = 'showProduct';
-        $data['listProduct'] = $this->listProduct();
+        $data['listProduct'] = collect($this->product_service->getAll());
 
         return view('/Home/showProduct', $data);
-    }
-
-
-    public function listProduct()
-    {
-        $products = [];
-        foreach (Product::all() as $product) {
-            $products[] = [
-                'name' => $product->name,
-                'link_locate_demo' => $product->link_locate_demo,
-                'seeCount' => collect($product->whosee)->count()
-            ];
-        }
-
-        return $products;
     }
 }

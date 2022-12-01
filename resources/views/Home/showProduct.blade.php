@@ -1,50 +1,43 @@
-@extends('layouts/frontLayout')
+@extends('layouts/front_main')
 
 @section('content')
-<!-- Page Content -->
-<!-- Banner Starts Here -->
-<div class="banner header-text">
-    <div class="owl-banner owl-carousel">
-        <div class="banner-item-01">
-            <div class="text-content">
-                <h4>penawaran terbaik</h4>
-                <h3 class="text-white">DAPATKAN PRODUK TERBAIK</h3>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Banner Ends Here -->
+<section class="pt-3 ">
+    <h3 class="fs-5 mb-2 text-decoration-underline text-center">PRODUK KAMI</h3>
 
-<div class="latest-products">
     <div class="container">
-        <section class="row">
-            <section class="col-md-12">
-                <div class="section-heading">
-                    <h2>Produk Kami</h2>
-                </div>
-            </section>
+        <div class="row justify-content-center">
+            <div class="col-11 ">
 
-            <section class="col-md-12">
-                <div class="row">
+
+                <div class="row justify-content-center">
 
                     @foreach ($listProduct as $product)
-                    <div class="col-md-4">
-                        <div class="product-item">
-                            <a href="#"><img src="/asset_2/images/product_02.jpg" alt=""></a>
-                            <div class="down-content">
-                                <h4><?= $product['name'] ?></h4>
-                                <p>Dilihat <?= number_format($product['seeCount']) ?></p>
-                                <a target="black" href="/Demo/<?= $product['link_locate_demo'] ?>"><span>Lihat demo</span></a>
+                    <div class="border col-sm-12 col-md-4 m-2 border-2 rounded " style="overflow: hidden;  position: relative; width: 300px; height: 300px; ">
+                        <div style="background-image: url('/storage/demo_01.png'); background-size: cover; background-position: center; background-repeat: no-repeat; position: absolute; top: 0; bottom: 0; left: 0; right: 0; ">
+
+                            <p class="fs-7 p-0 opacity-75 text-center bg-dark text-light rounded-bottom " style="width: 50%; margin: auto;"><?= $product->product_name ?></p>
+
+                            <div class="container" style="position: absolute; bottom: 5px;">
+                                <div class="row justify-content-between align-items-end">
+                                    <div class="col-6 d-grid ">
+                                        <a href="<?= '/Demo/' . $product->link_locate_demo ?>" class="btn btn-primary btn-sm p-0 fs-8 ">Lihat Demo</a>
+                                    </div>
+
+                                    <div class="col-6 d-grid ">
+                                        <a href="https://wa.me/62859106979837" target="_black" class="btn btn-primary btn-sm p-0 fs-8">Pesan sekarang</a>
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
                     </div>
                     @endforeach
 
                 </div>
-            </section>
 
-        </section>
 
+            </div>
+        </div>
     </div>
-</div>
+</section>
 @endsection
