@@ -71,6 +71,8 @@ Route::get('/Product/show/{code}', [Product_controller::class, 'show'])->middlew
 Route::get('/Product/edit/{code}', [Product_controller::class, 'edit'])->middleware('auth');
 Route::post('/Product/edit/{code}', [Product_controller::class, 'update'])->middleware('auth');
 
+Route::post('/Product/uploadTumb', [Product_controller::class, 'uploadTumb'])->middleware('auth');
+
 Route::delete('/Product/delete/{code}', [Product_controller::class, 'destroy'])->middleware('auth');
 /* end Product_controller */
 

@@ -45,6 +45,27 @@ class Product_service
         return $product->first();
     }
 
+    public function getIdByCode(string $code)
+    {
+        $product = DB::table('products')
+            ->select('id')
+            ->where('code', $code)
+            ->get();
+
+        return $product->first()->id;
+    }
+
+    public function getByCode(string $code)
+    {
+        $product = DB::table('products')
+            ->join('categories', 'products.category_id', '=', 'categories.id')
+            ->select('products.name', 'products.price', 'products.link_locate_demo', 'products.created_at', 'categories.name as category_name')
+            ->where('products.code', $code)
+            ->get();
+
+        return $product->first();
+    }
+
 
     public function getByLink($link)
     {

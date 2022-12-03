@@ -1,4 +1,4 @@
-@extends('layouts/main')
+@extends('layouts/cms_main')
 
 @section('content')
 
@@ -10,51 +10,35 @@
 
 <section class="row">
 
+    <div style="padding: 5px;">
+        <a href="/Product" class="btn btn-sm btn-link text-danger">Kembali</a>
+    </div>
+
     <div class="col-md-6">
-        <p style="margin: 0; padding: 0;">Kategori : <?= $product['category_name'] ?></p>
-        <p style="margin: 0; padding: 0;">Harga : <?= 'Rp. ' . number_format($product['price']) ?></p>
+        <p style="margin: 0; padding: 0;">Kategori : <?= $product['category_name'] ?> </p>
+        <p style="margin: 0; padding: 0;">Harga : <?= number_format($product['price']) ?></p>
         <p style="margin: 0; padding: 0;">Link demo : <?= $product['link_locate_demo'] ?></p>
-        <p style="margin: 0; padding: 0;">Dilihat : <?= number_format($product['see_count']) ?></p>
-        <p style="margin: 0; padding: 0;">Dibuat : <?= date(' H:i, d-M-Y', $product['created_at'] / 1000) ?></p>
+        <p style="margin: 0; padding: 0;">Dilihat : <?= number_format($product['views']) ?> </p>
+        <p style="margin: 0; padding: 0;">Dibuat : <?= date('h:i, d M Y', $product['created_at'] / 1000) ?></p>
     </div>
 
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Gambar produk
+                Gambar thumb product
             </div>
             <div>
-                <div style="float: left; width: 20%;">
-                    <img src="assets/img/user.gif" alt="gambar" style="border: 1px solid red;" />
-                    <br>
-                    <a href="">Hapus</a>
-                </div>
-                <div style="float: left; width: 20%;">
-                    <img src="assets/img/user.gif" alt="gambar" style="border: 1px solid red;" />
-                    <br>
-                    <a href="">Hapus</a>
-                </div>
-                <div style="float: left; width: 20%;">
-                    <img src="assets/img/user.gif" alt="gambar" style="border: 1px solid red;" />
-                    <br>
-                    <a href="">Hapus</a>
-                </div>
-                <div style="float: left; width: 20%;">
-                    <img src="assets/img/user.gif" alt="gambar" style="border: 1px solid red;" />
-                    <br>
-                    <a href="">Hapus</a>
-                </div>
-                <div style="float: left; width: 20%;">
-                    <img src="assets/img/user.gif" alt="gambar" style="border: 1px solid red;" />
-                    <br>
-                    <a href="">Hapus</a>
-                </div>
 
-                <div style="clear: left;"></div>
+                <img src="/storage/demo_01.png" alt="Gambar" style="width: 100%;">
 
             </div>
             <div style="padding: 5px;">
-                <button class="btn btn-info">Tambah gambar</button>
+                <form action="/Product/uploadTumb" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <input type="file" name="image">
+
+                    <button type="submit" class="btn btn-sm btn-info">Ganti gambar</button>
+                </form>
             </div>
         </div>
     </div>

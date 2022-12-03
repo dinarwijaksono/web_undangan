@@ -84,28 +84,30 @@ class Product_controller extends Controller
 
     public function show($code)
     {
-        $product = DB::table('products')
-            ->where('products.code', $code)
-            ->join('categories', 'categories.id', 'products.category_id')
-            ->select('products.name', 'products.price', 'products.link_locate_demo', 'products.created_at', 'categories.name as category_name')
-            ->get()[0];
+        $product = $this->product_service->getByCode($code);
+        $id = $this->product_service->getIdByCode($code);
 
-        $product_id = collect(Product::where('code', $code)->get())->first()->id;
-        $see = DB::table('who_sees')
-            ->where('product_id', $product_id)
-            ->select('user_agent', 'created_at')
-            ->get();
-
-        $product = collect($product);
-        $product['see_count'] = collect($see)->count();
-
-        $data['product'] = $product;
+        $data['product'] = [
+            'name' => $product->name,
+            'price' => $product->price,
+            'views' => $this->whoSeeDemo_service->getViews($id),
+            'link_locate_demo' => $product->link_locate_demo,
+            'created_at' => $product->created_at,
+            'category_name' => $product->category_name
+        ];
 
         return view('/Product/show', $data);
     }
 
 
+    public function uploadTumb(Request $request)
+    {
+        $picture = $request->file('image');
 
+        $picture->storePubliclyAs('tumbs', 'contoh' . '.' . $picture->getClientOriginalExtension(), 'public_custom');
+
+        return back()->with('successUpload', 'Gambar thumbnail produk berhasil di upload.');
+    }
 
 
 
