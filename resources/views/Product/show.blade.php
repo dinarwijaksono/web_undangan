@@ -6,6 +6,21 @@
     <div class="col-md-12">
         <h4 class="header-line"><?= $product['name'] ?></h4>
     </div>
+
+    <div class="col-md-12">
+        @error('image')
+        <div class="alert alert-danger" style="margin: 10px; padding: 10px;" role="alert"><?= $message ?></div>
+        @endError
+
+        @if (session('uploadFailed'))
+        <div class="alert alert-danger" style="margin: 10px; padding: 10px;" role="alert"><?= session('uploadFailed') ?></div>
+        @endif
+
+        @if (session('uploadSuccess'))
+        <div class="alert alert-success" style="margin: 10px; padding: 10px;" role="alert"><?= session('uploadSuccess') ?></div>
+        @endif
+
+    </div>
 </section>
 
 <section class="row">

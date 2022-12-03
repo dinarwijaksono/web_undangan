@@ -8,8 +8,11 @@ use App\Services\Category_service;
 use App\Services\Product_service;
 use App\Services\WhoSeeDemo_service;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Psy\Command\HistoryCommand;
+
+use function PHPUnit\Framework\isFalse;
+use function PHPUnit\Framework\isNull;
+use function PHPUnit\Framework\isTrue;
 
 class Product_controller extends Controller
 {
@@ -104,9 +107,19 @@ class Product_controller extends Controller
     {
         $picture = $request->file('image');
 
-        $picture->storePubliclyAs('tumbs', 'contoh' . '.' . $picture->getClientOriginalExtension(), 'public_custom');
+        $request->validate([
+            'image' => 'required'
+        ]);
 
-        return back()->with('successUpload', 'Gambar thumbnail produk berhasil di upload.');
+        $array = ['jpg', 'jpeg', 'png'];
+
+        if (!in_array(strtolower($picture->getClientOriginalExtension()), $array)) {
+            return back()->with('uploadFailed', 'File yang di upload bukan gambar.');
+        };
+
+        // $result = $picture->storePubliclyAs('tumbs', 'contoh' . '.' . $picture->getClientOriginalExtension(), 'public_custom');
+
+        return back()->with('uploadSuccess', 'Gambar thumbnail produk berhasil di upload.');
     }
 
 
