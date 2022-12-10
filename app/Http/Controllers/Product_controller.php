@@ -5,26 +5,25 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use App\Services\Category_service;
+use App\Services\PictureProduct_service;
 use App\Services\Product_service;
 use App\Services\WhoSeeDemo_service;
 use Illuminate\Http\Request;
-use Psy\Command\HistoryCommand;
 
-use function PHPUnit\Framework\isFalse;
-use function PHPUnit\Framework\isNull;
-use function PHPUnit\Framework\isTrue;
 
 class Product_controller extends Controller
 {
     protected $product_service;
     protected $category_service;
     protected $whoSeeDemo_service;
+    protected $pictureProduct_service;
 
-    function __construct(Product_service $product_service, Category_service $category_service, WhoSeeDemo_service $whoSeeDemo_service)
+    function __construct(Product_service $product_service, Category_service $category_service, WhoSeeDemo_service $whoSeeDemo_service, PictureProduct_service $pictureProduct_service)
     {
         $this->product_service = $product_service;
         $this->category_service = $category_service;
         $this->whoSeeDemo_service = $whoSeeDemo_service;
+        $this->pictureProduct_service = $pictureProduct_service;
     }
 
 
@@ -89,12 +88,20 @@ class Product_controller extends Controller
     {
         $product = $this->product_service->getByCode($code);
         $id = $this->product_service->getIdByCode($code);
+        $picture = $this->pictureProduct_service->getByProductId($id);
+
+        $image = NULL;
+        if ($picture['isEmpty'] === false) {
+            $image = $picture['data']->locate_file;
+        }
 
         $data['product'] = [
             'name' => $product->name,
+            'code' => $code,
             'price' => $product->price,
             'views' => $this->whoSeeDemo_service->getViews($id),
             'link_locate_demo' => $product->link_locate_demo,
+            'picture' => $image,
             'created_at' => $product->created_at,
             'category_name' => $product->category_name
         ];
@@ -103,7 +110,7 @@ class Product_controller extends Controller
     }
 
 
-    public function uploadTumb(Request $request)
+    public function uploadTumb(Request $request, $code)
     {
         $picture = $request->file('image');
 
@@ -117,7 +124,15 @@ class Product_controller extends Controller
             return back()->with('uploadFailed', 'File yang di upload bukan gambar.');
         };
 
-        // $result = $picture->storePubliclyAs('tumbs', 'contoh' . '.' . $picture->getClientOriginalExtension(), 'public_custom');
+        $product_id = $this->product_service->getIdByCode($code);
+        $name = 'F' . mt_rand(1, 9999999) . '.' . $picture->getClientOriginalExtension();
+        if ($this->pictureProduct_service->isExist($product_id)) {
+            $this->pictureProduct_service->update($name, $product_id);
+        } else {
+            $this->pictureProduct_service->add($name, $product_id);
+        }
+
+        $result = $picture->storePubliclyAs('tumbs', $name, 'public_custom');
 
         return back()->with('uploadSuccess', 'Gambar thumbnail produk berhasil di upload.');
     }

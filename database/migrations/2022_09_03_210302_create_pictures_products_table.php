@@ -17,8 +17,8 @@ class CreatePicturesProductsTable extends Migration
             $table->id();
             $table->foreignId('product_id');
             $table->string('locate_file');
-            $table->integer('create_at');
-            $table->integer('update_at');
+            $table->bigInteger('created_at');
+            $table->bigInteger('updated_at');
         });
     }
 

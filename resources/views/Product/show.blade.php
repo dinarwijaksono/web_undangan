@@ -44,11 +44,17 @@
             </div>
             <div>
 
+                <!-- <img src="/storage/demo_01.png" alt="Gambar" style="width: 100%;"> -->
+
+                @if ($product['picture'] === NULL)
                 <img src="/storage/demo_01.png" alt="Gambar" style="width: 100%;">
+                @else
+                <img src="<?= '/storage/tumbs/' . $product['picture'] ?>" alt="Gambar" style="width: 100%;">
+                @endif
 
             </div>
             <div style="padding: 5px;">
-                <form action="/Product/uploadTumb" method="post" enctype="multipart/form-data">
+                <form action="<?= '/Product/uploadTumb/' . $product['code'] ?>" method="post" enctype="multipart/form-data">
                     @csrf
                     <input type="file" name="image">
 
