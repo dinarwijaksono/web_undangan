@@ -25,7 +25,7 @@
                                 <div class="container" style="position: absolute; bottom: 5px;">
                                     <div class="row justify-content-between align-items-end">
                                         <div class="col-6 d-grid ">
-                                            <a href="<?= '/Demo/' . $product['link_locate_demo'] ?>" class="btn btn-primary btn-sm p-0 fs-8 ">Lihat Demo</a>
+                                            <a href="<?= '/Demo/' . $product['link_locate_demo'] ?>" class="btn btn-primary btn-sm p-0 fs-8 " target="_black">Lihat Demo</a>
                                         </div>
 
                                         <div class="col-6 d-grid ">

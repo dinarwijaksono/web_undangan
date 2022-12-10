@@ -1,7 +1,6 @@
 /node_modules
 /public/storage
 /storage/*.key
-/resources/views/Demo
 /resources/views/web_undangan
 /public/Demo
 /public/Pesanan

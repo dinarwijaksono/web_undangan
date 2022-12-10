@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\Product_service;
 use App\Services\WhoSeeDemo_service;
+use Directory;
 
 class Demo_controller extends Controller
 {
@@ -31,6 +32,9 @@ class Demo_controller extends Controller
 
         $this->whoSeeDemo_service->add($product->id, $user_agent);
 
+        if (!is_dir(__DIR__ . '/../../../resources/views/Demo/' . $link)) {
+            return view("/Demo/alternatives");
+        }
         return view("/Demo/$link/index");
     }
 }
