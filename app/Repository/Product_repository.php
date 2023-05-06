@@ -34,11 +34,30 @@ class Product_repository
         return $product->id;
     }
 
+    public function getByName(string $name): ?object
+    {
+        return DB::table('products')
+            ->join('body_products', 'products.id', '=', 'body_products.product_id')
+            ->select(
+                'products.id',
+                'products.category_id',
+                'products.code',
+                'products.name',
+                'products.price',
+                'products.link_locate_demo',
+                'body_products.body',
+                'products.created_at',
+                'products.updated_at'
+            )
+            ->where('products.name', $name)
+            ->first();
+    }
+
 
     // Delete
     public function delete(string $code): void
     {
-        DB::table('product')
+        DB::table('products')
             ->where('code', $code)
             ->delete();
     }

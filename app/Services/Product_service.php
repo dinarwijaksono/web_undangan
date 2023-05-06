@@ -88,6 +88,12 @@ class Product_service
     }
 
 
+    public function getByName(string $name): ?object
+    {
+        return $this->productRepository->getByName($name);
+    }
+
+
     public function getByLink($link)
     {
         $product = DB::table('products')
@@ -151,21 +157,21 @@ class Product_service
 
 
 
-    public function delete($code)
+    public function delete(string $code): void
     {
-        $product = DB::table('products')
-            ->where('code', $code)
-            ->select('code')
-            ->get();
+        try {
+            DB::beginTransaction();
 
-        if ($product->isEmpty()) {
-            return false;
+            $product_id = $this->productRepository->getIdByCode($code);
+
+            $this->bodyProductRepository->delete($product_id);
+            $this->productRepository->delete($code);
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            throw $th;
         }
-
-        DB::table('products')
-            ->where('code', $code)
-            ->delete();
-
-        return true;
     }
 }

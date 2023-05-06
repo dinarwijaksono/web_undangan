@@ -176,10 +176,7 @@ class Product_controller extends Controller
 
     public function destroy($code)
     {
-        $result = $this->product_service->delete($code);
-        if ($result == false) {
-            return back()->with('deleteFailed', 'Produk gagal di hapus');
-        }
+        $this->product_service->delete($code);
 
         return redirect('/Product')->with('deleteSuccess', 'Produk berhasil di hapus.');
     }

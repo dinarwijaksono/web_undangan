@@ -31,6 +31,8 @@ class ProductService_Test extends TestCase
         $this->bodyProductRepository = $this->app->make(BodyProduct_repository::class);
 
         $this->productService = $this->app->make(Product_service::class);
+
+        config(['database.default' => 'mysql-test']);
     }
 
 
@@ -43,7 +45,7 @@ class ProductService_Test extends TestCase
         $request['category_id'] = 1;
         $request['body'] = '<div>Aku ' . mt_rand(1, 9999) . ' kamu</div>';
 
-        $result = $this->productService->add($request);
+        $this->productService->add($request);
 
         $this->assertDatabaseHas('products', [
             'name' => $request['name'],
@@ -111,13 +113,31 @@ class ProductService_Test extends TestCase
     //     $this->assertFalse($result);
     // }
 
-    // public function test_deleteSuccess()
-    // {
-    //     $product = DB::table('products')->get();
-    //     $product = $product->first();
+    public function test_deleteSuccess()
+    {
+        $request = new Request();
+        $request['name'] = "aku kamu " . mt_rand(1, 99999);
+        $request['price'] = 100_000;
+        $request['category_id'] = 1;
+        $request['body'] = '<div>Aku ' . mt_rand(1, 9999) . ' kamu</div>';
 
-    //     $result = $this->product_service->delete($product->code);
+        $this->productService->add($request);
 
-    //     $this->assertTrue($result);
-    // }
+        $response = $this->productService->getByName($request->name);
+
+        $this->assertEquals($request->name, $request->name);
+        $this->assertEquals($request->category_id, $request->category_id);
+        $this->assertEquals($request->body, $request->body);
+
+        $this->productService->delete($response->code);
+
+        $this->assertDatabaseMissing('products', [
+            'name' => $request->name,
+            'category_id' => $request->category_id,
+        ]);
+
+        $this->assertDatabaseMissing('body_products', [
+            'body' => $request->body
+        ]);
+    }
 }

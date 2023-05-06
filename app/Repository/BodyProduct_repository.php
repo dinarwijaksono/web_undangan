@@ -15,4 +15,12 @@ class BodyProduct_repository
                 'body' => $product->body,
             ]);
     }
+
+
+    public function delete(int $product_id): void
+    {
+        DB::table('body_products')
+            ->where('product_id', $product_id)
+            ->delete();
+    }
 }
