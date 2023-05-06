@@ -42,8 +42,6 @@ class Product_controller extends Controller
             ];
         }
 
-        // return $listProduct;
-
         $data['listProduct'] = $listProduct;
 
         return view('/Product/index', $data);
@@ -66,12 +64,10 @@ class Product_controller extends Controller
     {
         $request->validate([
             'name' => 'required|max:20|unique:products,name',
-            'price' => 'required',
+            'price' => 'required|integer',
             'category_id' => 'required',
             'body' => 'required'
         ]);
-
-        $request['body'] = "<div><h1>Amiin</h1></div>";
 
         $this->product_service->add($request);
 
