@@ -33,4 +33,13 @@ class Product_repository
 
         return $product->id;
     }
+
+
+    // Delete
+    public function delete(string $code): void
+    {
+        DB::table('product')
+            ->where('code', $code)
+            ->delete();
+    }
 }
