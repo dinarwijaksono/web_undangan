@@ -65,17 +65,15 @@ class Product_controller extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|max:20|unique:products',
+            'name' => 'required|max:20|unique:products,name',
             'price' => 'required',
-            'category' => 'required'
+            'category_id' => 'required',
+            'body' => 'required'
         ]);
 
-        $body = "<div><h1>Amiin</h1></div>";
+        $request['body'] = "<div><h1>Amiin</h1></div>";
 
-        $result =  $this->product_service->add($request->name, $request->price, $request->category, $body);
-        if ($result == false) {
-            return back()->with('createFailed', "Produk gagal di buat.");
-        }
+        $this->product_service->add($request);
 
         return redirect('/Product')->with('createSuccess', "Produk berhasil di tambahkan.");
     }

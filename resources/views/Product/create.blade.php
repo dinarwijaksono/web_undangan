@@ -30,13 +30,21 @@
 
                     <div class="form-group">
                         <label>Kategori</label>
-                        <select name="category" class="form-control">
-                            <option>Pilih kategori</option>
+                        <select name="category_id" class="form-control">
+                            <option value="">Pilih kategori</option>
                             @foreach ($listCategory as $category )
                             <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
                             @endforeach
                         </select>
-                        @error('category')
+                        @error('category_id')
+                        <p class="help-block" style="color: red;"><?= $message ?></p>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label>Body</label>
+                        <textarea name="body" class="form-control" rows="3"></textarea>
+                        @error('body')
                         <p class="help-block" style="color: red;"><?= $message ?></p>
                         @enderror
                     </div>
