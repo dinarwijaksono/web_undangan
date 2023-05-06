@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('code', 8)->unique();
             $table->string('name', 20)->unique();
             $table->integer('price');
-            $table->string('link_locate_demo', 30);
+            $table->string('link_locate_demo', 50)->unique();
             $table->bigInteger('created_at');
             $table->bigInteger('updated_at');
         });

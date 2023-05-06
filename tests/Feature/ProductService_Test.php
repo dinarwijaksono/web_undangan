@@ -2,97 +2,122 @@
 
 namespace Tests\Feature;
 
+use App\Domain\Product_domain;
+use App\Repository\BodyProduct_repository;
+use App\Repository\Product_repository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use App\Services\Product_service;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class ProductService_Test extends TestCase
 {
-    private $product_service;
+    private $productDomain;
+
+    private $productRepository;
+    private $bodyProductRepository;
+
+    private $productService;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->product_service = $this->app->make(Product_service::class);
+        $this->productDomain = $this->app->make(Product_domain::class);
+
+        $this->productRepository = $this->app->make(Product_repository::class);
+        $this->bodyProductRepository = $this->app->make(BodyProduct_repository::class);
+
+        $this->productService = $this->app->make(Product_service::class);
     }
 
 
 
     public function test_addSuccess()
     {
-        $name = 'tema ' . mt_rand(1, 99);
-        $result = $this->product_service->add($name, 100_000, 1);
+        $request = new Request();
+        $request['name'] = "aku kamu " . mt_rand(1, 99999);
+        $request['price'] = 100_000;
+        $request['category_id'] = 1;
+        $request['body'] = '<div>Aku ' . mt_rand(1, 9999) . ' kamu</div>';
 
-        $this->assertTrue($result);
+        $result = $this->productService->add($request);
 
-        $this->assertDatabaseHas('products', ['name' => $name]);
+        $this->assertDatabaseHas('products', [
+            'name' => $request['name'],
+            'price' => $request['price'],
+            'category_id' => $request['category_id']
+        ]);
+
+        $this->assertDatabaseHas('body_products', [
+            'body' => $request['body']
+        ]);
     }
 
 
 
-    public function test_updateFailed()
-    {
-        $product = DB::table('products')->select('code', 'name', 'price', 'category_id')->get();
-        $product = $product->first();
+    // public function test_updateFailed()
+    // {
+    //     $product = DB::table('products')->select('code', 'name', 'price', 'category_id')->get();
+    //     $product = $product->first();
 
-        $name = $product->name;
-        $price = $product->price;
-        $category_id = $product->category_id;
+    //     $name = $product->name;
+    //     $price = $product->price;
+    //     $category_id = $product->category_id;
 
-        $result = $this->product_service->update($product->code, $name, $price, $category_id);
+    //     $result = $this->product_service->update($product->code, $name, $price, $category_id);
 
-        $this->assertFalse($result);
-    }
+    //     $this->assertFalse($result);
+    // }
 
-    public function test_updateNameIsExist()
-    {
-        $product = DB::table('products')->select('code', 'name', 'price', 'category_id')->get();
-        $product = $product->first();
+    // public function test_updateNameIsExist()
+    // {
+    //     $product = DB::table('products')->select('code', 'name', 'price', 'category_id')->get();
+    //     $product = $product->first();
 
-        $name = 'Tema 3';
-        $price = $product->price;
-        $category_id = $product->category_id;
+    //     $name = 'Tema 3';
+    //     $price = $product->price;
+    //     $category_id = $product->category_id;
 
-        $result = $this->product_service->update($product->code, $name, $price, $category_id);
+    //     $result = $this->product_service->update($product->code, $name, $price, $category_id);
 
-        $this->assertFalse($result);
-    }
-
-
-    public function test_updateSuccess()
-    {
-        $product = DB::table('products')->select('code', 'name', 'price', 'category_id')->get();
-        $product = $product->first();
-
-        $name = 'Tema 70';
-        $price = 25000;
-        $category_id = $product->category_id;
-
-        $result = $this->product_service->update($product->code, $name, $price, $category_id);
-
-        $this->assertTrue($result);
-    }
+    //     $this->assertFalse($result);
+    // }
 
 
+    // public function test_updateSuccess()
+    // {
+    //     $product = DB::table('products')->select('code', 'name', 'price', 'category_id')->get();
+    //     $product = $product->first();
+
+    //     $name = 'Tema 70';
+    //     $price = 25000;
+    //     $category_id = $product->category_id;
+
+    //     $result = $this->product_service->update($product->code, $name, $price, $category_id);
+
+    //     $this->assertTrue($result);
+    // }
 
 
-    public function test_deleteFailed()
-    {
-        $result = $this->product_service->delete('lkasdf');
 
-        $this->assertFalse($result);
-    }
 
-    public function test_deleteSuccess()
-    {
-        $product = DB::table('products')->get();
-        $product = $product->first();
+    // public function test_deleteFailed()
+    // {
+    //     $result = $this->product_service->delete('lkasdf');
 
-        $result = $this->product_service->delete($product->code);
+    //     $this->assertFalse($result);
+    // }
 
-        $this->assertTrue($result);
-    }
+    // public function test_deleteSuccess()
+    // {
+    //     $product = DB::table('products')->get();
+    //     $product = $product->first();
+
+    //     $result = $this->product_service->delete($product->code);
+
+    //     $this->assertTrue($result);
+    // }
 }

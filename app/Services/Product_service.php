@@ -2,35 +2,56 @@
 
 namespace App\Services;
 
+use App\Domain\Product_domain;
+use App\Models\Product;
 use Illuminate\Support\Facades\DB;
-use Psy\Command\WhereamiCommand;
+
+use App\Repository\BodyProduct_repository;
+use App\Repository\Product_repository;
+use Illuminate\Http\Request;
 
 class Product_service
 {
-    public function add($name, $price, $category_id): bool
+    private $productDomain;
+    private $productRepository;
+    private $bodyProductRepository;
+
+    public function __construct(Product_domain $product_domain, Product_repository $product_repository, BodyProduct_repository $bodyProduct_repository)
     {
-        $product = DB::table('products')
-            ->select('name')
-            ->where('name', $name)
-            ->get();
+        $this->productDomain = $product_domain;
 
-        if ($product->isNotEmpty()) {
-            return false;
+        $this->productRepository = $product_repository;
+        $this->bodyProductRepository = $bodyProduct_repository;
+    }
+
+
+    public function add(Request $request)
+    {
+        try {
+
+            DB::beginTransaction();
+
+            $product = $this->productDomain;
+            $product->name = $request->name;
+            $product->code = 'P' . mt_rand(1, 9999999);
+            $product->price = $request->price;
+            $product->link_locate_demo = 'Link-' . mt_rand(1, 9999);
+            $product->category_id = $request->category_id;
+            $product->body = $request->body;
+
+            $this->productRepository->create($product);
+
+            // get id by code
+            $product->id = $this->productRepository->getIdByCode($product->code);
+            $this->bodyProductRepository->create($product);
+
+            DB::commit();
+        } catch (\Throwable $th) {
+
+            DB::rollBack();
+
+            throw $th;
         }
-
-
-        DB::table('products')
-            ->insert([
-                'category_id' => $category_id,
-                'code' => 'P' . mt_rand(1, 9999999),
-                'name' => $name,
-                'price' => $price,
-                'link_locate_demo' => 'Link-' . mt_rand(1, 9999),
-                'created_at' => round(microtime(true) * 1000),
-                'updated_at' => round(microtime(true) * 1000),
-            ]);
-
-        return true;
     }
 
 

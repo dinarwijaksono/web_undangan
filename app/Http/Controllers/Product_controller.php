@@ -70,7 +70,9 @@ class Product_controller extends Controller
             'category' => 'required'
         ]);
 
-        $result =  $this->product_service->add($request->name, $request->price, $request->category);
+        $body = "<div><h1>Amiin</h1></div>";
+
+        $result =  $this->product_service->add($request->name, $request->price, $request->category, $body);
         if ($result == false) {
             return back()->with('createFailed', "Produk gagal di buat.");
         }

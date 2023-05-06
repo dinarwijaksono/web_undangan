@@ -9,10 +9,10 @@ use App\Services\PictureProduct_service;
 use App\Services\Product_service;
 use App\Services\User_service;
 use App\Services\WhoSeeDemo_service;
-
+use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 
-class Main_provider extends ServiceProvider
+class Main_provider extends ServiceProvider implements DeferrableProvider
 {
     /**
      * Register services.
@@ -29,8 +29,8 @@ class Main_provider extends ServiceProvider
             return new Category_service;
         });
 
-        $this->app->singleton(Product_service::class, function () {
-            return new Product_service;
+        $this->app->singleton(Product_service::class, function ($app) {
+            return new Product_service($app);
         });
 
 
