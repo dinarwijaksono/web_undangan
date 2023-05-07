@@ -18,9 +18,6 @@
                 <div class="alert alert-info" style="margin: 10px; padding: 10px;" role="alert"><?= session('deleteSuccess') ?></div>
                 @endif
 
-                @if (session('editSuccess'))
-                <div class="alert alert-info" style="margin: 10px; padding: 10px;" role="alert"><?= session('editSuccess') ?></div>
-                @endif
 
             </div>
             <div class="panel-body">

@@ -137,15 +137,14 @@ class Product_controller extends Controller
 
     public function edit($code)
     {
-        $product = $this->product_service->get($code);
+        $product = $this->product_service->getByCode($code);
 
         if (collect($product)->isEmpty()) {
             return redirect('/Product');
         }
 
-        $data['product'] = $product;
+        $data['product'] = collect($product);
         $data['listCategory'] = $this->category_service->getAll();
-        $data['code'] = $code;
 
         return view('/Product/edit', $data);
     }
@@ -157,16 +156,22 @@ class Product_controller extends Controller
         $request->validate([
             'name' => 'required|max:20',
             'price' => 'required',
-            'category' => 'required'
+            'category_id' => 'required',
+            'body' => 'required'
         ]);
 
-        $result = $this->product_service->update($code, $request->name, $request->price, $request->category);
 
-        if ($result['isSuccess'] == false) {
-            return back()->with('editFailed', $result['message']);
+        // cek apakah name di update
+        $product = $this->product_service->getByCode($request->code);
+        if ($product->name != $request->name) {
+            $request->validate([
+                'name' => 'unique:products,name'
+            ]);
         }
 
-        return redirect('/Product')->with('editSuccess', "Produk berhasil di edit.");
+        $this->product_service->update($request, $code);
+
+        return redirect("/Product/edit/$code")->with('editSuccess', "Produk berhasil di edit.");
     }
 
 

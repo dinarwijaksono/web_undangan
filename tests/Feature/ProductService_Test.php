@@ -89,19 +89,47 @@ class ProductService_Test extends TestCase
     // }
 
 
-    // public function test_updateSuccess()
-    // {
-    //     $product = DB::table('products')->select('code', 'name', 'price', 'category_id')->get();
-    //     $product = $product->first();
+    public function test_updateSuccess()
+    {
+        $request = new Request();
+        $request['name'] = "aku kamu " . mt_rand(1, 99999);
+        $request['price'] = 100_000;
+        $request['category_id'] = 1;
+        $request['body'] = '<div>Aku ' . mt_rand(1, 9999) . ' kamu</div>';
 
-    //     $name = 'Tema 70';
-    //     $price = 25000;
-    //     $category_id = $product->category_id;
+        $this->productService->add($request);
 
-    //     $result = $this->product_service->update($product->code, $name, $price, $category_id);
+        $this->assertDatabaseHas('products', [
+            'name' => $request['name'],
+            'price' => $request['price'],
+            'category_id' => $request['category_id']
+        ]);
 
-    //     $this->assertTrue($result);
-    // }
+        $this->assertDatabaseHas('body_products', [
+            'body' => $request['body']
+        ]);
+
+        $response = $this->productService->getByName($request->name);
+        $code = $response->code;
+
+        $request = new Request();
+        $request['name'] = "kamu dia " . mt_rand(1, 99999);
+        $request['price'] = 1_000;
+        $request['category_id'] = 2;
+        $request['body'] = '<div>Aku, dia ' . mt_rand(1, 9999) . ' kamu</div>';
+
+        $this->productService->update($request, $code);
+
+        $this->assertDatabaseHas('products', [
+            'name' => $request['name'],
+            'price' => $request['price'],
+            'category_id' => $request['category_id']
+        ]);
+
+        $this->assertDatabaseHas('body_products', [
+            'body' => $request['body']
+        ]);
+    }
 
 
 

@@ -25,6 +25,7 @@ class Product_service
     }
 
 
+    // create
     public function add(Request $request)
     {
         try {
@@ -55,6 +56,7 @@ class Product_service
     }
 
 
+    // Read
     public function get($code)
     {
         $product = DB::table('products')
@@ -78,13 +80,7 @@ class Product_service
 
     public function getByCode(string $code)
     {
-        $product = DB::table('products')
-            ->join('categories', 'products.category_id', '=', 'categories.id')
-            ->select('products.name', 'products.price', 'products.link_locate_demo', 'products.created_at', 'categories.name as category_name')
-            ->where('products.code', $code)
-            ->get();
-
-        return $product->first();
+        return $this->productRepository->getByCode($code);
     }
 
 
@@ -118,45 +114,34 @@ class Product_service
 
 
 
-    public function update($code, $name, $price, $category_id): array
+    // update
+    public function update(Request $request, string $code): void
     {
-        $product = $this->get($code);
-        if ($name == $product->product_name && $price == $product->price && $category_id == $product->category_id) {
-            return [
-                'isSuccess' => false,
-                'message' => "Tidak ada perubahan."
-            ];
+        try {
+            DB::beginTransaction();
+
+            $product = $this->productDomain;
+            $product->code = $code;
+            $product->name = $request->name;
+            $product->category_id = $request->category_id;
+            $product->price = $request->price;
+            $product->body = $request->body;
+            $product->id = $this->productRepository->getIdByCode($code);
+
+            $this->bodyProductRepository->update($product);
+            $this->productRepository->update($product);
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            throw $th;
         }
-
-        $productByName = DB::table('products')
-            ->select('name')
-            ->where('name', $name)
-            ->where('code', '!=', $code)
-            ->get();
-        if ($productByName->isNotEmpty()) {
-            return [
-                'isSuccess' => false,
-                'message' => "Terdapat nama product yang sama."
-            ];
-        }
-
-        DB::table('products')
-            ->where('code', $code)
-            ->update([
-                'name' => $name,
-                'price' => $price,
-                'category_id' => $category_id,
-                'updated_at' => round(microtime(true) * 1000)
-            ]);
-
-        return [
-            'isSuccess' => true
-        ];
     }
 
 
 
-
+    // Delete
     public function delete(string $code): void
     {
         try {

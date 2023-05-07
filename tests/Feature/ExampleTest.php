@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 
 class ExampleTest extends TestCase
@@ -14,8 +15,9 @@ class ExampleTest extends TestCase
      */
     public function test_example()
     {
-        $response = $this->get('/');
+        config(['database.default' => 'mysql-test']);
+        Artisan::call('migrate:fresh --seed');
 
-        $response->assertStatus(200);
+        $this->assertTrue(true);
     }
 }

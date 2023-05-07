@@ -25,6 +25,7 @@ class BodyProductRepository_Test extends TestCase
         config(['database.default' => 'mysql-test']);
     }
 
+    // Create
     public function test_create()
     {
         $product = $this->productDomain;
@@ -40,10 +41,36 @@ class BodyProductRepository_Test extends TestCase
     }
 
 
-    public function test_delete()
+    // Update
+    public function test_update()
     {
         $product = $this->productDomain;
         $product->id = 1;
+        $product->body = "<div>aku kamu " . mt_rand(1, 9999) . " </div>";
+
+        $this->bodyProductRepository->create($product);
+
+        $this->assertDatabaseHas('body_products', [
+            'product_id' => $product->id,
+            'body' => $product->body
+        ]);
+
+        $product->body = "<section>lorem ipsum dolar is amet</section>";
+
+        $this->bodyProductRepository->update($product);
+
+        $this->assertDatabaseHas('body_products', [
+            'product_id' => $product->id,
+            'body' => $product->body
+        ]);
+    }
+
+
+    // Delete
+    public function test_delete()
+    {
+        $product = $this->productDomain;
+        $product->id = 100;
         $product->body = "<div>aku kamu " . mt_rand(1, 9999) . " </div>";
 
         $this->bodyProductRepository->create($product);

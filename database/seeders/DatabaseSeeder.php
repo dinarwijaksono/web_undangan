@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
 
         $data = [
             'email' => 'admin@gmail.com',
-            'password' => Hash::make('damayanti'),
+            'password' => Hash::make('12341234'),
             'created_at' => floor(microtime(true) * 1000),
             'updated_at' => floor(microtime(true) * 1000),
         ];
