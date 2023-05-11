@@ -17,7 +17,9 @@ class Asset_controller extends Controller
 
     public function index()
     {
-        return view('Asset/index');
+        $data['assetList'] = collect($this->asset_service->getAll());
+
+        return view('Asset/index', $data);
     }
 
 

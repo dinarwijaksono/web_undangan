@@ -19,4 +19,11 @@ class Asset_service
     {
         $this->assetRepository->create($name, $type);
     }
+
+
+    // Read
+    public function getAll(): ?object
+    {
+        return $this->assetRepository->getAll();
+    }
 }

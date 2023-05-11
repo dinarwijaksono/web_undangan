@@ -32,4 +32,17 @@ class AssetRepository_Test extends TestCase
             'type' => $type,
         ]);
     }
+
+
+    public function test_getAll()
+    {
+        $name = 'bootstarp_3-' . mt_rand(1, 999) . '.css';
+        $type = 'css';
+
+        $this->assetRepository->create($name, $type);
+
+        $response = $this->assetRepository->getAll();
+
+        $this->assertIsObject($response);
+    }
 }

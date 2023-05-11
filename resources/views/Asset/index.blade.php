@@ -20,19 +20,31 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th style="width: 10%;">#</th>
-                                <th style="width: 70%;">Nama</th>
-                                <th style="width: 20%;">Action</th>
+                                <th style="width: 10%; text-align: center;">No</th>
+                                <th style="width: 40%;">Nama</th>
+                                <th style="width: 20%; text-align: center;">Type</th>
+                                <th style="width: 20%; text-align: center;">Dibuat</th>
+                                <th style="width: 10%; text-align: center;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
 
-                            <tr>
-                                <td>d</td>
-                                <td>
-                                    <a href="/Category/edit/" class="btn btn-primary btn-xs">Edit</a>
-                                </td>
-                            </tr>
+                            <?php $i = 1; ?>
+                            <?php foreach ($assetList as $asset) : ?>
+                                <tr>
+                                    <td style="text-align: center;"><?= $i++ ?></td>
+                                    <td><?= $asset->name ?></td>
+                                    <td style="text-align: center;"><?= $asset->type ?></td>
+                                    <td><?= date('h:i, d M Y', $asset->created_at / 1000) ?></td>
+                                    <td style="text-align: center;">
+                                        <form action="/Asset/delete" method="post">
+                                            @method('delete')
+                                            @csrf
+                                            <button class="btn btn-danger btn-xs">Hapus</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php endforeach ?>
 
                         </tbody>
                     </table>
