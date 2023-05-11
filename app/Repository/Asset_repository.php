@@ -10,7 +10,7 @@ class Asset_repository
     {
         DB::table('assets')
             ->insert([
-                'name' => $type . '/' . $name,
+                'name' =>  $name,
                 'type' => $type,
                 'created_at' => round(microtime(true) * 1000),
                 'updated_at' => round(microtime(true) * 1000),

@@ -28,7 +28,7 @@ class AssetService_Test extends TestCase
         $this->assetService->create($name, $type);
 
         $this->assertDatabaseHas('assets', [
-            'name' => $type . '/' . $name,
+            'name' => $name,
             'type' => $type,
         ]);
     }

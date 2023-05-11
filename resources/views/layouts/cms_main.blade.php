@@ -27,6 +27,7 @@
                         <ul id="menu-top" class="nav navbar-nav navbar-right">
                             <li><a href="/Dashboard">DASHBOARD</a></li>
                             <li><a href="/Category">KATEGORI</a></li>
+                            <li><a href="/Asset">Asset</a></li>
                             <li><a href="/Product">PRODUK</a></li>
                             <li><a href="/Order">PESANAN</a></li>
                             <li>

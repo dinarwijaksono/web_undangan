@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Asset_controller;
 use App\Http\Controllers\Auth_controller;
 use App\Http\Controllers\Category_controller;
 use App\Http\Controllers\ConfigManagement_controller;
@@ -76,6 +77,13 @@ Route::post('/Product/uploadTumb/{code}', [Product_controller::class, 'uploadTum
 Route::delete('/Product/delete/{code}', [Product_controller::class, 'destroy'])->middleware('auth');
 /* end Product_controller */
 
+/* Asset_controller */
+Route::get('/Asset', [Asset_controller::class, 'index'])->middleware('auth');
+Route::get('/Asset/index', [Asset_controller::class, 'index'])->middleware('auth');
+
+Route::get('/Asset/addAsset', [Asset_controller::class, 'addAsset'])->middleware('auth');
+Route::post('/Asset/addAsset', [Asset_controller::class, 'doAddAsset'])->middleware('auth');
+/* end Asset_controller */
 
 /* Config */
 Route::get('/Config/userManagement', [User_controller::class, 'index'])->middleware('auth');
