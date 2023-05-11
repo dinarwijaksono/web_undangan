@@ -65,4 +65,14 @@ class Asset_controller extends Controller
 
         return back()->with('addAssetSuccess', 'File berhasil tersimpan.');
     }
+
+
+    public function doDelete($id)
+    {
+        $asset = $this->asset_service->getById($id);
+
+        $this->asset_service->deleteById($asset->id);
+
+        return back()->with('deleteAssetSuccess', 'file berhasil dihapus.');
+    }
 }

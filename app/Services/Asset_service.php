@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repository\Asset_repository;
+use Illuminate\Support\Facades\Storage;
 
 class Asset_service
 {
@@ -22,8 +23,22 @@ class Asset_service
 
 
     // Read
+    public function getById($id): ?object
+    {
+        return $this->assetRepository->getById($id);
+    }
+
     public function getAll(): ?object
     {
         return $this->assetRepository->getAll();
+    }
+
+    // Delete
+    public function deleteById(int $id): void
+    {
+        $asset = $this->assetRepository->getById($id);
+
+        Storage::disk('public_custom')->delete($asset->name);
+        $this->assetRepository->deleteById($id);
     }
 }

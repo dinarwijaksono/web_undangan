@@ -83,6 +83,8 @@ Route::get('/Asset/index', [Asset_controller::class, 'index'])->middleware('auth
 
 Route::get('/Asset/addAsset', [Asset_controller::class, 'addAsset'])->middleware('auth');
 Route::post('/Asset/addAsset', [Asset_controller::class, 'doAddAsset'])->middleware('auth');
+
+Route::delete("/Asset/delete/{id}", [Asset_controller::class, 'doDelete'])->middleware('auth');
 /* end Asset_controller */
 
 /* Config */
