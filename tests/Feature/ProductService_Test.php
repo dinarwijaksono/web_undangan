@@ -90,6 +90,42 @@ class ProductService_Test extends TestCase
     }
 
 
+    public function test_getAll()
+    {
+        // create category
+        // create category 
+        $categoryCode = 'C' . mt_rand(1, 9999999);
+        $categoryName = 'category-' . mt_rand(1, 9999);
+        $this->categoryRepository->create($categoryCode, $categoryName);
+
+        $category = $this->categoryRepository->getByName($categoryName);
+
+        // create product
+        $request = new Request();
+        $request['name'] = "aku kamu " . mt_rand(1, 99999);
+        $request['price'] = 100_000;
+        $request['category_id'] = $category->id;
+        $request['css_external'] = [1, 2];
+        $request['js_external'] = [3, 4];
+        $request['css_internal'] = "ini css internal";
+        $request['body'] = '<div>Aku ' . mt_rand(1, 9999) . ' kamu</div>';
+        $request['js_internal'] = "ini javascript internal";
+
+        $this->productService->add($request);
+
+        $request['name'] = "aku kamu " . mt_rand(1, 99999);
+        $this->productService->add($request);
+
+        $request['name'] = "aku kamu " . mt_rand(1, 99999);
+        $this->productService->add($request);
+
+        $response = $this->productService->getAll();
+
+        $this->assertIsObject($response);;
+        $this->assertTrue($response->count() >= 3);
+    }
+
+
 
     // public function test_updateFailed()
     // {

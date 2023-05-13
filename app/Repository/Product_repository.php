@@ -80,6 +80,30 @@ class Product_repository
     }
 
 
+    public function getAll(): object
+    {
+        return DB::table('products')
+            ->join('categories', 'products.category_id', '=', 'categories.id')
+            ->join('body_products', 'products.id', '=', 'body_products.product_id')
+            ->select(
+                'products.id',
+                'products.name',
+                'products.code',
+                'products.price',
+                'categories.name as category_name',
+                'products.category_id',
+                'products.link_locate_demo',
+                'body_products.css_internal',
+                'body_products.body',
+                'body_products.js_internal',
+                'products.created_at',
+                'products.updated_at',
+            )
+            ->orderBy('products.created_at', 'desc')
+            ->get();
+    }
+
+
     // update
     public function update(Product_domain $product): void
     {

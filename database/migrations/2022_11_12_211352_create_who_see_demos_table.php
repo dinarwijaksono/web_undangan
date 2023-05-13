@@ -15,7 +15,7 @@ class CreateWhoSeeDemosTable extends Migration
     {
         Schema::create('who_see_demos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id');
+            $table->foreignId('product_id')->unique();
             $table->string('user_agent', 100);
             $table->bigInteger('created_at');
         });

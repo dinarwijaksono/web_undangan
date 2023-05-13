@@ -10,6 +10,7 @@ use App\Repository\BodyProduct_repository;
 use App\Repository\Category_repository;
 use App\Repository\Product_repository;
 use App\Repository\ProductAsset_repository;
+use App\Repository\WhoSeeDemo_repository;
 use Illuminate\Http\Request;
 
 class Product_service
@@ -19,18 +20,21 @@ class Product_service
     private $bodyProductRepository;
     private $productAssetRepository;
     private $categoryRepository;
+    private $whoSeeDemoRepository;
 
     public function __construct(
         Product_domain $product_domain,
         Product_repository $product_repository,
         BodyProduct_repository $bodyProduct_repository,
-        ProductAsset_repository $productAsset_repository
+        ProductAsset_repository $productAsset_repository,
+        WhoSeeDemo_repository $whoSeeDemo_repository
     ) {
         $this->productDomain = $product_domain;
 
         $this->productRepository = $product_repository;
         $this->bodyProductRepository = $bodyProduct_repository;
         $this->productAssetRepository = $productAsset_repository;
+        $this->whoSeeDemoRepository = $whoSeeDemo_repository;
     }
 
 
@@ -126,10 +130,14 @@ class Product_service
 
     public function getAll()
     {
-        $product = DB::table('products')
-            ->join('categories', 'products.category_id', '=', 'categories.id')
-            ->select('products.name as product_name', 'products.price', 'categories.name as category_name', 'products.link_locate_demo', 'products.code', 'categories.id as category_id', 'products.id as product_id')
-            ->get();
+        $product = collect($this->productRepository->getAll());
+
+        $product = $product->map(function ($item) {
+            $whoSee = $this->whoSeeDemoRepository->getAll();
+
+            $item->total_views = $whoSee->where('product_id', $item->id)->count();
+            return $item;
+        });
 
         return $product;
     }

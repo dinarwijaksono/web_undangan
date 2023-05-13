@@ -38,20 +38,9 @@ class Product_controller extends Controller
 
     public function index()
     {
-        $listProduct = [];
-        foreach ($this->product_service->getAll() as $product) {
-            $listProduct[] = [
-                'code' => $product->code,
-                'product_name' => $product->product_name,
-                'price' => $product->price,
-                'views' => $this->whoSeeDemo_service->getViews($product->product_id),
-                'category_name' => $product->category_name,
-                'link_locate_demo' => $product->link_locate_demo
-            ];
-        }
+        $data['listProduct'] = $this->product_service->getAll();
 
-        $data['listProduct'] = $listProduct;
-
+        // return $data['listProduct'];
         return view('/Product/index', $data);
     }
 
