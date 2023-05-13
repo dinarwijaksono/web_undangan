@@ -30,13 +30,17 @@ class BodyProductRepository_Test extends TestCase
     {
         $product = $this->productDomain;
         $product->id = 1;
+        $product->css_internal = "body { border: 1px solid red; }";
         $product->body = "<div>aku kamu " . mt_rand(1, 9999) . " </div>";
+        $product->js_internal = "let name = documents.getElementByName('input')";
 
         $this->bodyProductRepository->create($product);
 
         $this->assertDatabaseHas('body_products', [
             'product_id' => $product->id,
-            'body' => $product->body
+            'css_internal' => $product->css_internal,
+            'body' => $product->body,
+            'js_internal' => $product->js_internal,
         ]);
     }
 
@@ -46,16 +50,22 @@ class BodyProductRepository_Test extends TestCase
     {
         $product = $this->productDomain;
         $product->id = 1;
+        $product->css_internal = "body { border: 1px solid red; }";
         $product->body = "<div>aku kamu " . mt_rand(1, 9999) . " </div>";
+        $product->js_internal = "let name = documents.getElementByName('input')";
 
         $this->bodyProductRepository->create($product);
 
         $this->assertDatabaseHas('body_products', [
             'product_id' => $product->id,
-            'body' => $product->body
+            'css_internal' => $product->css_internal,
+            'body' => $product->body,
+            'js_internal' => $product->js_internal,
         ]);
 
+        $product->css_internal = "body { border: 10px solid black; }";
         $product->body = "<section>lorem ipsum dolar is amet</section>";
+        $product->js_internal = "let name = documents.getElementByName('input')";
 
         $this->bodyProductRepository->update($product);
 
@@ -71,7 +81,9 @@ class BodyProductRepository_Test extends TestCase
     {
         $product = $this->productDomain;
         $product->id = 100;
+        $product->internal_css = NULL;
         $product->body = "<div>aku kamu " . mt_rand(1, 9999) . " </div>";
+        $product->internal_js = NULL;
 
         $this->bodyProductRepository->create($product);
 

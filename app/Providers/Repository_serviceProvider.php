@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use App\Repository\Asset_repository;
+use App\Repository\AssetProduct_repository;
 use App\Repository\Product_repository;
 use App\Repository\BodyProduct_repository;
 use App\Repository\Category_repository;
+use App\Repository\ProductAsset_repository;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 
@@ -30,9 +32,12 @@ class Repository_serviceProvider extends ServiceProvider implements DeferrablePr
             return new BodyProduct_repository($app);
         });
 
-
         $this->app->singleton(Asset_repository::class, function ($app) {
             return new Asset_repository($app);
+        });
+
+        $this->app->singleton(ProductAsset_repository::class, function ($app) {
+            return new ProductAsset_repository($app);
         });
     }
 

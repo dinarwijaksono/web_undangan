@@ -14,7 +14,7 @@
                     @csrf
                     <div class="form-group">
                         <label for="name">Nama</label>
-                        <input class="form-control" type="text" name="name" id="name" placeholder="Nama kategori" />
+                        <input class="form-control" type="text" name="name" id="name" placeholder="Nama kategori" autocomplete="off" />
                         @error('name')
                         <p class="help-block" style="color: red;"><?= $message ?></p>
                         @enderror
@@ -22,7 +22,7 @@
 
                     <div class="form-group">
                         <label for="price">Harga</label>
-                        <input class="form-control" type="text" name="price" id="price" placeholder="Harga produk" />
+                        <input class="form-control" type="text" name="price" id="price" placeholder="Harga produk" autocomplete="off" />
                         @error('price')
                         <p class="help-block" style="color: red;"><?= $message ?></p>
                         @enderror
@@ -41,7 +41,6 @@
                         @enderror
                     </div>
 
-
                     <section class="form-group">
                         <label>Pilih asset (css)</label>
 
@@ -51,7 +50,7 @@
                                 <div class="col-sm-3">
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" value="<?= $css->id ?>" /><?= $css->name ?>
+                                            <input type="checkbox" name="css_external[]" value="<?= $css->id ?>" /><?= $css->name ?>
                                         </label>
                                     </div>
                                 </div>
@@ -69,7 +68,7 @@
                                 <div class="col-sm-3">
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" value="<?= $js->id ?>" /><?= $js->name ?>
+                                            <input type="checkbox" name="js_external[]" value="<?= $js->id ?>" /><?= $js->name ?>
                                         </label>
                                     </div>
                                 </div>
@@ -80,7 +79,7 @@
 
                     <section class="form-group">
                         <label>Css internal</label>
-                        <textarea class="form-control" rows="3"></textarea>
+                        <textarea class="form-control" name="css_internal" rows="3"></textarea>
                     </section>
 
                     <section class="form-group">
@@ -93,7 +92,7 @@
 
                     <section class="form-group">
                         <label>Javascript internal</label>
-                        <textarea class="form-control" rows="3"></textarea>
+                        <textarea class="form-control" name="js_internal" rows="3"></textarea>
                     </section>
 
                     <div class="row">

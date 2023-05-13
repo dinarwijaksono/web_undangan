@@ -16,7 +16,9 @@ class CreateBodyProductsTable extends Migration
         Schema::create('body_products', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id');
+            $table->text('css_internal')->nullable();
             $table->text('body');
+            $table->text('js_internal')->nullable();
         });
     }
 

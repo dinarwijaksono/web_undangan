@@ -75,6 +75,8 @@ class Product_controller extends Controller
             'body' => 'required'
         ]);
 
+        // return $request;
+
         $this->product_service->add($request);
 
         return redirect('/Product')->with('createSuccess', "Produk berhasil di tambahkan.");

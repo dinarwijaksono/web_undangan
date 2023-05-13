@@ -13,7 +13,9 @@ class BodyProduct_repository
         DB::table('body_products')
             ->insert([
                 'product_id' => $product->id,
+                'css_internal' => $product->css_internal,
                 'body' => $product->body,
+                'js_internal' => $product->js_internal,
             ]);
     }
 
@@ -23,7 +25,9 @@ class BodyProduct_repository
         DB::table('body_products')
             ->where('product_id', $product->id)
             ->update([
-                'body' => $product->body
+                'css_internal' => $product->css_internal,
+                'body' => $product->body,
+                'js_internal' => $product->js_internal,
             ]);
     }
 

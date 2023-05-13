@@ -3,11 +3,12 @@
 namespace App\Services;
 
 use App\Domain\Product_domain;
-use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 
 use App\Repository\BodyProduct_repository;
+use App\Repository\Category_repository;
 use App\Repository\Product_repository;
+use App\Repository\ProductAsset_repository;
 use Illuminate\Http\Request;
 
 class Product_service
@@ -15,13 +16,20 @@ class Product_service
     private $productDomain;
     private $productRepository;
     private $bodyProductRepository;
+    private $productAssetRepository;
+    private $categoryRepository;
 
-    public function __construct(Product_domain $product_domain, Product_repository $product_repository, BodyProduct_repository $bodyProduct_repository)
-    {
+    public function __construct(
+        Product_domain $product_domain,
+        Product_repository $product_repository,
+        BodyProduct_repository $bodyProduct_repository,
+        ProductAsset_repository $productAsset_repository
+    ) {
         $this->productDomain = $product_domain;
 
         $this->productRepository = $product_repository;
         $this->bodyProductRepository = $bodyProduct_repository;
+        $this->productAssetRepository = $productAsset_repository;
     }
 
 
@@ -38,13 +46,19 @@ class Product_service
             $product->price = $request->price;
             $product->link_locate_demo = 'Link-' . mt_rand(1, 9999);
             $product->category_id = $request->category_id;
+            $product->css_external = $request->css_external;
+            $product->js_external = $request->js_external;
+            $product->css_internal = $request->internal_css;
             $product->body = $request->body;
+            $product->js_internal = $request->internal_js;
 
             $this->productRepository->create($product);
 
             // get id by code
             $product->id = $this->productRepository->getIdByCode($product->code);
             $this->bodyProductRepository->create($product);
+
+            $this->productAssetRepository->create($product);
 
             DB::commit();
         } catch (\Throwable $th) {

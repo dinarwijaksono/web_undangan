@@ -15,7 +15,7 @@ class CreateAssetsTable extends Migration
     {
         Schema::create('assets', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique(); // picture/tumb.jpg
+            $table->string('name')->unique(); // example : picture/tumb.jpg
             $table->string('type', 12); // javascript, picture, css
             $table->bigInteger('created_at');
             $table->bigInteger('updated_at');

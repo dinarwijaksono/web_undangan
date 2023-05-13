@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use App\Domain\Product_domain;
 use App\Repository\BodyProduct_repository;
 use App\Repository\Product_repository;
+use App\Repository\ProductAsset_repository;
+use App\Repository\Category_repository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use App\Services\Product_service;
@@ -18,6 +20,8 @@ class ProductService_Test extends TestCase
 
     private $productRepository;
     private $bodyProductRepository;
+    private $productAssetRepository;
+    private $categoryRepository;
 
     private $productService;
 
@@ -29,6 +33,8 @@ class ProductService_Test extends TestCase
 
         $this->productRepository = $this->app->make(Product_repository::class);
         $this->bodyProductRepository = $this->app->make(BodyProduct_repository::class);
+        $this->productAssetRepository = $this->app->make(ProductAsset_repository::class);
+        $this->categoryRepository = $this->app->make(Category_repository::class);
 
         $this->productService = $this->app->make(Product_service::class);
 
@@ -39,11 +45,28 @@ class ProductService_Test extends TestCase
 
     public function test_addSuccess()
     {
+        // create category 
+        $categoryCode = 'C' . mt_rand(1, 9999999);
+        $categoryName = 'category-' . mt_rand(1, 9999);
+        $this->categoryRepository->create($categoryCode, $categoryName);
+
+        $this->assertDatabaseHas('categories', ['name' => $categoryName, 'code' => $categoryCode]);
+
+        $category = $this->categoryRepository->getByName($categoryName);
+
+        $this->assertIsObject($category);
+        $this->assertEquals($category->name, $categoryName);
+        $this->assertEquals($category->code, $categoryCode);
+
         $request = new Request();
         $request['name'] = "aku kamu " . mt_rand(1, 99999);
         $request['price'] = 100_000;
-        $request['category_id'] = 1;
+        $request['category_id'] = $category->id;
+        $request['css_external'] = [1, 2];
+        $request['js_external'] = [3, 4];
+        $request['css_internal'] = "ini css internal";
         $request['body'] = '<div>Aku ' . mt_rand(1, 9999) . ' kamu</div>';
+        $request['js_internal'] = "ini javascript internal";
 
         $this->productService->add($request);
 
@@ -56,6 +79,14 @@ class ProductService_Test extends TestCase
         $this->assertDatabaseHas('body_products', [
             'body' => $request['body']
         ]);
+
+        $product = $this->productService->getByName($request['name']);
+        $productId = $this->productService->getIdByCode($product->code);
+
+        $this->assertDatabaseHas('product_assets', ['product_id' => $productId, 'asset_id' => 1]);
+        $this->assertDatabaseHas('product_assets', ['product_id' => $productId, 'asset_id' => 2]);
+        $this->assertDatabaseHas('product_assets', ['product_id' => $productId, 'asset_id' => 3]);
+        $this->assertDatabaseHas('product_assets', ['product_id' => $productId, 'asset_id' => 4]);
     }
 
 
@@ -109,7 +140,10 @@ class ProductService_Test extends TestCase
             'body' => $request['body']
         ]);
 
-        $response = $this->productService->getByName($request->name);
+        $response = $this->productService->getByName($request['name']);
+
+        // var_dump($response);
+
         $code = $response->code;
 
         $request = new Request();
