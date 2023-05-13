@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\Product;
+use App\Services\Asset_service;
 use App\Services\Category_service;
 use App\Services\PictureProduct_service;
 use App\Services\Product_service;
@@ -17,13 +17,15 @@ class Product_controller extends Controller
     protected $category_service;
     protected $whoSeeDemo_service;
     protected $pictureProduct_service;
+    protected $asset_service;
 
-    function __construct(Product_service $product_service, Category_service $category_service, WhoSeeDemo_service $whoSeeDemo_service, PictureProduct_service $pictureProduct_service)
+    function __construct(Product_service $product_service, Category_service $category_service, WhoSeeDemo_service $whoSeeDemo_service, PictureProduct_service $pictureProduct_service, Asset_service $asset_service)
     {
         $this->product_service = $product_service;
         $this->category_service = $category_service;
         $this->whoSeeDemo_service = $whoSeeDemo_service;
         $this->pictureProduct_service = $pictureProduct_service;
+        $this->asset_service = $asset_service;
     }
 
 
@@ -55,7 +57,11 @@ class Product_controller extends Controller
 
     public function create()
     {
-        $data['listCategory'] =  Category::all();
+        $data['listCategory'] = Category::all();
+
+        $data['listAsset']['css'] = $this->asset_service->getAllByType('css');
+        $data['listAsset']['javascript'] = $this->asset_service->getAllByType('javascript');
+
         return view('/Product/create', $data);
     }
 

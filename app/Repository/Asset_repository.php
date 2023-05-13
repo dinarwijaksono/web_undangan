@@ -36,6 +36,15 @@ class Asset_repository
             ->first();
     }
 
+    public function getAllByType(string $type): ?object
+    {
+        return DB::table('assets')
+            ->select('id', 'name', 'type', 'created_at', 'updated_at')
+            ->where('type', $type)
+            ->get();
+    }
+
+
     public function getAll(): ?object
     {
         return DB::table('assets')

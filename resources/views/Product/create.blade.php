@@ -47,13 +47,15 @@
 
                         <div class="row">
 
-                            <div class="col-sm-3">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" value="" />Asset/javascript.css
-                                    </label>
+                            <?php foreach ($listAsset['css'] as $css) : ?>
+                                <div class="col-sm-3">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" value="<?= $css->id ?>" /><?= $css->name ?>
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
+                            <?php endforeach ?>
 
                         </div>
                     </section>
@@ -63,13 +65,15 @@
 
                         <div class="row">
 
-                            <div class="col-sm-3">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" value="" />Asset/javascript.css
-                                    </label>
+                            <?php foreach ($listAsset['javascript'] as $js) : ?>
+                                <div class="col-sm-3">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" value="<?= $js->id ?>" /><?= $js->name ?>
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
+                            <?php endforeach ?>
 
                         </div>
                     </section>

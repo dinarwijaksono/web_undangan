@@ -28,6 +28,11 @@ class Asset_service
         return $this->assetRepository->getById($id);
     }
 
+    public function getAllByType(string $type): ?object
+    {
+        return $this->assetRepository->getAllByType($type);
+    }
+
     public function getAll(): ?object
     {
         return $this->assetRepository->getAll();
