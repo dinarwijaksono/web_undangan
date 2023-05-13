@@ -176,17 +176,17 @@ class Product_service
         }
     }
 
-
-
     // Delete
     public function delete(string $code): void
     {
         try {
             DB::beginTransaction();
 
-            $product_id = $this->productRepository->getIdByCode($code);
+            $productId = $this->productRepository->getIdByCode($code);
 
-            $this->bodyProductRepository->delete($product_id);
+            $this->whoSeeDemoRepository->deleteByProductId($productId);
+            $this->productAssetRepository->deleteAllByProductId($productId);
+            $this->bodyProductRepository->delete($productId);
             $this->productRepository->delete($code);
 
             DB::commit();

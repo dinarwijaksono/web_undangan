@@ -71,4 +71,17 @@ class WhoSeeDemoRepository_Test extends TestCase
         $this->assertIsObject($response);
         $this->assertTrue($response->count() >= 3);
     }
+
+
+    public function test_deleteByProductId()
+    {
+        $productId = mt_rand(1, 9999);
+        $userAgent = 'contoh-' . mt_rand(1, 9999);
+        $this->whoSeeDemo_respository->create($productId, $userAgent);
+
+        $this->assertDatabaseHas('who_see_demos', ['product_id' => $productId, 'user_agent' => $userAgent]);
+
+        $this->whoSeeDemo_respository->deleteByproductId($productId);
+        $this->assertDatabaseMissing('who_see_demos', ['product_id' => $productId, 'user_agent' => $userAgent]);
+    }
 }

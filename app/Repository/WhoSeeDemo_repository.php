@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use Illuminate\Support\Facades\DB;
+use Psy\Command\WhereamiCommand;
 
 class WhoSeeDemo_repository
 {
@@ -35,5 +36,14 @@ class WhoSeeDemo_repository
             ->select('product_id', 'user_agent', 'created_at')
             ->orderBy('created_at', 'desc')
             ->get();
+    }
+
+
+    // Delete
+    public function deleteByProductId(int $productId): void
+    {
+        DB::table('who_see_demos')
+            ->where('product_id', $productId)
+            ->delete();
     }
 }
