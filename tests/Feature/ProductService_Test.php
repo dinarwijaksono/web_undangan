@@ -122,11 +122,29 @@ class ProductService_Test extends TestCase
 
     public function test_updateSuccess()
     {
+        // create category 
+        $categoryCode = 'C' . mt_rand(1, 9999999);
+        $categoryName = 'category-' . mt_rand(1, 9999);
+        $this->categoryRepository->create($categoryCode, $categoryName);
+
+        $this->assertDatabaseHas('categories', ['name' => $categoryName, 'code' => $categoryCode]);
+
+        $category = $this->categoryRepository->getByName($categoryName);
+
+        $this->assertIsObject($category);
+        $this->assertEquals($category->name, $categoryName);
+        $this->assertEquals($category->code, $categoryCode);
+
+        // add 
         $request = new Request();
         $request['name'] = "aku kamu " . mt_rand(1, 99999);
         $request['price'] = 100_000;
-        $request['category_id'] = 1;
+        $request['category_id'] = $category->id;
+        $request['css_external'] = [1, 2];
+        $request['js_external'] = [3, 4];
+        $request['css_internal'] = 'ini css internal';
         $request['body'] = '<div>Aku ' . mt_rand(1, 9999) . ' kamu</div>';
+        $request['js_internal'] = 'ini js internal';
 
         $this->productService->add($request);
 
@@ -137,7 +155,9 @@ class ProductService_Test extends TestCase
         ]);
 
         $this->assertDatabaseHas('body_products', [
-            'body' => $request['body']
+            'css_internal' => $request['css_internal'],
+            'body' => $request['body'],
+            'js_internal' => $request['js_internal'],
         ]);
 
         $response = $this->productService->getByName($request['name']);
@@ -150,7 +170,11 @@ class ProductService_Test extends TestCase
         $request['name'] = "kamu dia " . mt_rand(1, 99999);
         $request['price'] = 1_000;
         $request['category_id'] = 2;
+        $request['css_external'] = NULL;
+        $request['js_external'] = [7, 8];
+        $request['css_internal'] = 'ini css internal';
         $request['body'] = '<div>Aku, dia ' . mt_rand(1, 9999) . ' kamu</div>';
+        $request['js_internal'] = 'ini js internal';
 
         $this->productService->update($request, $code);
 
@@ -161,7 +185,9 @@ class ProductService_Test extends TestCase
         ]);
 
         $this->assertDatabaseHas('body_products', [
-            'body' => $request['body']
+            'css_internal' => $request['css_internal'],
+            'body' => $request['body'],
+            'js_internal' => $request['js_internal'],
         ]);
     }
 

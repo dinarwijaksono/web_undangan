@@ -46,7 +46,9 @@ class Product_repository
                 'categories.name as category_name',
                 'products.category_id',
                 'products.link_locate_demo',
+                'body_products.css_internal',
                 'body_products.body',
+                'body_products.js_internal',
                 'products.created_at',
                 'products.updated_at',
             )
@@ -67,7 +69,9 @@ class Product_repository
                 'categories.name as category_name',
                 'products.category_id',
                 'products.link_locate_demo',
+                'body_products.css_internal',
                 'body_products.body',
+                'body_products.js_internal',
                 'products.created_at',
                 'products.updated_at',
             )

@@ -10,6 +10,7 @@ use App\Services\Product_service;
 use App\Services\WhoSeeDemo_service;
 use Illuminate\Http\Request;
 
+use function PHPUnit\Framework\returnSelf;
 
 class Product_controller extends Controller
 {
@@ -19,8 +20,13 @@ class Product_controller extends Controller
     protected $pictureProduct_service;
     protected $asset_service;
 
-    function __construct(Product_service $product_service, Category_service $category_service, WhoSeeDemo_service $whoSeeDemo_service, PictureProduct_service $pictureProduct_service, Asset_service $asset_service)
-    {
+    function __construct(
+        Product_service $product_service,
+        Category_service $category_service,
+        WhoSeeDemo_service $whoSeeDemo_service,
+        PictureProduct_service $pictureProduct_service,
+        Asset_service $asset_service
+    ) {
         $this->product_service = $product_service;
         $this->category_service = $category_service;
         $this->whoSeeDemo_service = $whoSeeDemo_service;
@@ -74,8 +80,6 @@ class Product_controller extends Controller
             'category_id' => 'required',
             'body' => 'required'
         ]);
-
-        // return $request;
 
         $this->product_service->add($request);
 
@@ -151,9 +155,13 @@ class Product_controller extends Controller
             return redirect('/Product');
         }
 
+        $data['listAsset']['css'] = $this->asset_service->getAllByType('css');
+        $data['listAsset']['javascript'] = $this->asset_service->getAllByType('javascript');
+
         $data['product'] = collect($product);
         $data['listCategory'] = $this->category_service->getAll();
 
+        // return $product;
         return view('/Product/edit', $data);
     }
 
@@ -171,7 +179,7 @@ class Product_controller extends Controller
 
         // cek apakah name di update
         $product = $this->product_service->getByCode($request->code);
-        if ($product->name != $request->name) {
+        if ($product['name'] != $request->name) {
             $request->validate([
                 'name' => 'unique:products,name'
             ]);

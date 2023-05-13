@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Domain\Product_domain;
+use App\Models\product_asset;
 use Illuminate\Support\Facades\DB;
 
 use App\Repository\BodyProduct_repository;
@@ -48,9 +49,9 @@ class Product_service
             $product->category_id = $request->category_id;
             $product->css_external = $request->css_external;
             $product->js_external = $request->js_external;
-            $product->css_internal = $request->internal_css;
+            $product->css_internal = $request->css_internal;
             $product->body = $request->body;
-            $product->js_internal = $request->internal_js;
+            $product->js_internal = $request->js_internal;
 
             $this->productRepository->create($product);
 
@@ -94,7 +95,15 @@ class Product_service
 
     public function getByCode(string $code)
     {
-        return $this->productRepository->getByCode($code);
+        $product = $this->productRepository->getByCode($code);
+
+        $productId = $this->productRepository->getIdByCode($code);
+
+        $product->product_asset = collect($this->productAssetRepository->getAllByProductId($productId));
+
+        $product = collect($product);
+
+        return $product;
     }
 
 
@@ -139,11 +148,17 @@ class Product_service
             $product->name = $request->name;
             $product->category_id = $request->category_id;
             $product->price = $request->price;
+            $product->css_external = $request->css_external;
+            $product->js_external = $request->js_external;
+            $product->css_internal = $request->css_internal;
             $product->body = $request->body;
+            $product->js_internal = $request->js_internal;
             $product->id = $this->productRepository->getIdByCode($code);
 
             $this->bodyProductRepository->update($product);
             $this->productRepository->update($product);
+
+            $this->productAssetRepository->update($product);
 
             DB::commit();
         } catch (\Throwable $th) {

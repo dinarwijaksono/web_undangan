@@ -41,8 +41,9 @@ class ProductAsset_repository
     public function getAllByProductId($product_id): ?object
     {
         return DB::table('product_assets')
-            ->select('product_id', 'asset_id', 'created_at', 'updated_at')
-            ->where('product_id', $product_id)
+            ->join('assets', 'assets.id', '=', 'product_assets.asset_id')
+            ->select('product_assets.product_id', 'assets.name', 'assets.type', 'product_assets.asset_id', 'product_assets.created_at', 'product_assets.updated_at')
+            ->where('product_assets.product_id', $product_id)
             ->get();
     }
 

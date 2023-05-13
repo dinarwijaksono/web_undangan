@@ -54,6 +54,57 @@
                         @enderror
                     </div>
 
+                    <section class="form-group">
+                        <label>Pilih asset (css)</label>
+
+                        <div class="row">
+
+                            <?php foreach ($listAsset['css'] as $css) : ?>
+                                <?php if ($product->get('product_asset')->where('asset_id', $css->id)->isNotEmpty()) : ?>
+                                    <div class="col-sm-3">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="css_external[]" value="<?= $css->id ?>" checked /><?= $css->name ?>
+                                            </label>
+                                        </div>
+                                    </div>
+                                <?php else : ?>
+                                    <div class="col-sm-3">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="css_external[]" value="<?= $css->id ?>" /><?= $css->name ?>
+                                            </label>
+                                        </div>
+                                    </div>
+                                <?php endif ?>
+                            <?php endforeach ?>
+
+                        </div>
+                    </section>
+
+                    <section class="form-group">
+                        <label>Pilih asset (javascript)</label>
+
+                        <div class="row">
+
+                            <?php foreach ($listAsset['javascript'] as $js) : ?>
+                                <div class="col-sm-3">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="js_external[]" value="<?= $js->id ?>" /><?= $js->name ?>
+                                        </label>
+                                    </div>
+                                </div>
+                            <?php endforeach ?>
+
+                        </div>
+                    </section>
+
+                    <section class="form-group">
+                        <label>Css internal</label>
+                        <textarea class="form-control" name="css_internal" rows="3"><?= $product['css_internal'] ?></textarea>
+                    </section>
+
                     <div class="form-group">
                         <label>Body</label>
                         <textarea name="body" class="form-control" rows="3"><?= $product['body'] ?></textarea>
@@ -62,7 +113,12 @@
                         @enderror
                     </div>
 
-                    <div class="row">
+                    <section class="form-group">
+                        <label>Javascript internal</label>
+                        <textarea class="form-control" name="js_internal" rows="3"><?= $product['js_internal'] ?></textarea>
+                    </section>
+
+                    <section class="row">
                         <div class="container-fluid">
                             <div class="col-sm-2 col-sm-offset-8">
                                 <a href="/Product" class="btn btn-block btn-danger btn-block">Batal</a>
@@ -71,7 +127,7 @@
                                 <button type="submit" class="btn btn-block btn-primary btn-block">Edit kategori</button>
                             </div>
                         </div>
-                    </div>
+                    </section>
                 </form>
 
             </div>
