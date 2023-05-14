@@ -91,6 +91,7 @@ class Product_controller extends Controller
             $image = $picture['data']->locate_file;
         }
 
+        // return $data['product'];
         return view('/Product/show', $data);
     }
 
@@ -166,7 +167,10 @@ class Product_controller extends Controller
     }
 
 
-
+    public function doDeleteTumb(Request $request, $code)
+    {
+        # code...
+    }
 
 
 

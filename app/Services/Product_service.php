@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Repository\BodyProduct_repository;
 use App\Repository\Category_repository;
+use App\Repository\PictureProduct_repository;
 use App\Repository\Product_repository;
 use App\Repository\ProductAsset_repository;
 use App\Repository\WhoSeeDemo_repository;
@@ -21,13 +22,15 @@ class Product_service
     private $productAssetRepository;
     private $categoryRepository;
     private $whoSeeDemoRepository;
+    private $pictureProductRepository;
 
     public function __construct(
         Product_domain $product_domain,
         Product_repository $product_repository,
         BodyProduct_repository $bodyProduct_repository,
         ProductAsset_repository $productAsset_repository,
-        WhoSeeDemo_repository $whoSeeDemo_repository
+        WhoSeeDemo_repository $whoSeeDemo_repository,
+        PictureProduct_repository $pictureProduct_repository
     ) {
         $this->productDomain = $product_domain;
 
@@ -35,6 +38,7 @@ class Product_service
         $this->bodyProductRepository = $bodyProduct_repository;
         $this->productAssetRepository = $productAsset_repository;
         $this->whoSeeDemoRepository = $whoSeeDemo_repository;
+        $this->pictureProductRepository = $pictureProduct_repository;
     }
 
 
@@ -105,6 +109,7 @@ class Product_service
 
         $product->product_asset = collect($this->productAssetRepository->getAllByProductId($productId));
         $product->whoSeeDemo = collect($this->whoSeeDemoRepository->getAllByProductId($product->id));
+        $product->thumbs = collect($this->pictureProductRepository->getAllByProductId($productId));
 
         return $product;
     }

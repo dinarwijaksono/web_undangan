@@ -46,9 +46,15 @@
                 <div class="container">
                     <section class="row" style="overflow-x: scroll;">
 
-                        <div class="col-sm-3">
-                            <img src="/storage/demo_01.png" alt="Gambar" style="width: 100%;">
-                        </div>
+                        <?php foreach ($product->thumbs as $th) :  ?>
+                            <div class="col-sm-3">
+                                <img src="<?= '/storage/' . $th->locate_file ?>" alt="Gambar" style="width: 100%;">
+                                <form action="/" method="post">
+                                    <input type="hidden" name="picutreId" value="<?= $th->id ?>">
+                                    <button type="submit" class="btn btn-danger btn-xs">Hapus</button>
+                                </form>
+                            </div>
+                        <?php endforeach ?>
 
                     </section>
                 </div> <!-- container -->
@@ -58,7 +64,7 @@
                         @csrf
                         <input type="file" name="image">
 
-                        <button type="submit" class="btn btn-sm btn-info">Ganti gambar</button>
+                        <button type="submit" class="btn btn-sm btn-info">Tambah gambar</button>
                     </form>
                 </div>
             </div>

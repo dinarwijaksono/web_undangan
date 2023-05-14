@@ -74,6 +74,8 @@ Route::post('/Product/edit/{code}', [Product_controller::class, 'update'])->midd
 
 Route::post('/Product/uploadTumb/{code}', [Product_controller::class, 'uploadTumb'])->middleware('auth');
 
+Route::delete('/Product/deleteTumb/{code}', [Product_controller::class, 'doDeleteTumb'])->middleware('auth');
+
 Route::delete('/Product/delete/{code}', [Product_controller::class, 'destroy'])->middleware('auth');
 /* end Product_controller */
 

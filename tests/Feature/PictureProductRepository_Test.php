@@ -33,4 +33,21 @@ class PictureProductRepository_Test extends TestCase
             'locate_file' => $locateFile
         ]);
     }
+
+
+    public function test_getAllByProductId()
+    {
+        $productId = mt_rand(1, 999);
+        $locateFile = '/Storage/thum/contoh-' . mt_rand(1, 9999);
+
+        $this->pictureRepository->create($productId, $locateFile);
+
+        $locateFile = '/Storage/thum/contoh-' . mt_rand(1, 9999);
+        $this->pictureRepository->create($productId, $locateFile);
+
+        $response = $this->pictureRepository->getAllByProductId($productId);
+
+        $this->assertIsObject($response);
+        $this->assertTrue($response->count() >= 2);
+    }
 }

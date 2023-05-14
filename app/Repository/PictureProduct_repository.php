@@ -16,4 +16,13 @@ class PictureProduct_repository
                 'updated_at' => round(microtime(true) * 1000),
             ]);
     }
+
+
+    public function getAllByProductId($productId): object
+    {
+        return DB::table('pictures_products')
+            ->select('id', 'product_id', 'locate_file', 'created_at', 'updated_at')
+            ->where('product_id', $productId)
+            ->get();
+    }
 }
