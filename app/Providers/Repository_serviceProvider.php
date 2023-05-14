@@ -7,6 +7,7 @@ use App\Repository\AssetProduct_repository;
 use App\Repository\Product_repository;
 use App\Repository\BodyProduct_repository;
 use App\Repository\Category_repository;
+use App\Repository\PictureProduct_repository;
 use App\Repository\ProductAsset_repository;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
@@ -38,6 +39,10 @@ class Repository_serviceProvider extends ServiceProvider implements DeferrablePr
 
         $this->app->singleton(ProductAsset_repository::class, function ($app) {
             return new ProductAsset_repository($app);
+        });
+
+        $this->app->singleton(PictureProduct_repository::class, function ($app) {
+            return new PictureProduct_repository($app);
         });
     }
 

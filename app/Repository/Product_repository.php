@@ -63,6 +63,7 @@ class Product_repository
             ->join('categories', 'products.category_id', '=', 'categories.id')
             ->join('body_products', 'products.id', '=', 'body_products.product_id')
             ->select(
+                'products.id',
                 'products.name',
                 'products.code',
                 'products.price',

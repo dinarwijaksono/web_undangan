@@ -40,7 +40,6 @@ class Product_controller extends Controller
     {
         $data['listProduct'] = $this->product_service->getAll();
 
-        // return $data['listProduct'];
         return view('/Product/index', $data);
     }
 
@@ -83,7 +82,7 @@ class Product_controller extends Controller
 
     public function show($code)
     {
-        $product = $this->product_service->getByCode($code);
+        $data['product'] = $this->product_service->getByCode($code);
         $id = $this->product_service->getIdByCode($code);
         $picture = $this->pictureProduct_service->getByProductId($id);
 
@@ -91,17 +90,6 @@ class Product_controller extends Controller
         if ($picture['isEmpty'] === false) {
             $image = $picture['data']->locate_file;
         }
-
-        $data['product'] = [
-            'name' => $product->name,
-            'code' => $code,
-            'price' => $product->price,
-            'views' => $this->whoSeeDemo_service->getViews($id),
-            'link_locate_demo' => $product->link_locate_demo,
-            'picture' => $image,
-            'created_at' => $product->created_at,
-            'category_name' => $product->category_name
-        ];
 
         return view('/Product/show', $data);
     }
@@ -121,15 +109,13 @@ class Product_controller extends Controller
             return back()->with('uploadFailed', 'File yang di upload bukan gambar.');
         };
 
-        $product_id = $this->product_service->getIdByCode($code);
-        $name = 'F' . mt_rand(1, 9999999) . '.' . $picture->getClientOriginalExtension();
-        if ($this->pictureProduct_service->isExist($product_id)) {
-            $this->pictureProduct_service->update($name, $product_id);
-        } else {
-            $this->pictureProduct_service->add($name, $product_id);
-        }
+        $product = $this->product_service->getByCode($code);
 
-        $result = $picture->storePubliclyAs('tumbs', $name, 'public_custom');
+        $locateFile = 'tumbs/f-' . mt_rand(1, 9999999) . '.' . strtolower($picture->getClientOriginalExtension());
+
+        $this->pictureProduct_service->create($product->id, $locateFile);
+
+        $picture->storePubliclyAs('', $locateFile, 'public_custom');
 
         return back()->with('uploadSuccess', 'Gambar thumbnail produk berhasil di upload.');
     }

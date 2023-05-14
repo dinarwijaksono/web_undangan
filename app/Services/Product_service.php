@@ -104,8 +104,7 @@ class Product_service
         $productId = $this->productRepository->getIdByCode($code);
 
         $product->product_asset = collect($this->productAssetRepository->getAllByProductId($productId));
-
-        $product = collect($product);
+        $product->whoSeeDemo = collect($this->whoSeeDemoRepository->getAllByProductId($product->id));
 
         return $product;
     }
@@ -130,7 +129,7 @@ class Product_service
 
     public function getAll()
     {
-        $product = collect($this->productRepository->getAll());
+        $product = $this->productRepository->getAll();
 
         $product = $product->map(function ($item) {
             $whoSee = $this->whoSeeDemoRepository->getAll();

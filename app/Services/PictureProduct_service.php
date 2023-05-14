@@ -3,19 +3,21 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
+use App\Repository\PictureProduct_repository;
 
 class PictureProduct_service
 {
+    private $pictureProductRepository;
 
-    public function add(string $name, $product_id)
+    function __construct(PictureProduct_repository $pictureProduct_repository)
     {
-        DB::table('pictures_products')
-            ->insert([
-                'product_id' => $product_id,
-                'locate_file' => $name,
-                'created_at' => round(microtime(true) * 1000),
-                'updated_at' => round(microtime(true) * 1000),
-            ]);
+        $this->pictureProductRepository = $pictureProduct_repository;
+    }
+
+
+    public function create(int $productId, string $locateFile): void
+    {
+        $this->pictureProductRepository->create($productId, $locateFile);
     }
 
 
