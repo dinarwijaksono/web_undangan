@@ -18,11 +18,29 @@ class PictureProduct_repository
     }
 
 
+    public function getByLocateFile(string $locateFile): object
+    {
+        return DB::table('pictures_products')
+            ->select('id', 'product_id', 'locate_file', 'created_at', 'updated_at')
+            ->where('locate_file', $locateFile)
+            ->first();
+    }
+
+
+
     public function getAllByProductId($productId): object
     {
         return DB::table('pictures_products')
             ->select('id', 'product_id', 'locate_file', 'created_at', 'updated_at')
             ->where('product_id', $productId)
             ->get();
+    }
+
+
+    public function deleteByLocateFile(string $locateFile): void
+    {
+        DB::table('pictures_products')
+            ->where('locate_file', $locateFile)
+            ->delete();
     }
 }

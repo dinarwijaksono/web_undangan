@@ -167,9 +167,15 @@ class Product_controller extends Controller
     }
 
 
-    public function doDeleteTumb(Request $request, $code)
+    public function doDeleteTumb(Request $request, string $code)
     {
-        # code...
+        $request->validate([
+            'locateFile' => 'required'
+        ]);
+
+        $this->pictureProduct_service->deleteByLocateFile($request->locateFile);
+
+        return redirect("/Product/show/$code")->with('deleteThumSuccess', 'Gamber berhasil di hapus.');
     }
 
 

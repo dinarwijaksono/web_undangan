@@ -20,6 +20,10 @@
         <div class="alert alert-success" style="margin: 10px; padding: 10px;" role="alert"><?= session('uploadSuccess') ?></div>
         @endif
 
+        @if (session('deleteThumSuccess'))
+        <div class="alert alert-danger" style="margin: 10px; padding: 10px;" role="alert"><?= session('deleteThumSuccess') ?></div>
+        @endif
+
     </div>
 </section>
 
@@ -49,8 +53,11 @@
                         <?php foreach ($product->thumbs as $th) :  ?>
                             <div class="col-sm-3">
                                 <img src="<?= '/storage/' . $th->locate_file ?>" alt="Gambar" style="width: 100%;">
-                                <form action="/" method="post">
-                                    <input type="hidden" name="picutreId" value="<?= $th->id ?>">
+                                <form action="/Product/deleteTumb/<?= $product->code ?>" method="post">
+                                    @csrf
+                                    @method('delete')
+
+                                    <input type="hidden" name="locateFile" value="<?= $th->locate_file ?>">
                                     <button type="submit" class="btn btn-danger btn-xs">Hapus</button>
                                 </form>
                             </div>

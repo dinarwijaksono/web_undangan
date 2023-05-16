@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
 use App\Repository\PictureProduct_repository;
+use Illuminate\Support\Facades\Storage;
 
 class PictureProduct_service
 {
@@ -65,5 +66,14 @@ class PictureProduct_service
                 'locate_file' => $name,
                 'updated_at' => round(microtime(true) * 1000)
             ]);
+    }
+
+
+
+    public function deleteByLocateFile(string $locate): void
+    {
+        $this->pictureProductRepository->deleteByLocateFile($locate);
+
+        Storage::disk('public_custom')->delete($locate);
     }
 }

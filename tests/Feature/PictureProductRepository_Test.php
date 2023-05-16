@@ -50,4 +50,21 @@ class PictureProductRepository_Test extends TestCase
         $this->assertIsObject($response);
         $this->assertTrue($response->count() >= 2);
     }
+
+
+    public function test_deleteByLocate()
+    {
+        $productId = mt_rand(1, 999);
+        $locateFile = 'thum/contoh-' . mt_rand(1, 9999) . '.jpg';
+
+        $this->pictureRepository->create($productId, $locateFile);
+
+        $picture = $this->pictureRepository->getByLocateFile($locateFile);
+
+        $this->assertDatabaseHas('pictures_products', ['locate_file' => $locateFile, 'product_id' => $productId]);
+
+        $this->pictureRepository->deleteByLocateFile($picture->locate_file);
+
+        $this->assertDatabaseMissing('pictures_products', ['locate_file' => $locateFile]);
+    }
 }
