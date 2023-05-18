@@ -18,41 +18,46 @@ class CategoryService_Test extends TestCase
         parent::setUp();
 
         $this->category_service = $this->app->make(Category_service::class);
+
+        config(['database.default' => 'mysql-test']);
     }
 
 
 
     public function test_addCategory()
     {
-        $response = $this->category_service->addCategory('Romantis');
+        $name = 'Romantis' . mt_rand(1, 999);
+
+        $response = $this->category_service->addCategory($name);
 
         $this->assertTrue($response);
 
-        $this->assertDatabaseHas('categories', ['name' => 'Romantis']);
+        $this->assertDatabaseHas('categories', ['name' => $name]);
     }
 
 
     public function test_getSuccess()
     {
-        $categori = DB::table('categories')->select('code')->get();
-        $categori = collect($categori)->first();
-        $code = $categori->code;
+        $this->category_service->addCategory('category-' . mt_rand(1, 9999));
 
-        $result = $this->category_service->get($code);
+        $category = DB::table('categories')->select('code', 'name')->first();
 
-        $this->assertEquals($result->count(), 1);
+        $response = $this->category_service->get($category->code);
+
+        $this->assertEquals($category->code, $response->code);
+        $this->assertEquals($category->name, $response->name);
     }
 
 
     public function test_getFailed()
     {
-        $code = '';
+        $code = 'code yang tidak ada';
 
-        $result = $this->category_service->get($code);
+        $response = $this->category_service->get($code);
 
-        // var_dump($result);
+        // var_dump($response);
 
-        $this->assertTrue($result->isEmpty());
+        $this->assertTrue(is_null($response));
     }
 
 
@@ -69,9 +74,15 @@ class CategoryService_Test extends TestCase
 
     public function test_deleteSuccess()
     {
-        $response = $this->category_service->delete('C4964647');
+        $this->category_service->addCategory('contoh-' . mt_rand(1, 999999));
 
-        $this->assertTrue($response);
-        $this->assertDatabaseMissing('categories', ['code' => 'C4964647']);
+        $category = DB::table('categories')->select('name', 'code')->first();
+
+        $this->category_service->delete($category->code);
+
+        $this->assertDatabaseMissing('categories', [
+            'code' => $category->code,
+            'name' => $category->name
+        ]);
     }
 }

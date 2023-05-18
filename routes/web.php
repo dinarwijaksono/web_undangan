@@ -90,12 +90,12 @@ Route::delete("/Asset/delete/{id}", [Asset_controller::class, 'doDelete'])->midd
 /* end Asset_controller */
 
 /* Config */
-Route::get('/Config/userManagement', [User_controller::class, 'index'])->middleware('auth');
+// Route::get('/Config/userManagement', [User_controller::class, 'index'])->middleware('auth');
 
-Route::get('/Config/addUser', [User_controller::class, 'create'])->middleware('auth');
-Route::post('/Config/addUser', [User_controller::class, 'store'])->middleware('auth');
+// Route::get('/Config/addUser', [User_controller::class, 'create'])->middleware('auth');
+// Route::post('/Config/addUser', [User_controller::class, 'store'])->middleware('auth');
 
-Route::delete('/Config/deleteUser/{id}', [User_controller::class, 'destroy'])->middleware('auth');
+// Route::delete('/Config/deleteUser/{id}', [User_controller::class, 'destroy'])->middleware('auth');
 /* end Config */
 
 

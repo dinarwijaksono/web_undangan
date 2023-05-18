@@ -8,8 +8,9 @@ class Product_domain
     public string $name;
     public string $code;
     public int $category_id;
+    public string $type; /* demo | product */
     public int $price;
-    public string $link_locate_demo;
+    public string $link_locate;
     public ?array $css_external = NULL;
     public ?array $js_external = NULL;
     public ?string $css_internal = NULL;

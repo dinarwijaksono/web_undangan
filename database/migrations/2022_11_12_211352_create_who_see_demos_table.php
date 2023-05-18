@@ -13,7 +13,7 @@ class CreateWhoSeeDemosTable extends Migration
      */
     public function up()
     {
-        Schema::create('who_see_demos', function (Blueprint $table) {
+        Schema::create('who_see', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->unique();
             $table->string('user_agent', 100);

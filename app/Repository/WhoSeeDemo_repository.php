@@ -10,7 +10,7 @@ class WhoSeeDemo_repository
     // create
     public function create($productId, $userAgent): void
     {
-        DB::table('who_see_demos')
+        DB::table('who_see')
             ->insert([
                 'product_id' => $productId,
                 'user_agent' => $userAgent,
@@ -22,7 +22,7 @@ class WhoSeeDemo_repository
     // read
     public function getAllByProductId(int $productId): object
     {
-        return DB::table('who_see_demos')
+        return DB::table('who_see')
             ->select('product_id', 'user_agent', 'created_at')
             ->where('product_id', $productId)
             ->orderBy('created_at', 'desc')
@@ -32,7 +32,7 @@ class WhoSeeDemo_repository
 
     public function getAll(): object
     {
-        return DB::table('who_see_demos')
+        return DB::table('who_see')
             ->select('product_id', 'user_agent', 'created_at')
             ->orderBy('created_at', 'desc')
             ->get();
@@ -42,7 +42,7 @@ class WhoSeeDemo_repository
     // Delete
     public function deleteByProductId(int $productId): void
     {
-        DB::table('who_see_demos')
+        DB::table('who_see')
             ->where('product_id', $productId)
             ->delete();
     }

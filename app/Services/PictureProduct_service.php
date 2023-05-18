@@ -42,19 +42,19 @@ class PictureProduct_service
     }
 
 
-    public function isExist(int $product_id): bool
-    {
-        $item = DB::table('pictures_products')
-            ->where('product_id', $product_id)
-            ->select('product_id')
-            ->get();
+    // public function isExist(int $product_id): bool
+    // {
+    //     $item = DB::table('pictures_products')
+    //         ->where('product_id', $product_id)
+    //         ->select('product_id')
+    //         ->get();
 
-        if ($item->isEmpty()) {
-            return false;
-        } else {
-            return true;
-        }
-    }
+    //     if ($item->isEmpty()) {
+    //         return false;
+    //     } else {
+    //         return true;
+    //     }
+    // }
 
 
 

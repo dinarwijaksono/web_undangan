@@ -51,10 +51,6 @@ class Main_provider extends ServiceProvider implements DeferrableProvider
         $this->app->singleton(Asset_service::class, function ($app) {
             return new Asset_service($app);
         });
-
-        $this->app->singleton(WhoSeeDemo_repository::class, function ($app) {
-            return new WhoSeeDemo_repository($app);
-        });
     }
 
     /**

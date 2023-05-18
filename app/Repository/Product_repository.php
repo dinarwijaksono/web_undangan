@@ -16,8 +16,9 @@ class Product_repository
                 'category_id' => $product->category_id,
                 'code' => $product->code,
                 'name' => $product->name,
+                'type' => $product->type,
                 'price' => $product->price,
-                'link_locate_demo' => $product->link_locate_demo,
+                'link_locate' => $product->link_locate,
                 'created_at' => round(microtime(true) * 1000),
                 'updated_at' => round(microtime(true) * 1000),
             ]);
@@ -43,9 +44,10 @@ class Product_repository
                 'products.name',
                 'products.code',
                 'products.price',
+                'products.type',
                 'categories.name as category_name',
                 'products.category_id',
-                'products.link_locate_demo',
+                'products.link_locate',
                 'body_products.css_internal',
                 'body_products.body',
                 'body_products.js_internal',
@@ -67,9 +69,10 @@ class Product_repository
                 'products.name',
                 'products.code',
                 'products.price',
+                'products.type',
                 'categories.name as category_name',
                 'products.category_id',
-                'products.link_locate_demo',
+                'products.link_locate',
                 'body_products.css_internal',
                 'body_products.body',
                 'body_products.js_internal',
@@ -80,7 +83,7 @@ class Product_repository
             ->first();
     }
 
-    public function getByLinkLocateDemo(string $linkLocateDemo): object
+    public function getByLinkLocate(string $linkLocate): object
     {
         return DB::table('products')
             ->join('categories', 'products.category_id', '=', 'categories.id')
@@ -90,16 +93,17 @@ class Product_repository
                 'products.name',
                 'products.code',
                 'products.price',
+                'products.type',
                 'categories.name as category_name',
                 'products.category_id',
-                'products.link_locate_demo',
+                'products.link_locate',
                 'body_products.css_internal',
                 'body_products.body',
                 'body_products.js_internal',
                 'products.created_at',
                 'products.updated_at',
             )
-            ->where('products.link_locate_demo', $linkLocateDemo)
+            ->where('products.link_locate', $linkLocate)
             ->first();
     }
 
@@ -116,9 +120,10 @@ class Product_repository
                 'products.name',
                 'products.code',
                 'products.price',
+                'products.type',
                 'categories.name as category_name',
                 'products.category_id',
-                'products.link_locate_demo',
+                'products.link_locate',
                 'body_products.css_internal',
                 'body_products.body',
                 'body_products.js_internal',

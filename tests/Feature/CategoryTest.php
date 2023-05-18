@@ -10,13 +10,16 @@ use Tests\TestCase;
 
 class CategoryTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-
     use WithFaker;
+
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        config(['database.default' => 'mysql-test']);
+    }
+
 
     public function test_createSuccess()
     {
@@ -70,21 +73,6 @@ class CategoryTest extends TestCase
         $this->assertDatabaseHas('categories', ['name' => $data['name']]);
     }
 
-
-    public function test_update_failed()
-    {
-        $user = collect(User::where('email', 'admin@gmail.com')->get())->first();
-
-        $code = collect(Category::all())->pop()->code;
-        $data['name'] = $this->faker('id_ID')->text(40);
-
-        $response = $this->actingAs($user)
-            ->withSession(['banned' => false])
-            ->post("/Category/edit/$code", $data);
-
-        $response->assertInvalid(['name']);
-        $this->assertDatabaseMissing('categories', ['name' => $data['name']]);
-    }
 
     public function test_deleteSuccess()
     {

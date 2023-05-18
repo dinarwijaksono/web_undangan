@@ -17,18 +17,18 @@ class ProductPictureService_Test extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        config(['database.default' => 'mysql-test']);
+
 
         $this->pictureProductService = $this->app->make(PictureProduct_service::class);
     }
 
 
 
-    public function test_add_success()
+    public function test_addSuccess()
     {
-        $product_id = Product::get()->first();
-
         $name = 'F' . mt_rand(1, 9999999) . '.jpg';
-        $this->pictureProductService->add($name, $product_id->id);
+        $this->pictureProductService->create(mt_rand(1, 999), $name);
 
         $this->assertDatabaseHas('pictures_products', [
             'locate_file' => $name,
@@ -38,12 +38,10 @@ class ProductPictureService_Test extends TestCase
 
 
 
-    public function test_isExist_success()
-    {
-        $product_id = Product::get()->first()->id;
+    // public function test_isExist_success()
+    // {
+    //     $response = $this->pictureProductService->isExist(mt_rand(1,));
 
-        $response = $this->pictureProductService->isExist($product_id);
-
-        $this->assertTrue($response);
-    }
+    //     $this->assertTrue($response);
+    // }
 }

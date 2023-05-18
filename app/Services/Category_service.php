@@ -22,14 +22,12 @@ class Category_service
     }
 
 
-    public function get($code)
+    public function get(string $code): ?object
     {
-        $category = DB::table('categories')
+        return DB::table('categories')
             ->select('name', 'code')
             ->where('code', $code)
-            ->get();
-
-        return $category->first();
+            ->first();
     }
 
 
@@ -65,22 +63,10 @@ class Category_service
 
 
 
-    public function delete($code): bool
+    public function delete(string $code): void
     {
-        $category = DB::table('categories')
-            ->select('name')
-            ->where('code', $code)
-            ->get();
-        $category = collect($category);
-
-        if ($category->isEmpty()) {
-            return false;
-        }
-
         DB::table('categories')
             ->where('code', $code)
             ->delete();
-
-        return true;
     }
 }

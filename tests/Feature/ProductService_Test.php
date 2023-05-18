@@ -60,6 +60,7 @@ class ProductService_Test extends TestCase
 
         $request = new Request();
         $request['name'] = "aku kamu " . mt_rand(1, 99999);
+        $request['type'] = 'demo';
         $request['price'] = 100_000;
         $request['category_id'] = $category->id;
         $request['css_external'] = [1, 2];
@@ -103,6 +104,7 @@ class ProductService_Test extends TestCase
         // create product
         $request = new Request();
         $request['name'] = "aku kamu " . mt_rand(1, 99999);
+        $request['type'] = 'demo';
         $request['price'] = 100_000;
         $request['category_id'] = $category->id;
         $request['css_external'] = [1, 2];
@@ -174,6 +176,7 @@ class ProductService_Test extends TestCase
         // add 
         $request = new Request();
         $request['name'] = "aku kamu " . mt_rand(1, 99999);
+        $request['type'] = 'demo';
         $request['price'] = 100_000;
         $request['category_id'] = $category->id;
         $request['css_external'] = [1, 2];
@@ -239,10 +242,18 @@ class ProductService_Test extends TestCase
 
     public function test_deleteSuccess()
     {
+        // create category
+        $categoryCode = 'C' . mt_rand(1, 9999999);
+        $categoryName = 'category-' . mt_rand(1, 9999);
+        $this->categoryRepository->create($categoryCode, $categoryName);
+
+        $category = $this->categoryRepository->getByName($categoryName);
+
         $request = new Request();
         $request['name'] = "aku kamu " . mt_rand(1, 99999);
+        $request['type'] = 'demo';
         $request['price'] = 100_000;
-        $request['category_id'] = 1;
+        $request['category_id'] = $category->id;
         $request['body'] = '<div>Aku ' . mt_rand(1, 9999) . ' kamu</div>';
 
         $this->productService->add($request);

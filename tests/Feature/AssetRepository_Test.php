@@ -14,10 +14,9 @@ class AssetRepository_Test extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        config(['database.default' => 'mysql-test']);
 
         $this->assetRepository = $this->app->make(Asset_repository::class);
-
-        config(['database.default' => 'mysql-test']);
     }
 
     public function test_create()

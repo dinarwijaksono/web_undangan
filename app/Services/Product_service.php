@@ -51,9 +51,10 @@ class Product_service
 
             $product = $this->productDomain;
             $product->name = $request->name;
+            $product->type = $request->type;
             $product->code = 'P' . mt_rand(1, 9999999);
             $product->price = $request->price;
-            $product->link_locate_demo = 'Link-' . mt_rand(1, 9999);
+            $product->link_locate = 'Link-' . mt_rand(1, 9999);
             $product->category_id = $request->category_id;
             $product->css_external = $request->css_external;
             $product->js_external = $request->js_external;
@@ -121,9 +122,9 @@ class Product_service
     }
 
 
-    public function getByLinkLocateDemo(string $link): object
+    public function getByLinkLocate(string $link): object
     {
-        $product = $this->productRepository->getByLinkLocateDemo($link);
+        $product = $this->productRepository->getByLinkLocate($link);
 
         $product->product_asset = collect($this->productAssetRepository->getAllByProductId($product->id));
         $product->whoSeeDemo = collect($this->whoSeeDemoRepository->getAllByProductId($product->id));

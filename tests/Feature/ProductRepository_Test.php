@@ -39,17 +39,56 @@ class ProductRepository_Test extends TestCase
         $product->name = 'aku-kamu-' . mt_rand(1, 999);
         $product->code = 'P' . mt_rand(1, 9999999);
         $product->category_id = 1;
+        $product->type = 'demo';
         $product->price = 100000;
-        $product->link_locate_demo = 'aku-kamu-' . mt_rand(1, 999);
+        $product->link_locate = 'aku-kamu-' . mt_rand(1, 999);
 
         $this->productRepository->create($product);
 
         $this->assertDatabaseHas('products', [
             'name' => $product->name,
             'code' => $product->code,
-            'price' => $product->price
+            'price' => $product->price,
+            'type' => $product->type
         ]);
     }
+
+
+    public function test_getByName()
+    {
+        // create category
+        $categoryCode = 'C' . mt_rand(1, 9999999);
+        $categoryName = 'category-' . mt_rand(1, 99999);
+
+        $this->categoryRepository->create($categoryCode, $categoryName);
+
+        $category = $this->categoryRepository->getByName($categoryName);
+
+        // create product and body product
+        $product = $this->productDomain;
+        $product->name = 'aku-kamu-' . mt_rand(1, 999);
+        $product->code = 'P' . mt_rand(1, 9999999);
+        $product->category_id = $category->id;
+        $product->type = 'demo';
+        $product->price = 100000;
+        $product->link_locate = 'aku-kamu-' . mt_rand(1, 999);
+        $product->body = "<div>lorem ipsum</div>";
+
+        $this->productRepository->create($product);
+        $product->id = $this->productRepository->getIdByCode($product->code);
+        $this->bodyProductRepository->create($product);
+
+        // get by name
+        $response = $this->productRepository->getByName($product->name);
+
+        $this->assertIsObject($response);
+        $this->assertEquals($response->name, $product->name);
+        $this->assertEquals($response->code, $product->code);
+        $this->assertEquals($response->category_id, $product->category_id);
+        $this->assertEquals($response->category_name, $categoryName);
+        $this->assertEquals($response->body, $product->body);
+    }
+
 
 
 
@@ -74,8 +113,9 @@ class ProductRepository_Test extends TestCase
         $product->name = 'aku-kamu-' . mt_rand(1, 999);
         $product->code = 'P' . mt_rand(1, 9999999);
         $product->category_id = $category->id;
+        $product->type = 'demo';
         $product->price = 25000;
-        $product->link_locate_demo = 'aku-kamu-' . mt_rand(1, 999);
+        $product->link_locate = 'aku-kamu-' . mt_rand(1, 999);
         $product->body = "<div>aaa</div>";
 
         $this->productRepository->create($product);
@@ -100,12 +140,11 @@ class ProductRepository_Test extends TestCase
         $this->assertEquals($product->price, $response->price);
         $this->assertEquals($categoryName, $response->category_name);
         $this->assertEquals($product->category_id, $response->category_id);
-        $this->assertEquals($product->link_locate_demo, $response->link_locate_demo);
+        $this->assertEquals($product->link_locate, $response->link_locate);
         $this->assertEquals($product->body, $response->body);
     }
 
-
-    public function test_getByName()
+    public function test_getByLinkLocate()
     {
         // create category
         $categoryCode = 'C' . mt_rand(1, 9999999);
@@ -115,18 +154,14 @@ class ProductRepository_Test extends TestCase
 
         $category = $this->categoryRepository->getByName($categoryName);
 
-        $this->assertDatabaseHas('categories', [
-            'code' => $categoryCode,
-            'name' => $categoryName
-        ]);
-
         // create product and body product
         $product = $this->productDomain;
         $product->name = 'aku-kamu-' . mt_rand(1, 999);
         $product->code = 'P' . mt_rand(1, 9999999);
         $product->category_id = $category->id;
+        $product->type = 'demo';
         $product->price = 100000;
-        $product->link_locate_demo = 'aku-kamu-' . mt_rand(1, 999);
+        $product->link_locate = 'aku-kamu-' . mt_rand(1, 999);
         $product->body = "<div>lorem ipsum</div>";
 
         $this->productRepository->create($product);
@@ -134,7 +169,7 @@ class ProductRepository_Test extends TestCase
         $this->bodyProductRepository->create($product);
 
         // get by name
-        $response = $this->productRepository->getByName($product->name);
+        $response = $this->productRepository->getByLinkLocate($product->link_locate);
 
         $this->assertIsObject($response);
         $this->assertEquals($response->name, $product->name);
@@ -143,6 +178,7 @@ class ProductRepository_Test extends TestCase
         $this->assertEquals($response->category_name, $categoryName);
         $this->assertEquals($response->body, $product->body);
     }
+
 
 
     public function test_getAll()
@@ -166,7 +202,8 @@ class ProductRepository_Test extends TestCase
         $product->code = 'P' . mt_rand(1, 9999999);
         $product->category_id = $category->id;
         $product->price = 100000;
-        $product->link_locate_demo = 'aku-kamu-' . mt_rand(1, 999);
+        $product->type = 'demo';
+        $product->link_locate = 'aku-kamu-' . mt_rand(1, 999);
         $product->body = "<div>lorem ipsum</div>";
 
         $this->productRepository->create($product);
@@ -190,8 +227,9 @@ class ProductRepository_Test extends TestCase
         $product->name = 'aku-kamu-' . mt_rand(1, 999);
         $product->code = 'P' . mt_rand(1, 9999999);
         $product->category_id = 1;
+        $product->type = 'demo';
         $product->price = 100000;
-        $product->link_locate_demo = 'aku-kamu-' . mt_rand(1, 999);
+        $product->link_locate = 'aku-kamu-' . mt_rand(1, 999);
 
         $this->productRepository->create($product);
 
@@ -224,8 +262,9 @@ class ProductRepository_Test extends TestCase
         $product->name = 'aku-kamu-' . mt_rand(1, 999);
         $product->code = 'P' . mt_rand(1, 9999999);
         $product->category_id = 1;
+        $product->type = 'demo';
         $product->price = 100000;
-        $product->link_locate_demo = 'aku-kamu-' . mt_rand(1, 999);
+        $product->link_locate = 'aku-kamu-' . mt_rand(1, 999);
 
         $this->productRepository->create($product);
 
