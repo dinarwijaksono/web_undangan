@@ -121,14 +121,15 @@ class Product_service
     }
 
 
-    public function getByLink($link)
+    public function getByLinkLocateDemo(string $link): object
     {
-        $product = DB::table('products')
-            ->select('name', 'id', 'code')
-            ->where('link_locate_demo', $link)
-            ->get();
+        $product = $this->productRepository->getByLinkLocateDemo($link);
 
-        return $product->first();
+        $product->product_asset = collect($this->productAssetRepository->getAllByProductId($product->id));
+        $product->whoSeeDemo = collect($this->whoSeeDemoRepository->getAllByProductId($product->id));
+        $product->thumbs = collect($this->pictureProductRepository->getAllByProductId($product->id));
+
+        return $product;
     }
 
 

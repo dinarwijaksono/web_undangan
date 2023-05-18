@@ -102,7 +102,7 @@ Route::delete('/Config/deleteUser/{id}', [User_controller::class, 'destroy'])->m
 
 
 /* Demo_controller */
-Route::get('/Demo/{code}', [Demo_controller::class, 'product']);
+Route::get('/showDemoProduct/{code}', [Demo_controller::class, 'showDemoProduct']);
 /* end Demo_controller */
 
 

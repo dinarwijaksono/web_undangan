@@ -152,10 +152,9 @@ class Product_controller extends Controller
             'body' => 'required'
         ]);
 
-
         // cek apakah name di update
         $product = $this->product_service->getByCode($request->code);
-        if ($product['name'] != $request->name) {
+        if ($product->name != $request->name) {
             $request->validate([
                 'name' => 'unique:products,name'
             ]);

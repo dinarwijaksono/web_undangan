@@ -80,6 +80,31 @@ class Product_repository
             ->first();
     }
 
+    public function getByLinkLocateDemo(string $linkLocateDemo): object
+    {
+        return DB::table('products')
+            ->join('categories', 'products.category_id', '=', 'categories.id')
+            ->join('body_products', 'products.id', '=', 'body_products.product_id')
+            ->select(
+                'products.id',
+                'products.name',
+                'products.code',
+                'products.price',
+                'categories.name as category_name',
+                'products.category_id',
+                'products.link_locate_demo',
+                'body_products.css_internal',
+                'body_products.body',
+                'body_products.js_internal',
+                'products.created_at',
+                'products.updated_at',
+            )
+            ->where('products.link_locate_demo', $linkLocateDemo)
+            ->first();
+    }
+
+
+
 
     public function getAll(): object
     {

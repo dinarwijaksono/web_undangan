@@ -19,7 +19,7 @@ class Demo_controller extends Controller
 
 
 
-    public function product($link)
+    public function showDemoProduct($link)
     {
         $user_agent = NULL;
         if (empty($_SERVER['HTTP_USER_AGENT'])) {
@@ -28,13 +28,14 @@ class Demo_controller extends Controller
             $user_agent = $_SERVER['HTTP_USER_AGENT'];
         }
 
-        $product = $this->product_service->getByLink($link);
+        $data['product'] = $this->product_service->getByLinkLocateDemo($link);
 
-        $this->whoSeeDemo_service->add($product->id, $user_agent);
+        // $this->whoSeeDemo_service->add($data['product']->id, $user_agent);
 
-        if (!is_dir(__DIR__ . '/../../../resources/views/Demo/' . $link)) {
-            return view("/Demo/alternatives");
-        }
-        return view("/Demo/$link/index");
+        // if (!is_dir(__DIR__ . '/../../../resources/views/Demo/' . $link)) {
+        //     return view("/Demo/alternatives");
+        // }
+
+        return view("/Demo/showDemo", $data);
     }
 }

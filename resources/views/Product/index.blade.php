@@ -46,7 +46,7 @@
                                 <td style="text-align: center;"><?= $product->category_name ?></td>
                                 <td style="text-align: center;"><?= date('h:s, d M Y', $product->created_at / 1000) ?></td>
                                 <td style="text-align: center;">
-                                    <a href="/Demo/<?= $product->link_locate_demo ?>" target="black" class="btn btn-primary btn-xs">Lihat demo</a>
+                                    <a href="/showDemoProduct/<?= $product->link_locate_demo ?>" target="on" class="btn btn-primary btn-xs">Lihat demo</a>
                                     <a href="/Product/edit/<?= $product->code ?>" class="btn btn-primary btn-xs">Edit</a>
                                     <form action="/Product/delete/<?= $product->code ?>" method="post" style="display: inline;">
                                         @csrf
