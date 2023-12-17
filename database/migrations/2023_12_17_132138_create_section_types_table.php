@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBodyProductsTable extends Migration
+class CreateSectionTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateBodyProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('body_products', function (Blueprint $table) {
+        Schema::create('section_types', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id');
-            $table->text('css_internal')->nullable();
-            $table->text('body');
-            $table->text('js_internal')->nullable();
+            $table->string('name');
+            $table->bigInteger('created_at');
+            $table->bigInteger('updated_at');
         });
     }
 
@@ -29,6 +28,6 @@ class CreateBodyProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('body_products');
+        Schema::dropIfExists('section_types');
     }
 }

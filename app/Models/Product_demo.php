@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Who_see_order extends Model
+class Product_demo extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
+    protected $timestamps = false;
 }

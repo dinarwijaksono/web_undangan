@@ -19,10 +19,10 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 
-Artisan::command('migrate-test', function () {
+Artisan::command('migrate:fresh-test', function () {
     config(['database.default' => 'mysql-test']);
 
-    Artisan::call('migrate:fresh --seed');
+    Artisan::call('migrate:fresh');
 
     $this->comment('migrate-test is successfull');
 });

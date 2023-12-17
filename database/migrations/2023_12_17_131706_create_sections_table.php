@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrdersTable extends Migration
+class CreateSectionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('sections', function (Blueprint $table) {
             $table->id();
-            $table->string('code', 8)->unique();
-            $table->string('order_from', 50);
-            $table->string('link_locate', 100);
-            $table->bigInteger('expired');
+            $table->foreignId('type_section_id');
+            $table->string('name');
+            $table->json('data');
+            $table->text('body');
             $table->bigInteger('created_at');
             $table->bigInteger('updated_at');
         });
@@ -31,6 +31,6 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('sections');
     }
 }

@@ -10,4 +10,5 @@ class Chat extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+    protected $timestamps = false;
 }
