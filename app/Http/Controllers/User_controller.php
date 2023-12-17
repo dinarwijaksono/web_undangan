@@ -18,7 +18,7 @@ class User_controller extends Controller
     {
         $data['listUser'] = User::all();
 
-        return view('/Config/userManagement', $data);
+        return view('/User/index', $data);
     }
 
 
