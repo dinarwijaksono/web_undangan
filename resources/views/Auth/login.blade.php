@@ -1,90 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <!--[if IE]>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <![endif]-->
-    <title>web undangan</title>
-    <!-- BOOTSTRAP CORE STYLE  -->
-    <link href="/asset_cms/css/bootstrap.css" rel="stylesheet" />
-    <!-- FONT AWESOME STYLE  -->
-    <link href="/asset_cms/css/font-awesome.css" rel="stylesheet" />
-    <!-- CUSTOM STYLE  -->
-    <link href="/asset_cms/css/style.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web undangan</title>
+
+    <link rel="stylesheet" href="/asset/tailwind/style.css">
 
 </head>
 
 <body>
 
-    <!-- MENU SECTION END-->
-    <div class="content-wrapper">
-        <div class="container">
+    <div class="flex justify-center p-2 mt-20">
+        <section class="login">
+            <form action="/Login" method="post">
+                @csrf
 
-            <div class="col-sm-6 col-sm-offset-3 col-xs-12">
-                <div class="panel panel-info">
-                    <div class="panel-heading text-center">
-                        LOGIN
-                    </div>
-                    <div class="panel-body">
-
-                        @if (session('loginFailed'))
-                        <div class="alert alert-danger" role="alert"><?= session('loginFailed') ?></div>
-                        @endif
-
-                        <form method="post" action="/Login" role="form">
-                            @csrf
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input class="form-control" name="email" type="text" placeholder="Email" />
-                                @error('email')
-                                <p class="help-block" style="color: red;"><?= $message ?></p>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input class="form-control" name="password" type="password" placeholder="password" />
-                                @error('password')
-                                <p class="help-block" style="color: red;"><?= $message ?></p>
-                                @enderror
-                            </div>
-
-                            <button type="submit" class="btn btn-info btn-block">Login</button>
-
-                        </form>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    </div>
-
-    <!-- CONTENT-WRAPPER SECTION END-->
-    <section class="footer-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    &copy; 2022 Yourdomain.com |<a href="" target="_blank"> Designed and Develop by : @dinarwijaksono11</a>
+                <div class="bg-sky-200 p-2 mb-2">
+                    <h1 class="text-center text-sky-700 text-[22px]">LOGIN</h1>
                 </div>
 
-            </div>
-        </div>
-    </section>
-    <!-- FOOTER SECTION END-->
-    <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
-    <!-- CORE JQUERY  -->
-    <script src="/asset_cms/js/jquery-1.10.2.js"></script>
-    <!-- BOOTSTRAP SCRIPTS  -->
-    <script src="/asset_cms/js/bootstrap.js"></script>
-    <!-- CUSTOM SCRIPTS  -->
-    <script src="/asset_cms/js/custom.js"></script>
+                @if (session()->has('loginFailed'))
+                    <div class="flex justify-center">
+                        <div class="basis-10/12 bg-red-200 border border-red-500 rounded text-red-700 p-2 my-4">
+                            <p>{{ session()->get('loginFailed') }} </p>
+                        </div>
+                    </div>
+                @endif
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" placeholder="email" value="{{ old('email') }}"
+                        autocomplete="off">
+                    @error('email')
+                        <p>{{ $message }} </p>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Kata sandi</label>
+                    <input type="password" name="password" id="password" placeholder="Kata sandi">
+                    @error('password')
+                        <p>{{ $message }} </p>
+                    @enderror
+                </div>
+
+                <div class="form-group flex justify-center">
+                    <button type="submit">Kirim</button>
+                </div>
+
+
+            </form>
+        </section>
+    </div>
+
 </body>
 
 </html>

@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Repository\PictureProduct_repository;
 use App\Repository\WhoSeeDemo_repository;
 use App\Services\Asset_service;
+use App\Services\Auth_service;
 use App\Services\Category_service;
 use App\Services\Order_service;
 use App\Services\PictureProduct_service;
@@ -25,6 +26,10 @@ class Main_provider extends ServiceProvider implements DeferrableProvider
     {
         $this->app->singleton(User_service::class, function () {
             return new User_service;
+        });
+
+        $this->app->singleton(Auth_service::class, function ($app) {
+            return new Auth_service($app);
         });
 
         $this->app->singleton(Category_service::class, function () {

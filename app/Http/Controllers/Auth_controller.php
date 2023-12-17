@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\Auth_service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\User_service;
@@ -12,10 +13,12 @@ use function PHPUnit\Framework\isTrue;
 class Auth_controller extends Controller
 {
     private $user_service;
+    private $authService;
 
-    function __construct(User_service $user_service)
+    function __construct(User_service $user_service, Auth_service $authService)
     {
         $this->user_service = $user_service;
+        $this->authService = $authService;
     }
 
 
@@ -33,13 +36,13 @@ class Auth_controller extends Controller
             'password' => 'required'
         ]);
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
+        $login = $this->authService->login($request->email, $request->password);
 
-            return redirect()->intended('/Dashboard');
+        if ($login) {
+            return redirect('/Dashboard');
+        } else {
+            return back()->with('loginFailed', 'Email / password salah.');
         }
-
-        return back()->with('loginFailed', 'Email / password salah.');
     }
 
 
