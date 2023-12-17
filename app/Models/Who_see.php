@@ -10,5 +10,5 @@ class Who_see extends Model
     use HasFactory;
 
     protected $guareded = ['id'];
-    protected $timestamps = false;
+    public $timestamps = false;
 }

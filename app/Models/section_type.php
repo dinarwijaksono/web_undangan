@@ -10,5 +10,5 @@ class section_type extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
-    protected $timestamps = false;
+    public $timestamps = false;
 }
