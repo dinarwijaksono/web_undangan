@@ -49,9 +49,10 @@
                 <div class="form-group flex justify-center">
                     <button type="submit">Kirim</button>
                 </div>
-
-
             </form>
+
+            <a href="/Register" class="text-center">Belum punya akun daftar.</a>
+
         </section>
     </div>
 

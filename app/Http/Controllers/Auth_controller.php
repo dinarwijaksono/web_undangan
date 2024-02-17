@@ -27,6 +27,11 @@ class Auth_controller extends Controller
 
     public function login()
     {
+        Log::info("path /Login success", [
+            'class' => "Auth_controller",
+            'user_agent' => $_SERVER['HTTP_USER_AGENT']
+        ]);
+
         return view('Auth/login');
     }
 
@@ -40,8 +45,22 @@ class Auth_controller extends Controller
         $login = $this->authService->login($request->email, $request->password);
 
         if ($login) {
+
+            Log::info("do login success", [
+                'email' => $request->email,
+                'class' => "Auth_controller",
+                'user_agent' => $_SERVER['HTTP_USER_AGENT']
+            ]);
+
             return redirect('/Dashboard');
         } else {
+
+            Log::error("do login failed", [
+                'email' => $request->email,
+                'class' => "Auth_controller",
+                'user_agent' => $_SERVER['HTTP_USER_AGENT']
+            ]);
+
             return back()->with('loginFailed', 'Email / password salah.');
         }
     }
@@ -53,7 +72,7 @@ class Auth_controller extends Controller
 
     public function register()
     {
-        Log::info("path /Auth/register success", [
+        Log::info("path /Register success", [
             'class' => "Auth_controller",
             'user_agent' => $_SERVER['HTTP_USER_AGENT']
         ]);
