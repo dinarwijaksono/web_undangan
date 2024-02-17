@@ -17,6 +17,7 @@
     <!-- CUSTOM STYLE  -->
     <link href="/asset_cms/css/style.css" rel="stylesheet" />
 
+    @livewireStyles
 </head>
 
 <body>
@@ -30,55 +31,15 @@
                     <div class="panel-heading text-center">
                         Register
                     </div>
+
                     <div class="panel-body">
-
-                        @if (session('registerSuccess'))
-                        <div class="alert alert-success" role="alert"><?= session('registerSuccess') ?></div>
-                        @endif
-
-                        @if (session('registerFailed'))
-                        <div class="alert alert-danger" role="alert"><?= session('registerFailed') ?></div>
-                        @endif
-
-                        <form method="post" action="/Register" role="form">
-                            @csrf
-                            <div class="form-group">
-                                <label>Register Code</label>
-                                <input class="form-control" name="register_code" type="text" placeholder="Register code" value="{{ old('register_code') }}" />
-                                @error('register_code')
-                                <p class="help-block" style="color: red;"><?= $message ?></p>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input class="form-control" name="email" type="text" placeholder="Email" value="{{ old('email') }}" />
-                                @error('email')
-                                <p class="help-block" style="color: red;"><?= $message ?></p>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input class="form-control" name="password" type="password" placeholder="password" />
-                                @error('password')
-                                <p class="help-block" style="color: red;"><?= $message ?></p>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label>Konfirmasi password</label>
-                                <input class="form-control" name="password_confirmation" type="password" placeholder="konfirmasi password" />
-                                @error('password_confirmation')
-                                <p class="help-block" style="color: red;"><?= $message ?></p>
-                                @enderror
-                            </div>
-
-                            <button type="submit" class="btn btn-info btn-block">Login</button>
-
-                        </form>
-
+                        @livewire('form-register')
                     </div>
+
+                    <div class="panel-footer">
+                        <p class="text-center"><a href="/Login">Sudah punya akun.</a></p>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -91,7 +52,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    &copy; 2022 Yourdomain.com |<a href="" target="_blank"> Designed and Develop by : @dinarwijaksono11</a>
+                    &copy; 2022 Yourdomain.com |<a href="" target="_blank"> Designed and Develop by :
+                        @dinarwijaksono11</a>
                 </div>
 
             </div>
@@ -105,6 +67,8 @@
     <script src="/asset_cms/js/bootstrap.js"></script>
     <!-- CUSTOM SCRIPTS  -->
     <script src="/asset_cms/js/custom.js"></script>
+
+    @livewireScripts
 </body>
 
 </html>

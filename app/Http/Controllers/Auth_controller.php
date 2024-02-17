@@ -6,6 +6,7 @@ use App\Services\Auth_service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\User_service;
+use Illuminate\Support\Facades\Log;
 
 use function PHPUnit\Framework\isFalse;
 use function PHPUnit\Framework\isTrue;
@@ -52,32 +53,16 @@ class Auth_controller extends Controller
 
     public function register()
     {
+        Log::info("path /Auth/register success", [
+            'class' => "Auth_controller",
+            'user_agent' => $_SERVER['HTTP_USER_AGENT']
+        ]);
+
         return view('/Auth/register');
     }
 
 
-    public function doRegister(Request $request)
-    {
-        $request->validate([
-            'email' => 'required',
-            'register_code' => 'required',
-            'password' => 'required',
-            'password_confirmation' => 'required|same:password'
-        ]);
 
-        $code = $this->user_service->getRegisterCode();
-        if ($code !== $request->register_code) {
-            return back()->with('registerFailed', 'Kode register tidak cocok.')->withInput();
-        }
-
-        $register = $this->user_service->register($request->email, $request->password);
-
-        if ($register == false) {
-            return back()->with('registerFailed', 'Email sudah di gunakan.')->withInput();
-        }
-
-        return back()->with('registerSuccess', 'Register berhasil.');
-    }
 
 
 
