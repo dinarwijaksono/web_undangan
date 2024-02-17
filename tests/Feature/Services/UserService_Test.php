@@ -34,11 +34,29 @@ class UserService_Test extends TestCase
 
         $this->assertIsBool($response);
         $this->assertTrue($response);
-
         $this->assertDatabaseHas('users', [
             'role' => $userDomain->role,
             'username' => $userDomain->username,
             'email' => $userDomain->email,
         ]);
+    }
+
+
+    public function test_create_failed_usernameDowble()
+    {
+
+        $userDomain = new User_domain();
+        $userDomain->role = 1;
+        $userDomain->username = 'test';
+        $userDomain->email = 'test@gmail.com';
+        $userDomain->password = 'test';
+
+        $response = $this->userService->create($userDomain);
+        $this->assertIsBool($response);
+        $this->assertTrue($response);
+
+        $response2 = $this->userService->create($userDomain);
+
+        $this->assertFalse($response2);
     }
 }

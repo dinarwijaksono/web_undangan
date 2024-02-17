@@ -40,11 +40,11 @@ class User_service
             return true;
         } catch (QueryException $th) {
 
-            Log::info('create user', [
+            Log::error('create user', [
                 'username' => $userDomain->username,
                 'email' => $userDomain->email,
                 'status' => 'failed',
-                'exeption' => $th
+                'exeption' => $th->getMessage()
             ]);
 
             return false;
