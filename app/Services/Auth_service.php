@@ -27,7 +27,7 @@ class Auth_service
             return false;
         } catch (\Throwable $th) {
 
-            Log::info('Login failed', [
+            Log::error('Login failed', [
                 'email' => $email,
                 'class' => "Auth_service",
                 'error_message' => $th->getMessage()

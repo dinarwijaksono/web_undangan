@@ -13,36 +13,44 @@
 <body>
 
     <nav>
-        <div class="title ">
-            <h1>Web Undangan</h1>
+        <div class="title basis-2/12 ">
+            <h2>Web Undangan</h2>
         </div>
 
-        <div class="menu">
-            <form action="/logout" method="post">
-                @csrf
-
-                <button type="submit" class="logout">LOGOUT</button>
-            </form>
+        <div class="menu basis-10/12 flex justify-end">
+            <ul>
+                <li>
+                    <form action="/logout" method="post">
+                        @csrf
+                        <button type="submit"
+                            class="bg-red-500 text-[12px] py-1 px-2 text-white rounded hover:bg-red-400">LOGOUT</button>
+                    </form>
+                </li>
+            </ul>
         </div>
 
     </nav>
 
 
-    <div class="wraper">
+    <div class="content">
 
-        <x-aside active="user" />
+        <aside>
+            <x-aside active="{{ $active }}" />
+        </aside>
 
-        <main>
+        <div class="wraper">
+            <main>
 
-            @yield('content')
+                @yield('content')
 
-        </main>
+            </main>
+
+            <footer>
+                <p>Created by dinarwijaksono11@gmail.com</p>
+            </footer>
+
+        </div>
     </div>
-
-    <footer>
-        <p>Created by dinarwijaksono11@gmail.com</p>
-    </footer>
-
 
 </body>
 

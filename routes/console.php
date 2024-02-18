@@ -70,3 +70,7 @@ Artisan::command('install', function () {
         $this->comment('Username super admin sudah di buat sebelumnya');
     }
 });
+
+Artisan::command('tailwind-start', function () {
+    system("npx tailwind -i ./resources/css/app.css -o ./public/asset/tailwind/style.css --watch");
+});

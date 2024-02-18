@@ -1,20 +1,20 @@
-<aside>
+<div>
 
-    <div class="profile">
+    <div class="mt-5">
         <a href="/">
-            <p>{{ auth()->user()->username }}</p>
+            <p class="text-center">{{ auth()->user()->username }}</p>
         </a>
 
-        <p>Admin</p>
+        <p class="text-center text-white">{{ auth()->user()->email }}</p>
 
     </div>
 
     <ul>
-        <a href="/">
-            <li @class([
-                'active' => $active == 'dashboard',
-            ])>Dashboard</li>
-        </a>
+        @if (!in_array(auth()->user()->role, [0]))
+            <a href="/Dashboard">
+                <li @class(['active' => $active == 'dashboard'])>Dashboard</li>
+            </a>
+        @endif
 
         @if (in_array(auth()->user()->role, [0]))
             <a href="/User/index">
@@ -26,4 +26,4 @@
 
     </ul>
 
-</aside>
+</div>

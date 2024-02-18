@@ -10,6 +10,7 @@
             <thead>
                 <tr>
                     <th>No</th>
+                    <th>Username</th>
                     <th>Email</th>
                     <th>Role</th>
                     <th>Dibuat</th>
@@ -17,9 +18,11 @@
             </thead>
 
             <tbody>
+                @php $i = 1; @endphp
                 @foreach ($listUser as $user)
                     <tr>
-                        <td class="text-center">1</td>
+                        <td class="text-center">{{ $i++ }} </td>
+                        <td>{{ $user->username }} </td>
                         <td>{{ $user->email }} </td>
                         <td class="text-center">{{ $user->role }} </td>
                         <td class="text-center">{{ date('j F Y', $user->created_at / 1000) }} </td>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Services\Auth_service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,13 +53,19 @@ class Auth_controller extends Controller
                 'user_agent' => $_SERVER['HTTP_USER_AGENT']
             ]);
 
+            $user = User::select('role')->where('email', $request->email)->first();
+
+            if ($user->role == 0) {
+                return redirect('/User/index');
+            }
             return redirect('/Dashboard');
         } else {
 
             Log::error("do login failed", [
                 'email' => $request->email,
                 'class' => "Auth_controller",
-                'user_agent' => $_SERVER['HTTP_USER_AGENT']
+                'user_agent' => $_SERVER['HTTP_USER_AGENT'],
+                "message_error" => "Email atau password salah."
             ]);
 
             return back()->with('loginFailed', 'Email / password salah.');
