@@ -10,6 +10,7 @@ use App\Services\Category_service;
 use App\Services\Order_service;
 use App\Services\PictureProduct_service;
 use App\Services\Product_service;
+use App\Services\Section_service;
 use App\Services\User_service;
 use App\Services\WhoSeeDemo_service;
 use Illuminate\Contracts\Support\DeferrableProvider;
@@ -30,6 +31,10 @@ class Main_provider extends ServiceProvider implements DeferrableProvider
 
         $this->app->singleton(Auth_service::class, function ($app) {
             return new Auth_service($app);
+        });
+
+        $this->app->singleton(Section_service::class, function ($app) {
+            return new Section_service($app);
         });
 
         $this->app->singleton(Category_service::class, function () {

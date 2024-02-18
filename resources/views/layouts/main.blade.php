@@ -8,9 +8,10 @@
 
     <link rel="stylesheet" href="/asset/tailwind/style.css">
 
+    @livewireStyles
 </head>
 
-<body>
+<body class="bg-zinc-200">
 
     <nav>
         <div class="title basis-2/12 ">
@@ -52,6 +53,7 @@
         </div>
     </div>
 
+    @livewireScripts
 </body>
 
 </html>

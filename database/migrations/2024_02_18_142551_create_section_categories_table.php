@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSectionTypesTable extends Migration
+class CreateSectionCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateSectionTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('section_types', function (Blueprint $table) {
+        Schema::create('section_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name', 50);
             $table->bigInteger('created_at');
             $table->bigInteger('updated_at');
         });
@@ -28,6 +28,6 @@ class CreateSectionTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('section_types');
+        Schema::dropIfExists('section_categories');
     }
 }

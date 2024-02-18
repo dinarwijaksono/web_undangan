@@ -9,6 +9,7 @@ use App\Http\Controllers\Demo_controller;
 use App\Http\Controllers\Home_controller;
 use App\Http\Controllers\Order_controller;
 use App\Http\Controllers\Product_controller;
+use App\Http\Controllers\Section_controller;
 use App\Http\Controllers\User_controller;
 use App\Http\Controllers\WebUndangan_controller;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,11 @@ Route::post('/Register', [Auth_controller::class, 'doRegister'])->middleware('gu
 
 Route::post('/logout', [Auth_controller::class, 'logout'])->middleware('auth');
 /* end Auth_controller */
+
+
+/* Section_controller */
+Route::get('/Section', [Section_controller::class, 'index'])->middleware('auth');
+/* end Section_controller */
 
 
 /* Dasbhord_controller */
