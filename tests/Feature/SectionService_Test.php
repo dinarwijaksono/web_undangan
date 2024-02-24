@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use App\Services\Section_service;
+use Database\Seeders\SectionCategory_seeder;
 use Database\Seeders\User_seeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -35,5 +36,21 @@ class SectionService_Test extends TestCase
         $this->assertDatabaseHas('section_categories', [
             'name' => $name,
         ]);
+    }
+
+
+    public function test_getTheListCategory_success()
+    {
+        $this->seed(SectionCategory_seeder::class);
+        $this->seed(SectionCategory_seeder::class);
+        $this->seed(SectionCategory_seeder::class);
+
+        $response = $this->sectionService->getTheListCategory();
+
+        $this->assertIsObject($response);
+        $this->assertEquals($response->count(), 3);
+        $this->assertArrayHasKey('name', $response->first()->toArray());
+        $this->assertArrayHasKey('created_at', $response->first()->toArray());
+        $this->assertArrayHasKey('updated_at', $response->first()->toArray());
     }
 }

@@ -38,6 +38,8 @@ class FormCreateSectionCategory extends Component
             session()->flash('create-section-category-success', "kategori section berhasil dibuat.");
 
             $this->name = "";
+
+            $this->emitTo('table-section-category', 'create-section-category');
         } catch (\Throwable $th) {
             Log::error('do create section category failed', [
                 'user_id' => auth()->user()->id,

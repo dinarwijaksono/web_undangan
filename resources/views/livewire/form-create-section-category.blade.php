@@ -11,7 +11,7 @@
 
     </div>
 
-    <div class="box-body">
+    <div class="box-body h-72">
 
         <div class="form-group">
             <label for="name">Nama</label>
