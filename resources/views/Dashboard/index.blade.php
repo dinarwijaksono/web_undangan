@@ -1,4 +1,4 @@
-@extends('layouts/main')
+@extends('layouts/main-responsive')
 
 @section('content')
     <section class="box box-body">

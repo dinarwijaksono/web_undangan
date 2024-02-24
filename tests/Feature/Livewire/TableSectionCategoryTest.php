@@ -31,4 +31,34 @@ class TableSectionCategoryTest extends TestCase
             ->assertSee('Daftar kategori section')
             ->assertSee('Nama');
     }
+
+
+    public function test_doCreateCategorySection_success()
+    {
+        $name = 'contoh-' . mt_rand(1, 999);
+
+        $component = Livewire::test(TableSectionCategory::class)
+            ->set('category_name', $name)
+            ->call('doCreateCategorySection')
+            ->assertHasNoErrors('category_name');
+
+        $this->assertDatabaseHas('section_categories', [
+            'name' => $name
+        ]);
+    }
+
+
+    public function test_doCreateCategorySection_success_validation()
+    {
+        $name = '';
+
+        $component = Livewire::test(TableSectionCategory::class)
+            ->set('category_name', $name)
+            ->call('doCreateCategorySection')
+            ->assertHasErrors('category_name');
+
+        $this->assertDatabaseMissing('section_categories', [
+            'name' => $name
+        ]);
+    }
 }
