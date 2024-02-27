@@ -15,10 +15,9 @@ class CreateSectionsTable extends Migration
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('type_section_id');
-            $table->string('location_pic')->nullable();
+            $table->foreignId('section_category_id');
+            $table->string('location_picture')->nullable();
             $table->json('data')->nullable();
-            $table->text('body')->nullable();
             $table->bigInteger('created_at');
             $table->bigInteger('updated_at');
         });

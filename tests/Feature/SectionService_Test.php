@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Section_category;
 use App\Models\User;
 use App\Services\Section_service;
 use Database\Seeders\SectionCategory_seeder;
@@ -35,6 +36,23 @@ class SectionService_Test extends TestCase
 
         $this->assertDatabaseHas('section_categories', [
             'name' => $name,
+        ]);
+    }
+
+    public function test_createSection_success()
+    {
+        $this->seed(SectionCategory_seeder::class);
+        $this->seed(SectionCategory_seeder::class);
+
+        $sectionCategory = Section_category::select('*')->first();
+
+        $location = 'test-' . mt_rand(1, 9999);
+
+        $this->sectionService->create($sectionCategory->id, $location);
+
+        $this->assertDatabaseHas('sections', [
+            'section_category_id' => $sectionCategory->id,
+            'location_picture' => $location
         ]);
     }
 

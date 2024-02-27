@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\section;
 use App\Models\Section_category;
 use Illuminate\Support\Facades\Log;
 
@@ -32,6 +33,34 @@ class Section_service
             ]);
         }
     }
+
+    public function create(int $categoryId, string $location_picture): void
+    {
+        try {
+            section::insert([
+                'section_category_id' => $categoryId,
+                'location_picture' => $location_picture,
+                'data' => NULL,
+                'created_at' => round(microtime(true) * 1000),
+                'updated_at' => round(microtime(true) * 1000),
+            ]);
+
+            Log::info('create section success', [
+                'user_id' => auth()->user()->id,
+                'email' => auth()->user()->email,
+                'class' => "Section_service",
+            ]);
+        } catch (\Throwable $th) {
+            Log::error('create section failed', [
+                'user_id' => auth()->user()->id,
+                'email' => auth()->user()->email,
+                'class' => "Section_service",
+                'message_error' => $th->getMessage()
+            ]);
+        }
+    }
+
+
 
     // Read
     public function getTheListCategory(): object
